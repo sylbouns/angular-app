@@ -1,0 +1,18 @@
+:host {
+    align-self: flex-start;    
+}
+
+i {
+    padding: 0px 20px;
+    margin-right: -20px;
+    cursor: pointer;
+}
+
+.dropdown-menu.show {
+    top: 10px!important;
+    left: -10px!important;
+}
+
+.dropdown-menu a.active {
+    display: none;
+}
