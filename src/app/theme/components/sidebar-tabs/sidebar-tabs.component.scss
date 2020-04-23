@@ -1,0 +1,9 @@
+@import "_variables.scss";
+
+.sidebar-tabs-labels {
+    display: flex;
+    justify-content: space-between;
+    sidebar-tabs-label {
+        flex-grow: 1;
+    }
+}

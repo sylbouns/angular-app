@@ -7,6 +7,7 @@ export const posts: Post[] = [
         title: 'Mon premier post',
         content: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis',
         createdAt: new Date('2019-05-22T07:22:13'),
+        updatedAt: new Date('2019-05-22T07:22:13'),
         loveIts: 0,
     },
     {
@@ -14,6 +15,7 @@ export const posts: Post[] = [
         title: 'Mon deuxieme post',
         content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis',
         createdAt: new Date('2019-04-18T17:52:31'),
+        updatedAt: new Date('2019-04-18T17:52:31'),
         loveIts: 1,
     },
     {
@@ -21,6 +23,31 @@ export const posts: Post[] = [
         title: 'Encore un post',
         content: 'tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis. Lorem ipsum dolor sit amet. Ut enim ad minim veniam, quis. Consectetur adipiscing elit, sed do eiusmod.',
         createdAt: new Date('2019-02-22T15:11:45'),
+        updatedAt: new Date('2019-02-22T15:11:45'),
         loveIts: -2,
+    },
+    {
+        id: Guid.parse('1f5aaa81-2b47-c784-e43f-01c06f09f996'),
+        title: 'Mon premier post',
+        content: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis',
+        createdAt: new Date('2019-05-22T07:22:13'),
+        updatedAt: new Date('2019-05-22T07:22:13'),
+        loveIts: 2,
+    },
+    {
+        id: Guid.parse('25666638-1813-c0c3-47b2-0befcdb218cd'),
+        title: 'Mon deuxieme post',
+        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis',
+        createdAt: new Date('2019-04-18T17:52:31'),
+        updatedAt: new Date('2019-04-18T17:52:31'),
+        loveIts: 0,
+    },
+    {
+        id: Guid.parse('4b07b8eb-d3da-af03-a5ab-0e4095720e09'),
+        title: 'Encore un post',
+        content: 'tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis. Lorem ipsum dolor sit amet. Ut enim ad minim veniam, quis. Consectetur adipiscing elit, sed do eiusmod.',
+        createdAt: new Date('2019-02-22T15:11:45'),
+        updatedAt: new Date('2019-02-22T15:11:45'),
+        loveIts: 5,
     },
 ];

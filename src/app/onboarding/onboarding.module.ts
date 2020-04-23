@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { ThemeModule } from 'src/theme/theme.module';
+import { ThemeModule } from '../theme/theme.module';
 import { SharedModule } from '../shared/shared.module';
 
 import { OnboardingRoutingModule } from './onboarding-routing.module';

@@ -8,6 +8,7 @@ import { PostListComponent } from './post-list/post-list.component';
 import { PostPageComponent } from './post-page/post-page.component';
 import { PostFormComponent } from './post-form/post-form.component';
 import { PostOutletComponent } from './post-outlet/post-outlet.component';
+import { PostEditComponent } from './post-edit/post-edit.component';
 
 const routes: Routes = [
   { path: '',
@@ -16,10 +17,10 @@ const routes: Routes = [
     children: [
         { path: '', redirectTo: 'list', pathMatch: 'full' },
         { path: 'list', component: PostListComponent },
-        { path: 'new', component: PostFormComponent },
+        { path: 'add', component: PostFormComponent },
         { path: ':id', redirectTo: ':id/view' },
         { path: ':id/view', component: PostPageComponent, resolve: { post: PostResolver } },
-        { path: ':id/edit', component: PostFormComponent, resolve: { post: PostResolver } },
+        { path: ':id/edit', component: PostEditComponent, resolve: { post: PostResolver } },
   ]}
 ];
 

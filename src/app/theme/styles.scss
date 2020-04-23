@@ -1,0 +1,20 @@
+// Custom theme variables
+@import '_variables.scss';
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// **Be sure that you only ever include this mixin once!**
+@include mat-core();
+
+// Include the default theme styles.
+@include angular-material-theme($theme);
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+*:focus {
+    outline: none !important;
+}
+
+// Custom theme
+@import 'theme.scss';

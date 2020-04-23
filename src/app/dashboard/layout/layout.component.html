@@ -1,3 +1,24 @@
 <layout-sidebar>
+    <mat-nav-list sidebar-menu class="p0">
+        <a mat-list-item button routerLink="/dashboard">
+            <mat-icon class="mr-3">dashboard</mat-icon> Dashboard
+        </a>
+        <a mat-list-item button routerLink="/onboarding">
+            <mat-icon class="mr-3">business</mat-icon> Tenants
+        </a>
+        <a mat-list-item button routerLink="/post">
+            <mat-icon class="mr-3">apps</mat-icon> Services
+        </a>
+    </mat-nav-list>
+
+    <mat-list sidebar-tabs>
+        <mat-list-item><button mat-icon-button aria-hidden="false" aria-label="Show help">
+                <mat-icon>help_outline</mat-icon>
+            </button></mat-list-item>
+        <mat-list-item><button mat-icon-button aria-hidden="false" aria-label="Show help">
+                <mat-icon>settings</mat-icon>
+            </button></mat-list-item>
+    </mat-list>
+
     <router-outlet></router-outlet>
 </layout-sidebar>

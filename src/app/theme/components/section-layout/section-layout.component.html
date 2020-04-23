@@ -1,0 +1,18 @@
+<section>
+    <header #header *ngIf="header">
+        <ng-content select="[header]"></ng-content>
+    </header>
+    <aside #left *ngIf="left">
+        <ng-content select="[left]"></ng-content>
+    </aside>
+    <main #main>
+        <ng-content select="[main]"></ng-content>
+        <ng-content></ng-content>
+    </main>
+    <aside #right *ngIf="right">
+        <ng-content select="[right]"></ng-content>    
+    </aside>
+    <footer #footer *ngIf="footer">
+        <ng-content select="[footer]"></ng-content>
+    </footer>
+</section>

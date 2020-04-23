@@ -1,0 +1,7 @@
+<div class="loveits">
+    <mat-icon *ngIf="post.loveIts > 0">thumb_up</mat-icon>
+    <mat-icon *ngIf="post.loveIts < 0" color="error">thumb_down</mat-icon>
+    <span *ngIf="post.loveIts != 0" class="p-2">{{ post.loveIts | abs }} </span>
+</div>
+<button mat-button mat-stroked-button (click)="loveItsDown()" color="warn">DISLIKE</button>
+<button mat-button mat-flat-button (click)="loveItsUp()" color="accent">LIKE</button>

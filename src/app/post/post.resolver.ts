@@ -4,6 +4,7 @@ import { Observable, of, EMPTY } from 'rxjs';
 import { mergeMap, take } from 'rxjs/operators'
 import { Post } from './post.model';
 import { PostService } from './post.service';
+import { Guid } from 'guid-typescript';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +19,7 @@ export class PostResolver implements Resolve<Post> {
     
     let id = route.paramMap.get('id');
 
-    return this.postService.getPost(id).pipe(
+    return this.postService.getPost(Guid.parse(id)).pipe(
       take(1),
       mergeMap(post => {
         if (post) {

@@ -1,0 +1,32 @@
+@import "_variables.scss";
+
+button {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+
+    .inner-button {
+        display: flex;
+        flex-flow: column nowrap;
+        color: mat-color($primary, 200);
+        padding: 4px 0 4px 0;
+        border-right: 1px solid mat-color($primary, 300);
+        border-bottom: 4px solid mat-color($accent, 200);
+    
+        .mat-button {
+            margin: 0;
+            border-radius: 0;
+        }
+    
+        mat-icon {
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+    &.open .inner-button {
+        color: mat-color($accent);
+    }
+}
+:host.last button .inner-button {
+    border-right: none;
+}

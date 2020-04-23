@@ -1,0 +1,7 @@
+<page-title [title]="isNewPost ? 'New post' : 'Edit post'" subtitle="{{ post.title }}">
+    <app-post-actions contextualLinks *ngIf="!isNewPost" [id]="post.id.toString()"></app-post-actions>
+</page-title>
+
+<app-post-form [post]="post" (onSubmit)="onSubmit($event)"></app-post-form>
+
+<back-link [routerLink]="[ postBasePath, 'list']" text="Back to post list"></back-link>

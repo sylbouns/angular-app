@@ -1,0 +1,19 @@
+mat-card {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+
+    mat-card-header {
+        margin-left: -16px;
+        margin-right: -8px;
+        justify-content: space-between;
+        mat-card-title { cursor: pointer; }
+        app-post-actions {
+            right: 0;
+        }
+    }
+
+    mat-card-content {
+        flex-grow: 1;
+    }
+}

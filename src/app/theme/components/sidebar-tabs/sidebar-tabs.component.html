@@ -1,0 +1,19 @@
+<mat-divider></mat-divider>
+
+<div class="sidebar-tabs-labels">
+    <ng-container *ngFor="let pane of panes; let id = index; let last = last">
+        <sidebar-tabs-label 
+            (open)="open($event)" 
+            [switch]="switchTab" 
+            [id]="pane.id" 
+            [route]="pane.route" 
+            [icon]="pane.icon"
+            [label]="pane.label"
+            [ngClass]="{ last: last }">
+        </sidebar-tabs-label>
+    </ng-container>
+</div>
+
+<div class="sidebar-tabs-panes">
+    <ng-content></ng-content>
+</div>

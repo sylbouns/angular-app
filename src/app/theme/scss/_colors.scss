@@ -1,0 +1,54 @@
+// THEME COLORS 
+
+// Default text colors
+$dark-primary-text: rgba(black, 0.87);
+$dark-secondary-text: rgba(black, 0.54);
+$dark-disabled-text: rgba(black, 0.38);
+$dark-dividers: rgba(black, 0.12);
+$dark-focused: rgba(black, 0.12);
+$light-primary-text: white;
+$light-secondary-text: rgba(white, 0.7);
+$light-disabled-text: rgba(white, 0.5);
+$light-dividers: rgba(white, 0.12);
+$light-focused: rgba(white, 0.12);
+
+// Generator : http://mcg.mbitson.com/
+
+$mat-custom-dark: (
+  50 : #e6e5e6,
+  100 : #c0bec0,
+  200 : #969396,
+  300 : #6c676b,
+  400 : #4d474c,
+  500 : #2d262c,
+  600 : #282227,
+  700 : #221c21,
+  800 : #1c171b,
+  900 : #110d10,
+  A100 : #ff56ff,
+  A200 : #ff23ff,
+  A400 : #f000f0,
+  A700 : #d600d6,
+contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $light-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  )
+);
+
+// Define the default theme (same as the example above).
+$primary: mat-palette($mat-custom-dark);
+$accent:  mat-palette($mat-pink, A200, A100, A400);
+$warn:    mat-palette($mat-deep-orange);
+$theme:   mat-dark-theme($primary, $accent, $warn);

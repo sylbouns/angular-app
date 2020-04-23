@@ -1,0 +1,6 @@
+<section class="mat-typography title-group">
+    <div class="contextual-links"><ng-content select="[contextualLinks]"></ng-content></div>
+    <h1 *ngIf="title">{{ title }}</h1>
+    <span *ngIf="subtitle" class="subtitle">{{ subtitle }}</span>
+    <mat-divider></mat-divider>
+</section>

@@ -1,0 +1,17 @@
+@import "_variables.scss";
+
+.title-group {
+    margin: 16px;
+}
+.contextual-links {
+    float: right;
+}
+.subtitle {
+    display: block;
+    margin: -8px 0 8px 0;
+    color: mat-color($primary, 200);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 28px;
+}

@@ -1,0 +1,10 @@
+:host {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 8px;
+
+    ::ng-deep > * {
+        box-sizing: border-box;
+        padding: 8px;
+    }
+}

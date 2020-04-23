@@ -1,0 +1,27 @@
+$gutter: 16px;
+$half-gutter: $gutter / 2;
+
+.flex-grid,
+.flex-grid-1,
+.flex-grid-2,
+.flex-grid-3,
+.flex-grid-4,
+.flex-grid-5 {
+    display: flex;
+    flex-wrap: wrap;
+    margin: $half-gutter;
+    > * {
+        box-sizing: border-box;
+        padding: $half-gutter;
+        > * {
+            box-sizing: border-box;
+            height: 100%;
+        }
+    }
+    &.flex-grid-1 > * { width: 100%; }
+    &.flex-grid-2 > * { width: 50%; }
+    &.flex-grid,
+    &.flex-grid-3 > * { width: 33.333%; }
+    &.flex-grid-4 > * { width: 25%; }
+    &.flex-grid-5 > * { width: 20%; }
+}

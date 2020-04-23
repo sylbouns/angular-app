@@ -1,44 +1,15 @@
-<!-- <div *ngIf="post" 
-      [ngClass]="{
-                  'card': true,
-                  'bg-success': post.loveIts > 0,
-                  'bg-danger': post.loveIts < 0
-                }">
-  <div class="card-body">
-    <div class="header-container">
-      <h5 class="card-title" [routerLink]="[ postBasePath, id, 'view' ]">{{ post.title }}</h5>
-      <h6 class="card-subtitle mb-2 text-muted">{{ post.createdAt | date: 'EEEE d MMMM y' }}</h6>
-      <app-post-actions [id]="post.id.toString()"></app-post-actions>
-    </div>
-    <p class="card-text">{{ post.content }}</p>
-    <span class="loveits mr-3">{{ post.loveIts | abs }}
-      <i class="fas fa-thumbs-up" *ngIf="post.loveIts >= 0"></i>
-      <i class="fas fa-thumbs-down" *ngIf="post.loveIts < 0"></i>
-    </span>
-    <button class="btn btn-success mr-3" (click)="loveItsUp()">Love it!</button>
-    <button class="btn btn-danger" (click)="loveItsDown()">Don't love it!</button>
-  </div>
-</div> -->
-
 <mat-card *ngIf="post">
 
   <mat-card-header>
-      <mat-card-title [routerLink]="[ postBasePath, id, 'view' ]">{{ post.title }}</mat-card-title>
-      <mat-card-subtitle>{{ post.createdAt | date: 'EEEE d MMMM y' }}</mat-card-subtitle>
-      <app-post-actions [id]="post.id.toString()"></app-post-actions>
+    <mat-card-title [routerLink]="[ postBasePath, id, 'view' ]" [ngClass]="{ 'text-danger': post.loveIts < 0 }">{{ post.title }}</mat-card-title>
+    <mat-card-subtitle>{{ post.updatedAt | date: 'EEEE d MMMM y' }}</mat-card-subtitle>
+    <app-post-actions [id]="post.id.toString()"></app-post-actions>
   </mat-card-header>
 
   <mat-card-content>
-      <p>{{ post.content }}</p>
+    <p>{{ post.content }}</p>
   </mat-card-content>
 
-  <mat-card-actions>
-      <span class="loveits mr-3">{{ post.loveIts | abs }}
-        <mat-icon *ngIf="post.loveIts >= 0">thumb_up</mat-icon>
-        <mat-icon *ngIf="post.loveIts < 0" color="error">thumb_down</mat-icon>
-      </span>
-      <button mat-button (click)="loveItsUp()" color="accent">LIKE</button>
-      <button mat-button (click)="loveItsDown()">DISLIKE</button>
-  </mat-card-actions>
+  <app-post-vote [id]="post.id.toString()"></app-post-vote>
 
 </mat-card>

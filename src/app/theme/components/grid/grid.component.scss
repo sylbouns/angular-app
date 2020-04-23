@@ -1,0 +1,11 @@
+:host {
+    display: grid;
+    column-gap: 20px;
+    row-gap: 20px;
+
+    ::ng-deep > * {
+        display: flex;
+        height: 100%;
+        margin: 20px;
+    }
+}

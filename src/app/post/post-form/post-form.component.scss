@@ -1,0 +1,7 @@
+form {
+    display: flex;
+    flex-flow: column nowrap;
+    button {
+        align-self: flex-end;
+    }
+}

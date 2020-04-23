@@ -1,0 +1,8 @@
+<button mat-button (click)="onLabelClick()" [routerLink]="route" routerLinkActive="router-link-active" [ngClass]="{open: active}">
+    <div class="inner-button">
+        <mat-icon *ngIf="icon" class="mt-2">{{ icon }}</mat-icon>
+        <span class="mat-caption">{{ label }}</span>
+    </div>
+</button>
+
+<ng-content></ng-content>

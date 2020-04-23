@@ -14,38 +14,60 @@ export class PostService {
 
   constructor() { }
 
-  getNewPost() {
-    return new Post();
-  }
-
-  getPosts() {
+  public getPosts() {
     return this.posts;
   }
 
-  addPost(post: Post) {
-    console.log('add post !')
-    // post.id = Guid.create();
-    // post.createdAt = new Date();
-    // post.updatedAt = new Date();
-    // this.posts.push(post);
+  private getEmptyPost() {
+    const post: Post = new Post();
+    // Default data except ID generated on save
+    post.createdAt = new Date();
+    post.updatedAt = new Date();
+    post.loveIts = 0;
+    return post;
   }
 
-  getPost(id: string): Observable<Post> {
+  private getPostIndex(id: Guid) {
+    return this.posts.getValue().findIndex((post: Post) => post.id.equals(id));
+  }
+
+  public getPost(id: Guid): Observable<Post> {
     return this.getPosts().pipe(
-      map(posts => posts.find((post: Post) => post.id.equals(Guid.parse(id))))
+      map(posts => posts.find((post: Post) => post.id.equals(id)))
     );
   }
 
-  updatePost(post: Post) {
-    console.log('update post !');
-    // post.updatedAt = new Date();
-    // const index = this.posts.findIndex((p: Post) => p.id.equals(post.id));
-    // this.posts.splice(index, 1, post);
+  public isNewPost(post:Post) {
+    return post.id == undefined;
   }
 
-  deletePost(id: string) {
+  public savePost(post: Post) {
+    this.isNewPost(post) ? this.addPost(post) : this.updatePost(post);
+  }
+
+  public deletePost(id: Guid) {
     console.log('delete post !');
-    // const index = this.posts.findIndex((post: Post) => post.id.equals(id));
-    // this.posts.splice(index, 1);
+    this.posts.getValue().splice(this.getPostIndex(id), 1);
+    this.emmitPosts();
+  }
+
+  private addPost(post: Post) {
+    console.log('add post !')
+    let newPost = this.getEmptyPost();
+    newPost.id = Guid.create();
+    this.posts.getValue().push({ ...newPost, ...post })
+    this.emmitPosts();
+  }
+
+  private updatePost(post: Post) {
+    console.log('update post !');
+    post.updatedAt = new Date();
+    this.posts.getValue().splice(this.getPostIndex(post.id), 1, post);
+    this.emmitPosts();
+  }
+
+  private emmitPosts() {
+    console.log('emmitPosts', this.posts.getValue());
+    this.posts.next(this.posts.getValue());
   }
 }
