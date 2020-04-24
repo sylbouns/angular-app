@@ -22,6 +22,7 @@ import { SidebarTabsModule } from './components/sidebar-tabs/sidebar-tabs.module
 import { SectionLayoutComponent } from './components/section-layout/section-layout.component';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { ActionsComponent } from './components/actions/actions.component';
+import { FullscreenComponent } from './components/fullscreen/fullscreen.component';
 
 const BASE_MODULES = [
   MaterialModule,
@@ -44,6 +45,7 @@ const BASE_COMPONENTS = [
   SectionLayoutComponent,
   DialogComponent,
   ActionsComponent,
+  FullscreenComponent,
 ];
 
 const BASE_DIRECTIVES = [
