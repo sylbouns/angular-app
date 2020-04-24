@@ -12,6 +12,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   exports: [
@@ -27,6 +28,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatGridListModule,
     MatTabsModule,
     MatDialogModule,
+    MatAutocompleteModule,
   ],
 })
 export class MaterialModule { }

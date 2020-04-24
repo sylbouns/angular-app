@@ -1,0 +1,15 @@
+<form #form="ngForm">
+    <button mat-icon-button aria-hidden="false" aria-label="Search on domain" (click)="toggleSearchInput()">
+        <mat-icon>search</mat-icon>
+    </button>
+    <mat-form-field [@openClose]="isOpen ? 'open' : 'closed'" class="search-input" [floatLabel]="'never'">
+        <input #searchInput matInput
+                placeholder="Search..."
+                aria-label="Search"
+                [matAutocomplete]="auto"
+                [formControl]="searchControl">
+        <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let proposal of filtredProposals | async" [value]="proposal">{{ proposal }}</mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+</form>

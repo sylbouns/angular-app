@@ -23,6 +23,7 @@ import { SectionLayoutComponent } from './components/section-layout/section-layo
 import { DialogComponent } from './components/dialog/dialog.component';
 import { ActionsComponent } from './components/actions/actions.component';
 import { FullscreenComponent } from './components/fullscreen/fullscreen.component';
+import { SearchComponent } from './components/search/search.component';
 
 const BASE_MODULES = [
   MaterialModule,
@@ -46,6 +47,7 @@ const BASE_COMPONENTS = [
   DialogComponent,
   ActionsComponent,
   FullscreenComponent,
+  SearchComponent,
 ];
 
 const BASE_DIRECTIVES = [

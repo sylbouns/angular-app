@@ -35,10 +35,8 @@
           </button>
           <span>{{ title }}</span>
           <span class="spacer"></span>
-          <button mat-icon-button aria-hidden="false" aria-label="Search on domain">
-            <mat-icon>search</mat-icon>
-          </button>
-          <fullscreen></fullscreen> 
+          <search *ngIf="!media.xsmall"></search>
+          <fullscreen *ngIf="!media.xsmall"></fullscreen>
           <button mat-icon-button aria-hidden="false" aria-label="Messages">
             <mat-icon matBadge="8" matBadgeColor="accent">mail</mat-icon>
           </button>
@@ -52,6 +50,12 @@
       </mat-toolbar>
 
       <ng-content></ng-content>
+
+      <mat-toolbar footer *ngIf="media.xsmall">
+        <mat-toolbar-row>
+          <search></search>
+        </mat-toolbar-row>
+      </mat-toolbar>
 
     </section-layout>
 

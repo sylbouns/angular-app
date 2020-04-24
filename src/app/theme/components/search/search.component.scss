@@ -1,0 +1,16 @@
+@import "_variables.scss";
+
+form {
+    display: flex;
+    align-items: center;
+    .search-input {
+        font-weight: 300;
+        font-size: 0.7em;
+        width: 300px;
+
+        ::ng-deep .mat-form-field-label {
+            font-style: italic;
+            color: mat-color($primary, 300);    
+        }
+    }
+}
