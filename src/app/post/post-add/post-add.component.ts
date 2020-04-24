@@ -21,7 +21,7 @@ export class PostAddComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       this.post = result;
-      console.log(this.post);
+      console.log('openDialog', this.post);
     });
   }
 

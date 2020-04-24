@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
 import { Post } from '../post.model';
 import { PostService } from '../post.service';
 
@@ -16,6 +16,8 @@ export class PostFormComponent implements OnInit {
 
   @Output() onSubmit = new EventEmitter<string>();
 
+  @ViewChild("form") form:NgForm;
+
   constructor(private formBuilder: FormBuilder,
               private postService: PostService) { }
 
@@ -28,9 +30,14 @@ export class PostFormComponent implements OnInit {
   }
 
   onSubmitForm() {
+    console.log('onSubmitForm');
     this.post.title = this.postForm.value['title'];
     this.post.content = this.postForm.value['content'];
     this.postService.savePost(this.post);
     this.onSubmit.next('submit');
+  }
+
+  public submit() {
+    this.form.ngSubmit.emit();
   }
 }

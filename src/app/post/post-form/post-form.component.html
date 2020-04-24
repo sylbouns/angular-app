@@ -1,4 +1,4 @@
-<form *ngIf="post" [formGroup]="postForm" (ngSubmit)="onSubmitForm()">
+<form #form="ngForm" *ngIf="post" [formGroup]="postForm" (ngSubmit)="onSubmitForm()">
     <mat-form-field appearance="fill">
         <mat-label>Title</mat-label>
         <input matInput id="title" formControlName="title">
@@ -7,6 +7,4 @@
         <mat-label>Content</mat-label>
         <textarea matInput id="content" formControlName="content"></textarea>
     </mat-form-field>
-    <button mat-button mat-flat-button color="accent" type="submit"
-        [disabled]="postForm.invalid">{{ isNewPost ? 'Add' : 'Update' }}</button>
 </form>

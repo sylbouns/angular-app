@@ -21,6 +21,7 @@ import { TabItemComponent } from './components/tab-item/tab-item.component';
 import { SidebarTabsModule } from './components/sidebar-tabs/sidebar-tabs.module';
 import { SectionLayoutComponent } from './components/section-layout/section-layout.component';
 import { DialogComponent } from './components/dialog/dialog.component';
+import { ActionsComponent } from './components/actions/actions.component';
 
 const BASE_MODULES = [
   MaterialModule,
@@ -42,6 +43,7 @@ const BASE_COMPONENTS = [
   TabItemComponent,
   SectionLayoutComponent,
   DialogComponent,
+  ActionsComponent,
 ];
 
 const BASE_DIRECTIVES = [

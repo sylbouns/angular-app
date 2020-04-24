@@ -2,6 +2,10 @@
     <app-post-actions contextualLinks *ngIf="!isNewPost" [id]="post.id.toString()"></app-post-actions>
 </page-title>
 
-<app-post-form [post]="post" (onSubmit)="onSubmit($event)"></app-post-form>
+<app-post-form #form [post]="post" (onSubmit)="onSubmit($event)"></app-post-form>
 
-<back-link [routerLink]="[ postBasePath, 'list']" text="Back to post list"></back-link>
+<actions>
+    <back-link [routerLink]="[ postBasePath, 'list']" text="Back to post list"></back-link>
+    <button mat-button mat-flat-button color="accent" (click)="form.submit()" [disabled]="form.postForm.invalid">Update</button>    
+</actions>
+

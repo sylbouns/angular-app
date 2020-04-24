@@ -1,6 +1,8 @@
 <dialog title="Add post" [dialogRef]="dialogRef">
-    <app-post-form (onSubmit)="onSubmit()"></app-post-form>
-    <button dialog-actions mat-button mat-dialog-close>Cancel</button>
-    <button dialog-actions mat-button mat-flat-button color="accent" [mat-dialog-close]="data">Add</button>    
+    <app-post-form #form (onSubmit)="onSubmit()"></app-post-form>
+    <actions dialog-actions>
+        <button mat-button mat-dialog-close>Cancel</button>
+        <button mat-button mat-flat-button color="accent" (click)="form.submit()" [disabled]="form.postForm.invalid" >Add</button>    
+    </actions>
 </dialog>
 
