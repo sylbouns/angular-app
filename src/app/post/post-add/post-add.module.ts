@@ -14,8 +14,5 @@ import { PostAddDialogComponent } from './post-add-dialog/post-add-dialog.compon
   exports: [
     PostAddComponent,
   ],
-  entryComponents: [
-    PostAddDialogComponent,
-  ],
 })
 export class PostAddModule { }

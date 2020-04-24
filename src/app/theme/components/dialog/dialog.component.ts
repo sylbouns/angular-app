@@ -1,15 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-dialog',
+  selector: 'dialog',
   templateUrl: './dialog.component.html',
   styleUrls: ['./dialog.component.scss']
 })
-export class DialogComponent implements OnInit {
+export class DialogComponent {
+  @Input() title: string;
+  @Input() data: any;
+  @Input() dialogRef: MatDialogRef<any>;
+  @ViewChild("dialogActions") dialogActionsRef: ElementRef<any>;
+  public actions: boolean = true;
 
-  constructor() { }
+  constructor( ) {}
 
-  ngOnInit(): void {
+  ngAfterViewInit() {
+    this.actions = !this.isEmpty(this.dialogActionsRef);
+  }
+
+  isEmpty(elt: ElementRef<any>) {
+    return elt == undefined ? true : elt.nativeElement.childNodes.length == 0;
+  }
+
+  onSubmit(): void {
+    this.dialogRef.close();
   }
 
 }

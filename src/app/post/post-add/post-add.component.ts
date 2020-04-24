@@ -16,7 +16,6 @@ export class PostAddComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(PostAddDialogComponent, {
-      width: '500px',
       data: {post: this.post}
     });
 

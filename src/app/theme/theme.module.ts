@@ -21,7 +21,6 @@ import { TabItemComponent } from './components/tab-item/tab-item.component';
 import { SidebarTabsModule } from './components/sidebar-tabs/sidebar-tabs.module';
 import { SectionLayoutComponent } from './components/section-layout/section-layout.component';
 import { DialogComponent } from './components/dialog/dialog.component';
-import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 
 const BASE_MODULES = [
   MaterialModule,
@@ -69,6 +68,9 @@ const BASE_PIPES = [];
     ...BASE_PIPES,
     ...BASE_DIRECTIVES,
     ...BASE_COMPONENTS,
+  ],
+  entryComponents: [
+    DialogComponent,
   ],
 })
 export class ThemeModule { }

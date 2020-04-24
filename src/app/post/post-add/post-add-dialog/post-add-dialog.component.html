@@ -1,4 +1,6 @@
-<h1 mat-dialog-title>Add post</h1>
-<div mat-dialog-content>
-  <app-post-form (onSubmit)="onSubmit()"></app-post-form>
-</div>
+<dialog title="Add post" [dialogRef]="dialogRef">
+    <app-post-form (onSubmit)="onSubmit()"></app-post-form>
+    <button dialog-actions mat-button mat-dialog-close>Cancel</button>
+    <button dialog-actions mat-button mat-flat-button color="accent" [mat-dialog-close]="data">Add</button>    
+</dialog>
+
