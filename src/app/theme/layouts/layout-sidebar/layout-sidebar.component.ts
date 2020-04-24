@@ -1,14 +1,16 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef } from '@angular/core';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'layout-sidebar',
   templateUrl: './layout-sidebar.component.html',
   styleUrls: ['./layout-sidebar.component.scss']
 })
-export class LayoutSidebarComponent implements OnInit {
+export class LayoutSidebarComponent {
   @Input() company: string = 'Company name';
   @Input() title: string = 'Domain name';
+  @ViewChild(MatSidenav) sidenav;
 
   public mode: string = 'side';
   public opened: boolean = false;
@@ -30,7 +32,7 @@ export class LayoutSidebarComponent implements OnInit {
     ]).subscribe(result => result.matches ? this.updateView(result.breakpoints) : false);
   }
 
-  updateView(breakpoints): void {
+  private updateView(breakpoints): void {
     this.media.xsmall = breakpoints[Breakpoints.XSmall];
     this.media.small = breakpoints[Breakpoints.Small];
     this.media.medium = breakpoints[Breakpoints.Medium];
@@ -41,7 +43,7 @@ export class LayoutSidebarComponent implements OnInit {
     this.updateOpened();
   }
 
-  updateMode(): void {
+  private updateMode(): void {
     switch (true) {
       case this.media.xsmall: this.mode = 'push'; break;
       case this.media.small: this.mode = 'over'; break;
@@ -49,7 +51,7 @@ export class LayoutSidebarComponent implements OnInit {
     }
   }
 
-  updateOpened(): void {
+  private updateOpened(): void {
     switch (true) {
       case this.media.xsmall: this.opened = false; break;
       case this.media.small: this.opened = false; break;
@@ -57,7 +59,7 @@ export class LayoutSidebarComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
+  public sidenavToggle(){
+    this.sidenav.toggle();
   }
-
 }

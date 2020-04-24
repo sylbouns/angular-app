@@ -1,0 +1,11 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <button mat-icon-button aria-hidden="false" aria-label="Toggle sidebar" (click)="sidenavToggle.emit()"
+            color="accent">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <span>{{ title }}</span>
+        <span class="spacer"></span>
+        <ng-content></ng-content>
+    </mat-toolbar-row>
+</mat-toolbar>

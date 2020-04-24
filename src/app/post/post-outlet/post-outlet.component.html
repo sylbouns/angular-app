@@ -1,28 +1,16 @@
-<layout-sidebar title="Post managment">
+<layout-sidebar #layout>
+
+    <sidebar-toolbar>
+        <button mat-icon-button aria-hidden="false" aria-label="Company logo">
+            <mat-icon>business</mat-icon>
+        </button>
+        <span>Post company</span>
+        <button mat-icon-button aria-hidden="false" aria-label="Switch to other domains">
+            <mat-icon>apps</mat-icon>
+        </button>
+    </sidebar-toolbar>
 
     <sidebar-menu>
-        <menu-item route="/dashboard" icon="dashboard">Dashboard</menu-item>
-        <menu-item route="/onboarding" icon="business">Tenants</menu-item>
-        <menu-item route="/post" icon="apps">Posts</menu-item>
-
-        <menu-item route="/dashboard" icon="dashboard">Dashboard</menu-item>
-        <menu-item route="/onboarding" icon="business">Tenants</menu-item>
-        <menu-item route="/post" icon="apps">Posts</menu-item>
-        <menu-item route="/dashboard" icon="dashboard">Dashboard</menu-item>
-        <menu-item route="/onboarding" icon="business">Tenants</menu-item>
-        <menu-item route="/post" icon="apps">Posts</menu-item>
-        <menu-item route="/dashboard" icon="dashboard">Dashboard</menu-item>
-        <menu-item route="/onboarding" icon="business">Tenants</menu-item>
-        <menu-item route="/post" icon="apps">Posts</menu-item>
-        <menu-item route="/dashboard" icon="dashboard">Dashboard</menu-item>
-        <menu-item route="/onboarding" icon="business">Tenants</menu-item>
-        <menu-item route="/post" icon="apps">Posts</menu-item>
-        <menu-item route="/dashboard" icon="dashboard">Dashboard</menu-item>
-        <menu-item route="/onboarding" icon="business">Tenants</menu-item>
-        <menu-item route="/post" icon="apps">Posts</menu-item>
-        <menu-item route="/dashboard" icon="dashboard">Dashboard</menu-item>
-        <menu-item route="/onboarding" icon="business">Tenants</menu-item>
-        <menu-item route="/post" icon="apps">Posts</menu-item>
         <menu-item route="/dashboard" icon="dashboard">Dashboard</menu-item>
         <menu-item route="/onboarding" icon="business">Tenants</menu-item>
         <menu-item route="/post" icon="apps">Posts</menu-item>
@@ -45,6 +33,30 @@
             </div>
         </sidebar-tabs-pane>
     </sidebar-tabs>
+
+    <toolbar title="Post managment" (sidenavToggle)="layout.sidenavToggle()">
+        <search *ngIf="!layout.media.xsmall"></search>
+        <fullscreen *ngIf="!layout.media.xsmall"></fullscreen>
+        <button *ngIf="!layout.media.xsmall" mat-icon-button aria-hidden="false" aria-label="Messages">
+            <mat-icon matBadge="8" matBadgeColor="accent">mail</mat-icon>
+        </button>
+        <button *ngIf="!layout.media.xsmall" mat-icon-button aria-hidden="false" aria-label="Notifications">
+            <mat-icon matBadge="3" matBadgeColor="warn">notifications</mat-icon>
+        </button>
+        <button mat-icon-button aria-hidden="false" aria-label="My account">
+            <mat-icon>face</mat-icon>
+        </button>
+    </toolbar>
+
+    <bottom-toolbar *ngIf="layout.media.xsmall">
+        <search></search>
+        <button mat-icon-button aria-hidden="false" aria-label="Messages">
+            <mat-icon matBadge="8" matBadgeColor="accent">mail</mat-icon>
+        </button>
+        <button mat-icon-button aria-hidden="false" aria-label="Notifications">
+            <mat-icon matBadge="3" matBadgeColor="warn">notifications</mat-icon>
+        </button>
+    </bottom-toolbar>
 
     <router-outlet></router-outlet>
 </layout-sidebar>

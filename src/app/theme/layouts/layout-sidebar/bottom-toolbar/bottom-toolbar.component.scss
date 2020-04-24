@@ -1,0 +1,10 @@
+mat-toolbar {
+    mat-toolbar-row {
+        display: flex;
+        margin: auto -8px;
+        .spacer { flex-grow: 1; }
+        ::ng-deep > * {
+            margin: 0 8px;
+        }
+    }
+}

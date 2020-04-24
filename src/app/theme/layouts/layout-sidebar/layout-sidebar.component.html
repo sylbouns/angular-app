@@ -1,70 +1,19 @@
 <mat-sidenav-container>
 
   <mat-sidenav #sidenav [mode]="mode" [opened]="opened">
-
     <section-layout>
-
-      <mat-toolbar header color="primary">
-        <mat-toolbar-row>
-          <button mat-icon-button aria-hidden="false" aria-label="Company logo">
-            <mat-icon>business</mat-icon>
-          </button>
-          <span>{{ company }}</span>
-          <button mat-icon-button aria-hidden="false" aria-label="Switch to other domains">
-            <mat-icon>apps</mat-icon>
-          </button>
-        </mat-toolbar-row>
-      </mat-toolbar>
-
+      <ng-content header select="sidebar-toolbar"></ng-content>
       <ng-content main select="sidebar-menu"></ng-content>
-
       <ng-content footer select="sidebar-tabs"></ng-content>
-
     </section-layout>
-
   </mat-sidenav>
 
   <mat-sidenav-content>
-
     <section-layout>
-      <mat-toolbar header color="primary">
-        <mat-toolbar-row>
-          <button mat-icon-button aria-hidden="false" aria-label="Toggle sidebar" (click)="sidenav.toggle()"
-            color="accent">
-            <mat-icon>menu</mat-icon>
-          </button>
-          <span>{{ title }}</span>
-          <span class="spacer"></span>
-          <search *ngIf="!media.xsmall"></search>
-          <fullscreen *ngIf="!media.xsmall"></fullscreen>
-          <button *ngIf="!media.xsmall" mat-icon-button aria-hidden="false" aria-label="Messages">
-            <mat-icon matBadge="8" matBadgeColor="accent">mail</mat-icon>
-          </button>
-          <button *ngIf="!media.xsmall" mat-icon-button aria-hidden="false" aria-label="Notifications">
-            <mat-icon matBadge="3" matBadgeColor="warn">notifications</mat-icon>
-          </button>
-          <button mat-icon-button aria-hidden="false" aria-label="My account">
-            <mat-icon>face</mat-icon>
-          </button>
-        </mat-toolbar-row>
-      </mat-toolbar>
-
+      <ng-content header select="toolbar"></ng-content>
       <ng-content></ng-content>
-
-      <mat-toolbar footer *ngIf="media.xsmall">
-        <mat-toolbar-row>
-          <search></search>
-          <button mat-icon-button aria-hidden="false" aria-label="Messages">
-            <mat-icon matBadge="8" matBadgeColor="accent">mail</mat-icon>
-          </button>
-          <button mat-icon-button aria-hidden="false" aria-label="Notifications">
-            <mat-icon matBadge="3" matBadgeColor="warn">notifications</mat-icon>
-          </button>
-        </mat-toolbar-row>
-      </mat-toolbar>
-
+      <ng-content footer select="bottom-toolbar"></ng-content>
     </section-layout>
-
   </mat-sidenav-content>
 
 </mat-sidenav-container>
