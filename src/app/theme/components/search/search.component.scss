@@ -6,11 +6,15 @@ form {
     .search-input {
         font-weight: 300;
         font-size: 0.7em;
+
         width: 300px;
+        @include media($xsmall) {
+            width: 50vw;
+        }
 
         ::ng-deep .mat-form-field-label {
             font-style: italic;
-            color: mat-color($primary, 300);    
+            color: mat-color($primary, 300);
         }
     }
 }

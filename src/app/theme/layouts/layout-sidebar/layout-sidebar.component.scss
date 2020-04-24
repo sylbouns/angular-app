@@ -7,7 +7,7 @@ mat-sidenav-container {
     }
 }
 
-mat-toolbar {
+mat-toolbar[header] {
     mat-toolbar-row {
         display: flex;
         justify-content: space-between;
@@ -17,6 +17,17 @@ mat-toolbar {
             margin-right: 8px; 
         }
         > :last-child { margin-right: -8px; }
+    }
+}
+
+mat-toolbar[footer] {
+    mat-toolbar-row {
+        display: flex;
+        margin: auto -8px;
+        .spacer { flex-grow: 1; }
+        > * {
+            margin: 0 8px;
+        }
     }
 }
 

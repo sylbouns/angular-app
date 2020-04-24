@@ -24,6 +24,7 @@ import { DialogComponent } from './components/dialog/dialog.component';
 import { ActionsComponent } from './components/actions/actions.component';
 import { FullscreenComponent } from './components/fullscreen/fullscreen.component';
 import { SearchComponent } from './components/search/search.component';
+import { AddButtonComponent } from './components/add-button/add-button.component';
 
 const BASE_MODULES = [
   MaterialModule,
@@ -48,6 +49,7 @@ const BASE_COMPONENTS = [
   ActionsComponent,
   FullscreenComponent,
   SearchComponent,
+  AddButtonComponent,
 ];
 
 const BASE_DIRECTIVES = [

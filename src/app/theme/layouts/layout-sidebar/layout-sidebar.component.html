@@ -37,10 +37,10 @@
           <span class="spacer"></span>
           <search *ngIf="!media.xsmall"></search>
           <fullscreen *ngIf="!media.xsmall"></fullscreen>
-          <button mat-icon-button aria-hidden="false" aria-label="Messages">
+          <button *ngIf="!media.xsmall" mat-icon-button aria-hidden="false" aria-label="Messages">
             <mat-icon matBadge="8" matBadgeColor="accent">mail</mat-icon>
           </button>
-          <button mat-icon-button aria-hidden="false" aria-label="Notifications">
+          <button *ngIf="!media.xsmall" mat-icon-button aria-hidden="false" aria-label="Notifications">
             <mat-icon matBadge="3" matBadgeColor="warn">notifications</mat-icon>
           </button>
           <button mat-icon-button aria-hidden="false" aria-label="My account">
@@ -54,6 +54,12 @@
       <mat-toolbar footer *ngIf="media.xsmall">
         <mat-toolbar-row>
           <search></search>
+          <button mat-icon-button aria-hidden="false" aria-label="Messages">
+            <mat-icon matBadge="8" matBadgeColor="accent">mail</mat-icon>
+          </button>
+          <button mat-icon-button aria-hidden="false" aria-label="Notifications">
+            <mat-icon matBadge="3" matBadgeColor="warn">notifications</mat-icon>
+          </button>
         </mat-toolbar-row>
       </mat-toolbar>
 
