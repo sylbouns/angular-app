@@ -5,6 +5,7 @@ import { SharedModule } from '../shared/shared.module';
 
 import { DashboardComponent } from './dashboard.component';
 import { LayoutComponent } from './layout/layout.component';
+import { CalendarModule } from './calendar/calendar.module';
 
 @NgModule({
   declarations: [DashboardComponent, LayoutComponent],
@@ -12,6 +13,7 @@ import { LayoutComponent } from './layout/layout.component';
     ThemeModule,
     SharedModule,
     DashboardRoutingModule,
+    CalendarModule,
   ]
 })
 export class DashboardModule { }

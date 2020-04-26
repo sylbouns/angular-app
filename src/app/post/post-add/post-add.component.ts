@@ -15,13 +15,13 @@ export class PostAddComponent implements OnInit {
   constructor(private dialog: MatDialog) {}
 
   openDialog(): void {
+    console.log('openDialog');
     const dialogRef = this.dialog.open(PostAddDialogComponent, {
       data: {post: this.post}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       this.post = result;
-      console.log('openDialog', this.post);
     });
   }
 

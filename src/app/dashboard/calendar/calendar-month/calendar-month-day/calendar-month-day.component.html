@@ -1,0 +1,7 @@
+<div class="day" [ngClass]="{ 'out': isSameMonth, 'weekend': isWeekend }">
+    <span class="day-name" *ngIf="showDayName">{{ format(date, 'E') }}</span>
+    <span class="day-number">{{ format(date, 'd') }} <span *ngIf="showMonthName">{{ format(date, 'MMM') }}</span></span>
+    <div class="day-content">
+        <div class="day-event" *ngFor="let event of events">{{ event.label }}</div>
+    </div>
+</div>

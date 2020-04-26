@@ -30,7 +30,6 @@ export class PostFormComponent implements OnInit {
   }
 
   onSubmitForm() {
-    console.log('onSubmitForm');
     this.post.title = this.postForm.value['title'];
     this.post.content = this.postForm.value['content'];
     this.postService.savePost(this.post);

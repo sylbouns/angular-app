@@ -1,0 +1,36 @@
+<section class="calendar-month">
+
+    <header>
+        <button mat-button (click)="today()">Aujourd'hui</button>
+        <button mat-icon-button mat-icon="keyboard_arrow_left" aria-hidden="false" aria-label="Mois précédent"
+            (click)="previousMonth()">
+            <mat-icon>keyboard_arrow_left</mat-icon>
+        </button>
+        <button mat-icon-button aria-hidden="false" aria-label="Mois suivant" (click)="nextMonth()">
+            <mat-icon>keyboard_arrow_right</mat-icon>
+        </button>
+        <h3 class="month-title">{{ format(date, 'MMMM y') }}</h3>
+        <span class="spacer"></span>
+        <mat-slide-toggle (change)="weekendChange($event)">Weekend</mat-slide-toggle>
+    </header>
+
+    <main [ngClass]="{ 'weekend': weekend }">
+        <div class="days">
+            <ng-container *ngFor="let day of days; let index = index">
+                <div class="week" *ngIf="index % 7 == 0">{{ format(day, 'w') }}</div>
+                <calendar-month-day [date]="day" [showDayName]="index < 7" [showMonthName]="isFirstDayOfMonth(day)"
+                    [isSameMonth]="isSameMonth(day)" [isWeekend]="isWeekend(day)" *ngIf="weekend || !isWeekend(day)"
+                    [ngStyle]="{'height': 100 / (days.length / 7) + '%'}">
+                </calendar-month-day>
+            </ng-container>
+        </div>
+        <div class="events">
+            <ng-container *ngFor="let gridEvent of gridEvents">
+                <div class="event" [ngStyle]="{ gridColumn: gridEvent.cols, gridRow: gridEvent.rows }">
+                    {{ format(gridEvent.event.start, 'dd/MM/yy') }} > {{ format(gridEvent.event.end, 'dd/MM/yy') }}
+                </div>
+            </ng-container>
+        </div>
+    </main>
+
+</section>

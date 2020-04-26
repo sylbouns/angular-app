@@ -1,0 +1,11 @@
+<span class="number">{{ dateFns.format(date, 'w') }}</span>
+<div class="week">
+    <div class="days">
+        <ng-container *ngFor="let day of days; let index = index">
+            <calendar-month-day [date]="day" [showDayName]="index < 7" [showMonthName]="dateFns.isFirstDayOfMonth(day)"
+                [isSameMonth]="dateFns.isSameMonth(date, day)" [isWeekend]="dateFns.isWeekend(day)" *ngIf="weekend || !dateFns.isWeekend(day)"
+                [ngStyle]="{'height': 100 / (days.length / 7) + '%'}">
+            </calendar-month-day>
+        </ng-container>
+    </div>
+</div>

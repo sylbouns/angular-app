@@ -14,6 +14,7 @@ export class PostAddDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: PostAddDialogData) {}
 
   onSubmit(): void {
+    console.log('post-add-dialog', 'onSubmit');
     this.dialogRef.close();
   }
 

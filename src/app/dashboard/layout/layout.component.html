@@ -1,24 +1,62 @@
-<layout-sidebar>
-    <mat-nav-list sidebar-menu class="p0">
-        <a mat-list-item button routerLink="/dashboard">
-            <mat-icon class="mr-3">dashboard</mat-icon> Dashboard
-        </a>
-        <a mat-list-item button routerLink="/onboarding">
-            <mat-icon class="mr-3">business</mat-icon> Tenants
-        </a>
-        <a mat-list-item button routerLink="/post">
-            <mat-icon class="mr-3">apps</mat-icon> Services
-        </a>
-    </mat-nav-list>
+<layout-sidebar #layout>
 
-    <mat-list sidebar-tabs>
-        <mat-list-item><button mat-icon-button aria-hidden="false" aria-label="Show help">
-                <mat-icon>help_outline</mat-icon>
-            </button></mat-list-item>
-        <mat-list-item><button mat-icon-button aria-hidden="false" aria-label="Show help">
-                <mat-icon>settings</mat-icon>
-            </button></mat-list-item>
-    </mat-list>
+    <sidebar-toolbar>
+        <button mat-icon-button aria-hidden="false" aria-label="Company logo">
+            <mat-icon>business</mat-icon>
+        </button>
+        <span>Calendar</span>
+        <button mat-icon-button aria-hidden="false" aria-label="Switch to other domains">
+            <mat-icon>apps</mat-icon>
+        </button>
+    </sidebar-toolbar>
+
+    <sidebar-menu>
+        <menu-item route="/dashboard" icon="dashboard">Dashboard</menu-item>
+        <menu-item route="/onboarding" icon="business">Tenants</menu-item>
+        <menu-item route="/post" icon="apps">Posts</menu-item>
+    </sidebar-menu>
+
+    <sidebar-tabs>
+        <sidebar-tabs-pane id="help" route="/post" icon="help_outline" label="Help">
+            <div style="margin: 16px">
+                <p>Should not be displayed cause of route</p>
+            </div>
+        </sidebar-tabs-pane>
+        <sidebar-tabs-pane id="settings" icon="settings" label="Settings">
+            <div style="margin: 16px">
+                <p>Tab content SETTINGS...</p>
+                <p>Tab content SETTINGS...</p>
+                <p>Tab content SETTINGS...</p>
+                <p>Tab content SETTINGS...</p>
+                <p>Tab content SETTINGS...</p>
+                <p>Tab content SETTINGS...</p>
+            </div>
+        </sidebar-tabs-pane>
+    </sidebar-tabs>
+
+    <toolbar title="Calendar" (sidenavToggle)="layout.sidenavToggle()">
+        <search *ngIf="!layout.media.xsmall"></search>
+        <fullscreen *ngIf="!layout.media.xsmall"></fullscreen>
+        <button *ngIf="!layout.media.xsmall" mat-icon-button aria-hidden="false" aria-label="Messages">
+            <mat-icon matBadge="8" matBadgeColor="accent">mail</mat-icon>
+        </button>
+        <button *ngIf="!layout.media.xsmall" mat-icon-button aria-hidden="false" aria-label="Notifications">
+            <mat-icon matBadge="3" matBadgeColor="warn">notifications</mat-icon>
+        </button>
+        <button mat-icon-button aria-hidden="false" aria-label="My account">
+            <mat-icon>face</mat-icon>
+        </button>
+    </toolbar>
+
+    <bottom-toolbar *ngIf="layout.media.xsmall">
+        <search></search>
+        <button mat-icon-button aria-hidden="false" aria-label="Messages">
+            <mat-icon matBadge="8" matBadgeColor="accent">mail</mat-icon>
+        </button>
+        <button mat-icon-button aria-hidden="false" aria-label="Notifications">
+            <mat-icon matBadge="3" matBadgeColor="warn">notifications</mat-icon>
+        </button>
+    </bottom-toolbar>
 
     <router-outlet></router-outlet>
 </layout-sidebar>

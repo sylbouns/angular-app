@@ -1,0 +1,104 @@
+@import "_variables.scss";
+
+$palette: $primary;
+
+section {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    .spacer {
+        flex-grow: 1;
+    }
+    header {
+        margin: 8px;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        align-items: center;
+        .month-title {
+            margin: 0 8px;
+            text-transform: capitalize;
+        }
+        mat-slide-toggle {
+            margin-right: 16px;
+        }
+    }
+    main {
+        display: block;
+        flex-grow: 1;
+        width: 100%;
+        height: 100%;
+        overflow-y: auto;
+
+        .days {
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: flex-start;
+            align-items: stretch;
+            border-top: solid mat-color($palette, 800) 1px;
+            border-left: solid mat-color($palette, 800) 1px;
+            width: 100%;
+            height: 100%;
+
+            .week {
+                width: 2.5%;
+                background-color: mat-color($palette, 600);
+                text-align: center;
+                padding-top: 4px;
+                font-size: small;
+            }
+            calendar-month-day {
+                width: 19.5%;
+                flex-grow: 1;
+                overflow-y: auto;
+            }
+        }
+
+        &.weekend .days .week {
+            width: 2%;
+        }
+        &.weekend .days calendar-month-day {
+            width: 14%;
+        }
+
+        .events {
+            display: grid;
+            grid-template-columns: 2.5% 19.5% 19.5% 19.5% 19.5% 19.5%;
+            grid-template-rows: 20% 20% 20% 20% 20%;
+            align-content: stretch;
+            justify-content: stretch;
+            align-items: start;
+            justify-items: stretch;
+            width: 100%;
+            height: 100%;
+            // position: absolute;
+            // top: 0;
+
+            .event {
+                background-color: mat-color($palette, 300);
+                padding: 4px;
+            }
+        }
+
+        &.weekend .events {
+            grid-template-columns: 2% 14% 14% 14% 14% 14% 14% 14%;
+            grid-template-rows: 20% 20% 20% 20% 20%;
+        }
+    }
+
+    aside {
+        position: absolute;
+        padding: 56px 0 0 2.5%;
+        width: 100%;
+        pointer-events: none;
+        &.weekend .week {
+            margin-right: 2%;
+        }
+
+        .event {
+        }
+    }
+}

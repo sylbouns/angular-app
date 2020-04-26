@@ -20,7 +20,7 @@ import { trigger, state, transition, animate, style } from '@angular/animations'
         animate('0.3s 0s ease-in-out')
       ]),
       transition('closed => open', [
-        animate('0.5s 0s ease-in-out')
+        animate('0.3s 0s ease-in-out')
       ]),
     ]),
   ]

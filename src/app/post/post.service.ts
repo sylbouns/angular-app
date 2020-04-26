@@ -46,13 +46,13 @@ export class PostService {
   }
 
   public deletePost(id: Guid) {
-    console.log('delete post !');
+    console.log('Delete post', id);
     this.posts.getValue().splice(this.getPostIndex(id), 1);
     this.emmitPosts();
   }
 
   private addPost(post: Post) {
-    console.log('add post !')
+    console.log('Add post', post);
     let newPost = this.getEmptyPost();
     newPost.id = Guid.create();
     this.posts.getValue().push({ ...newPost, ...post })
@@ -60,14 +60,13 @@ export class PostService {
   }
 
   private updatePost(post: Post) {
-    console.log('update post !');
+    console.log('Update post', post);
     post.updatedAt = new Date();
     this.posts.getValue().splice(this.getPostIndex(post.id), 1, post);
     this.emmitPosts();
   }
 
   private emmitPosts() {
-    console.log('emmitPosts', this.posts.getValue());
     this.posts.next(this.posts.getValue());
   }
 }
