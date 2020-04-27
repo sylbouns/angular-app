@@ -27,78 +27,31 @@ section {
         }
     }
     main {
-        display: block;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: space-between;
         flex-grow: 1;
-        width: 100%;
-        height: 100%;
         overflow-y: auto;
-
-        .days {
+        .days-name {
             display: flex;
-            flex-flow: row wrap;
-            justify-content: flex-start;
-            align-items: stretch;
-            border-top: solid mat-color($palette, 800) 1px;
-            border-left: solid mat-color($palette, 800) 1px;
-            width: 100%;
-            height: 100%;
+            flex-flow: row nowrap;
+            justify-content: space-between;
+            text-transform: uppercase;
+            font-size: smaller;
+            margin-left: 16px;
+            height: 20px;
 
-            .week {
-                width: 2.5%;
-                background-color: mat-color($palette, 600);
+            span {
+                width: 100%;
                 text-align: center;
-                padding-top: 4px;
-                font-size: small;
-            }
-            calendar-month-day {
-                width: 19.5%;
-                flex-grow: 1;
-                overflow-y: auto;
             }
         }
-
-        &.weekend .days .week {
-            width: 2%;
-        }
-        &.weekend .days calendar-month-day {
-            width: 14%;
-        }
-
-        .events {
-            display: grid;
-            grid-template-columns: 2.5% 19.5% 19.5% 19.5% 19.5% 19.5%;
-            grid-template-rows: 20% 20% 20% 20% 20%;
-            align-content: stretch;
-            justify-content: stretch;
-            align-items: start;
-            justify-items: stretch;
-            width: 100%;
-            height: 100%;
-            // position: absolute;
-            // top: 0;
-
-            .event {
-                background-color: mat-color($palette, 300);
-                padding: 4px;
+        .weeks {
+            flex-grow: 1;
+            height: calc(100% - 20px);
+            calendar-month-week {
+                overflow: hidden;
             }
-        }
-
-        &.weekend .events {
-            grid-template-columns: 2% 14% 14% 14% 14% 14% 14% 14%;
-            grid-template-rows: 20% 20% 20% 20% 20%;
-        }
-    }
-
-    aside {
-        position: absolute;
-        padding: 56px 0 0 2.5%;
-        width: 100%;
-        pointer-events: none;
-        &.weekend .week {
-            margin-right: 2%;
-        }
-
-        .event {
         }
     }
 }

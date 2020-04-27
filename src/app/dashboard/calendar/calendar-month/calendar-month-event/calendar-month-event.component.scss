@@ -1,0 +1,16 @@
+@import "_variables.scss";
+
+$palette: $primary;
+
+:host {
+    padding: 1px;
+}
+.event {
+    background-color: mat-color($palette, 400);
+    padding: 4px 8px;
+    border-radius: 4px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+}

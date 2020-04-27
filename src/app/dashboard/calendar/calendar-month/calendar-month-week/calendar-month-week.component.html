@@ -1,11 +1,19 @@
-<span class="number">{{ dateFns.format(date, 'w') }}</span>
+<span class="number">{{ df.format(date, 'w') }}</span>
 <div class="week">
     <div class="days">
-        <ng-container *ngFor="let day of days; let index = index">
-            <calendar-month-day [date]="day" [showDayName]="index < 7" [showMonthName]="dateFns.isFirstDayOfMonth(day)"
-                [isSameMonth]="dateFns.isSameMonth(date, day)" [isWeekend]="dateFns.isWeekend(day)" *ngIf="weekend || !dateFns.isWeekend(day)"
-                [ngStyle]="{'height': 100 / (days.length / 7) + '%'}">
+        <ng-container *ngFor="let day of days">
+            <calendar-month-day 
+                *ngIf="weekend || !df.isWeekend(day)" 
+                [date]="day" 
+                [context]="context" 
+                [out]="df.isSameMonth(date, day)" 
+                [ngStyle]="{width: weekend ? '14.28%' : '20%'}">
             </calendar-month-day>
+        </ng-container>
+    </div>
+    <div class="events">
+        <ng-container *ngFor="let event of grid">
+            <calendar-month-event [event]="event.event" [ngStyle]="{top: event.top, left: event.left, width: event.width}"></calendar-month-event>
         </ng-container>
     </div>
 </div>

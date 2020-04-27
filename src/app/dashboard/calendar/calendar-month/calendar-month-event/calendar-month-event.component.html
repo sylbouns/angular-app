@@ -1,1 +1,3 @@
-<p>calendar-month-event works!</p>
+<div class="event">
+    {{ df.format(event.start, 'dd/MM/yy') }} > {{ df.format(event.end, 'dd/MM/yy') }} > {{ event.label }}
+</div>

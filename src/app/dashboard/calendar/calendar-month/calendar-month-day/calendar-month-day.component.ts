@@ -3,6 +3,7 @@ import { format, isSameDay, isAfter, isBefore, startOfMonth, endOfMonth, startOf
 import { fr } from 'date-fns/esm/locale'
 import { Event } from '../../event/event.model';
 import { EventService } from '../../event/event.service';
+import { DateFsnService } from '@app/theme/services/date-fsn.service';
 
 @Component({
   selector: 'calendar-month-day',
@@ -11,17 +12,15 @@ import { EventService } from '../../event/event.service';
 })
 export class CalendarMonthDayComponent implements OnInit {
   @Input() date: Date = new Date();
-  @Input() showDayName: boolean = true;
-  @Input() showMonthName: boolean = true;
-  @Input() isSameMonth: boolean = true;
-  @Input() isWeekend: boolean = true;
+  @Input() context: Date;
+  @Input() out: boolean = true;
   public events: Event[] = [];
 
-  constructor(private eventService: EventService) {
+  constructor(private eventService: EventService, public df: DateFsnService) {
   }
 
   ngOnInit(): void {
-    this.eventService.getEvents().subscribe((events: Event[]) => this.eventsDayFilter(events) );
+    // this.eventService.getEvents().subscribe((events: Event[]) => this.eventsDayFilter(events) );
   }
 
   eventsDayFilter(events: Event[]) {

@@ -18,7 +18,6 @@ export class CalendarComponent implements OnInit {
     for (let i = 0; i < quantity; i++) {
       this.events.push(new CalendarEvent());
     }
-    console.log(this.events);
   }
 
   ngOnInit(): void {

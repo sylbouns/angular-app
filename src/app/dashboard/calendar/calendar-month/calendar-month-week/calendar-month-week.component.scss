@@ -1,0 +1,48 @@
+@import "_variables.scss";
+
+$palette: $primary;
+
+:host {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    .number {
+        width: 16px;
+        text-align: center;
+        padding-top: 4px;
+    }
+    .week {
+        display: grid;
+        grid-template-columns: 100%;
+        grid-template-rows: 20px auto;
+        flex-grow: 1;
+        height: 100%;
+        width: 100%;
+        .days {
+            grid-area: 1 / 1 / span 2 / 1;
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: flex-start;
+            align-items: stretch;
+            border-top: solid mat-color($palette, 800) 1px;
+            border-left: solid mat-color($palette, 800) 1px;
+            width: 100%;
+            height: 100%;
+
+            calendar-month-day {
+                height: 100%;
+                flex-grow: 1;
+                overflow-y: auto;
+            }
+        }
+        .events {
+            grid-area: 2 / 1 / 2 / 1;
+            position: relative;
+            overflow-y: auto;
+            calendar-month-event {
+                position: absolute;
+                padding: 1px;
+            }
+        }
+    }
+}

@@ -12,9 +12,7 @@ export class EventService {
 
   private events: BehaviorSubject<Event[]> = new BehaviorSubject<Event[]>(events);
 
-  constructor() { 
-    console.log(this.events);
-  }
+  constructor() { }
 
   public getEvents() {
     return this.events;
