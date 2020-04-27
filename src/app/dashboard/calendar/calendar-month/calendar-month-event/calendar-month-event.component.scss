@@ -13,4 +13,13 @@ $palette: $primary;
     overflow: hidden;
     white-space: nowrap;
     width: 100%;
+    opacity: 0.8;
+    cursor: pointer;
+
+    .hour {
+        padding-right: 8px;
+    }
+}
+.event:hover {
+    opacity: 1;
 }

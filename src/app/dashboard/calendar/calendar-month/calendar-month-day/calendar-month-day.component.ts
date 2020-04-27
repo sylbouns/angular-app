@@ -4,6 +4,8 @@ import { fr } from 'date-fns/esm/locale'
 import { Event } from '../../event/event.model';
 import { EventService } from '../../event/event.service';
 import { DateFsnService } from '@app/theme/services/date-fsn.service';
+import { MatDialog } from '@angular/material/dialog';
+import { EventDialogComponent } from '../../event/event-dialog/event-dialog.component';
 
 @Component({
   selector: 'calendar-month-day',
@@ -16,11 +18,22 @@ export class CalendarMonthDayComponent implements OnInit {
   @Input() out: boolean = true;
   public events: Event[] = [];
 
-  constructor(private eventService: EventService, public df: DateFsnService) {
-  }
+  constructor(
+    private eventService: EventService, 
+    public df: DateFsnService,
+    public dialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
     // this.eventService.getEvents().subscribe((events: Event[]) => this.eventsDayFilter(events) );
+  }
+  
+  openDialog(): void {
+    let event = new Event();
+    event.start = this.date;
+    const dialogRef = this.dialog.open(EventDialogComponent, { data: { event: event, action: 'add' } });
+
+    // dialogRef.afterClosed().subscribe(result => result ? this.event = result.event : false );
   }
 
   eventsDayFilter(events: Event[]) {
@@ -33,4 +46,5 @@ export class CalendarMonthDayComponent implements OnInit {
   format(date: Date, f: string): string {
     return format(date, f, { locale: fr });
   }
+
 }

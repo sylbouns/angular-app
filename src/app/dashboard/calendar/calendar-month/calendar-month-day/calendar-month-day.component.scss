@@ -26,6 +26,7 @@ $palette: $primary;
     .day-content {
         flex-grow: 1;
         overflow-y: auto;
+        cursor: pointer;
         .day-event {
             padding: 4px;
             width: 100%;

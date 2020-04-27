@@ -1,0 +1,15 @@
+<dialog title="{{ title }}">
+    <button *ngIf="action == 'view'" contextual-actions mat-icon-button class="contextual-actions" (click)="edit()"><mat-icon>create</mat-icon></button>
+    <button *ngIf="action == 'edit'" contextual-actions mat-icon-button class="contextual-actions" (click)="view()"><mat-icon>visibility</mat-icon></button>
+    <button *ngIf="action == 'view' || action == 'edit'" contextual-actions mat-icon-button class="contextual-actions" (click)="delete()"><mat-icon>delete</mat-icon></button>
+
+    <app-event-view *ngIf="action == 'view'" [event]="event"></app-event-view>
+
+    <ng-container *ngIf="action == 'edit' || action == 'add'">
+        <app-event-form #form [event]="event"></app-event-form>
+        <actions dialog-actions>
+            <button mat-button mat-dialog-close>Cancel</button>
+            <button mat-button mat-flat-button color="accent" [mat-dialog-close]="data" (click)="form.submit()" [disabled]="form.eventForm.invalid" >{{ action == 'edit' ? "Update" : "Add"}}</button>    
+        </actions>    
+    </ng-container>
+</dialog>

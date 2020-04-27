@@ -1,0 +1,21 @@
+<form #form="ngForm" *ngIf="event" [formGroup]="eventForm" (ngSubmit)="onSubmitForm()">
+    <mat-form-field appearance="fill" class="label">
+        <mat-label>Label</mat-label>
+        <input #label matInput id="label" formControlName="label">
+    </mat-form-field>
+    <div class="dates">
+        <mat-form-field appearance="fill" class="start">
+            <mat-label>Start</mat-label>
+            <input matInput [matDatepicker]="start" id="start" formControlName="start">
+            <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
+            <mat-datepicker #start></mat-datepicker>
+        </mat-form-field>
+        <span class="spacer"></span>
+        <mat-form-field appearance="fill" class="end">
+            <mat-label>End</mat-label>
+            <input matInput [matDatepicker]="end" id="end" formControlName="end">
+            <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
+            <mat-datepicker #end></mat-datepicker>
+        </mat-form-field>
+    </div>
+</form>

@@ -39,7 +39,9 @@ $palette: $primary;
             grid-area: 2 / 1 / 2 / 1;
             position: relative;
             overflow-y: auto;
+            pointer-events: none;
             calendar-month-event {
+                pointer-events: all;
                 position: absolute;
                 padding: 1px;
             }

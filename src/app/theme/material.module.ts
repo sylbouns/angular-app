@@ -14,6 +14,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   exports: [
@@ -31,6 +33,11 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatDialogModule,
     MatAutocompleteModule,
     MatSlideToggleModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+  ],
+  providers: [  
+    MatDatepickerModule,  
   ],
 })
 export class MaterialModule { }
