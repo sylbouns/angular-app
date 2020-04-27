@@ -1,11 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { format, isSameDay, isAfter, isBefore, startOfMonth, endOfMonth, startOfWeek, endOfWeek, eachDayOfInterval, getMonth, isWeekend, addMonths, subMonths, isFirstDayOfMonth } from 'date-fns';
 import { fr } from 'date-fns/esm/locale'
-import { Event } from '../../event/event.model';
-import { EventService } from '../../event/event.service';
+import { Event } from '@app/shared/event/event.model';
+import { EventService } from '@app/shared/event/event.service';
 import { DateFsnService } from '@app/theme/services/date-fsn.service';
 import { MatDialog } from '@angular/material/dialog';
-import { EventDialogComponent } from '../../event/event-dialog/event-dialog.component';
+import { EventDialogComponent } from '@app/shared/event/event-dialog/event-dialog.component';
 
 @Component({
   selector: 'calendar-month-day',

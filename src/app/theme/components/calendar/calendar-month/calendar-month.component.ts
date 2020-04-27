@@ -2,8 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { format, areIntervalsOverlapping, differenceInDays, isSameWeek, addWeeks, subWeeks, isSameDay, isAfter, isBefore, startOfMonth, endOfMonth, startOfWeek, endOfWeek, eachDayOfInterval, getMonth, isWeekend, addMonths, subMonths, isFirstDayOfMonth } from 'date-fns';
 import { fr } from 'date-fns/esm/locale'
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
-import { EventService } from '../event/event.service';
-import { Event } from '../event/event.model';
+import { EventService } from '@app/shared/event/event.service';
+import { Event } from '@app/shared/event/event.model';
 import { DateFsnService } from '@app/theme/services/date-fsn.service';
 
 @Component({

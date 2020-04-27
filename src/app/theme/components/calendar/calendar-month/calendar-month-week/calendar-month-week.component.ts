@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { EventService } from '../../event/event.service';
+import { EventService } from '@app/shared/event/event.service';
 import { format, areIntervalsOverlapping, differenceInDays, isSameDay, isAfter, isBefore, startOfMonth, endOfMonth, startOfWeek, endOfWeek, eachDayOfInterval, getMonth, isWeekend, addMonths, subMonths, isFirstDayOfMonth } from 'date-fns';
-import { Event } from '../../event/event.model';
+import { Event } from '@app/shared/event/event.model';
 import { DateFsnService } from '@app/theme/services/date-fsn.service';
 
 @Component({

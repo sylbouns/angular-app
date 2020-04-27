@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Event } from '../../event/event.model';
+import { Event } from '@app/shared/event/event.model';
 import { DateFsnService } from '@app/theme/services/date-fsn.service';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
-import { EventDialogComponent } from '../../event/event-dialog/event-dialog.component';
+import { EventDialogComponent } from '@app/shared/event/event-dialog/event-dialog.component';
 
 @Component({
   selector: 'calendar-month-event',
