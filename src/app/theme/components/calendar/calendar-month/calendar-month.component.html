@@ -26,7 +26,15 @@
         </div>
         <div class="weeks">
             <ng-container *ngFor="let week of weeks">
-                <calendar-month-week [date]="week" [context]="date" [weekend]="weekend" [ngStyle]="{height: 100 / weeks.length + '%'}"></calendar-month-week>
+                <calendar-month-week 
+                    [events]="events" 
+                    [date]="week" 
+                    [context]="date" 
+                    [weekend]="weekend" 
+                    [ngStyle]="{height: 100 / weeks.length + '%'}"
+                    (onDayClick)="onDayClick.emit($event)"
+                    (onEventClick)="onEventClick.emit($event)"
+                ></calendar-month-week>
             </ng-container>    
         </div>
     </main>

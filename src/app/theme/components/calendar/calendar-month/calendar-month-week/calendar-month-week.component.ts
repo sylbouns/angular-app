@@ -1,84 +1,106 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { EventService } from '@app/shared/event/event.service';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { format, areIntervalsOverlapping, differenceInDays, isSameDay, isAfter, isBefore, startOfMonth, endOfMonth, startOfWeek, endOfWeek, eachDayOfInterval, getMonth, isWeekend, addMonths, subMonths, isFirstDayOfMonth } from 'date-fns';
-import { Event } from '@app/shared/event/event.model';
 import { DateFsnService } from '@app/theme/services/date-fsn.service';
+import { CalendarEvent } from '../../calendar-event';
+
+class GridEvent {
+  public event: CalendarEvent;
+  public start: number;
+  public end: number;
+  public top?: string;
+  public left?: string;
+  public width?: string;
+}
+
+class GridRowsEvent {
+  public completion: number = 0;
+  public events: GridEvent[] = [];
+}
 
 @Component({
   selector: 'calendar-month-week',
   templateUrl: './calendar-month-week.component.html',
   styleUrls: ['./calendar-month-week.component.scss']
 })
-export class CalendarMonthWeekComponent implements OnInit {
+export class CalendarMonthWeekComponent implements OnInit, OnChanges {
+  @Input() events: CalendarEvent[];
   @Input() date: Date = new Date();
   @Input() context: Date;
   @Input() weekend: boolean = false;
+  @Input() showEvents: boolean = false;
+  @Output() onDayClick: EventEmitter<Date> = new EventEmitter<Date>();
+  @Output() onEventClick: EventEmitter<CalendarEvent> = new EventEmitter<CalendarEvent>();
+
   public days: Date[];
   public start: Date;
   public end: Date;
-  private min: number;
-  private max: number;
-  private length: number;
-  public events: Event[] = [];
-  public grid: { 
-    event: Event,
-    top: string,
-    left: string,
-    width: string,
-    start: number,
-    end: number,
-  }[] = [];
-  private gridRow: number[];
+  public gridRows: GridEvent[][];
 
-  constructor( private eventService: EventService, public df: DateFsnService) { }
+  constructor(public df: DateFsnService) { }
 
   ngOnInit(): void {
-    this.setDays();
-    this.eventService.getEvents().subscribe((events: Event[]) => this.setEventsWeekFiltered(events));
   }
 
-  setEventsWeekFiltered(events: Event[]) {
-    this.grid = [];
-    this.gridRow = [];
-    events.filter(event => areIntervalsOverlapping(
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.date) this.setDays();
+    if (changes.events) this.setEventsWeekFiltered();
+  }
+
+  setEventsWeekFiltered() {
+    this.gridRows = [];
+    this.events.filter(event => areIntervalsOverlapping(
       { start: this.start, end: this.end },
       { start: event.start, end: event.end }
-    )).sort((a, b) => {
-      if (a.start > b.start) return 1;
-      if (a.start < b.start) return -1;
-      if (a.end < b.end) return 1;
-      if (a.end > b.end) return -1;
-      return 0;
-    }).map(event => this.insertEventInGrid(event));
+    ))
+      .sort((a, b) => this.sortEvents(a, b))
+      .map(event => this.insertEventInGrid(event));
   }
 
-  insertEventInGrid(event: Event) {
-    let start = Math.max(this.df.getTime(event.start), this.min);
-    let end = Math.min(this.df.getTime(event.end), this.max);
-    if (start == end) end = Math.min(end + 86400000, this.max);
-    let { top, left } = this.getTopInGrid(start - this.min, end - this.min);
-    this.grid.push({
-      event: event,
-      top: top,
-      left: (start - this.min) / this.length * 100 + '%',
-      width: (end - start) / this.length * 100 + '%',
-      start: start,
-      end: end,        
+  sortEvents(a: CalendarEvent, b: CalendarEvent): number {
+    let aStart = a.start > this.start ? a.start : this.start;
+    let bStart = b.start > this.start ? b.start : this.start;
+    let aEnd = a.end < this.end ? a.end : this.end;
+    let bEnd = b.end < this.end ? b.end : this.end;
+    if (aStart > bStart) return 1;
+    if (aStart < bStart) return -1;
+    if (aEnd < bEnd) return 1;
+    if (aEnd > bEnd) return -1;
+    return 0;
+  }
+
+  insertEventInGrid(event: CalendarEvent) {
+    let gridEvent = new GridEvent();
+    gridEvent.event = event;
+    gridEvent.start = Math.max(this.df.getTime(event.start) - this.df.getTime(this.start), 0);
+    gridEvent.end = Math.min(this.df.getTime(event.end) - this.df.getTime(this.start), 604800000); // 1 week
+    if (gridEvent.start == gridEvent.end) gridEvent.end = Math.min(gridEvent.end + 86400000, 604800000); // Add 1 day
+
+    this.insertGridEvent(gridEvent);
+  }
+
+  insertGridEvent(gridEvent: GridEvent, row: number = 0) {
+    let index = this.getGridEventIndexInRow(gridEvent, row);
+    if (index != -1) return this.insertGridEventInRow(gridEvent, row, index);
+    return this.insertGridEvent(gridEvent, row + 1) 
+  }
+
+  getGridEventIndexInRow(gridEvent: GridEvent, row: number = 0) {
+    if (this.gridRows[row] == undefined) return 0;
+
+    return this.gridRows[row].findIndex((rowEvent, index, row) => {
+      if (gridEvent.start < rowEvent.end) return false;
+      if (row[index - 1] == undefined || gridEvent.end <= row[index - 1].start) return true;
+      return false;
     });
   }
 
-  getTopInGrid(start: number, end: number, row:number = 0): { top: string, left: string } {
-    let duration = end - start;
-    if (this.gridRow[row] == undefined) this.gridRow[row] = 0;
-    if (start >= this.gridRow[row]) {
-      let left = (start - this.gridRow[row]) / this.length * 100 + '%';
-      this.gridRow[row] = end;
-      return {
-        top: row * 30 + 'px',
-        left: left,
-      }
-    }
-    return this.getTopInGrid(start, end, row + 1);
+  insertGridEventInRow(gridEvent: GridEvent, row: number = 0, index: number = 0): boolean {
+    if (this.gridRows[row] == undefined) this.gridRows[row] = [];
+    gridEvent.top = row * 30 + 'px';
+    gridEvent.left = gridEvent.start / 604800000 * 100 + '%';
+    gridEvent.width = (gridEvent.end - gridEvent.start) / 604800000 * 100 + '%';
+    this.gridRows[row].splice(index, 0, gridEvent);
+    return true;
   }
 
   setDays(): void {
@@ -86,19 +108,5 @@ export class CalendarMonthWeekComponent implements OnInit {
     this.end = endOfWeek(this.date, { weekStartsOn: 1 });
     if (!this.weekend) this.end = this.df.subDays(this.end, 2);
     this.days = eachDayOfInterval({ start: this.start, end: this.end });
-    this.min = this.df.getTime(this.start);
-    this.max = this.df.getTime(this.end);
-    this.length = this.max - this.min;
   }
-
-  getEventStyles(event: Event) {
-    let start = Math.max(this.df.getTime(event.start), this.min);
-    let end = Math.min(this.df.getTime(event.end), this.max);
-    if (start == end) end = Math.min(end + 86400000, this.max);
-    return {
-      marginLeft: (start - this.min) / this.length * 100 + '%',
-      width: (end - start) / this.length * 100 + '%',
-    }  
-  }
-
 }

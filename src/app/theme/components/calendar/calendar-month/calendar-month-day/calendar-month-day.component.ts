@@ -1,11 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { format, isSameDay, isAfter, isBefore, startOfMonth, endOfMonth, startOfWeek, endOfWeek, eachDayOfInterval, getMonth, isWeekend, addMonths, subMonths, isFirstDayOfMonth } from 'date-fns';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { format, isSameDay, isAfter, isBefore } from 'date-fns';
 import { fr } from 'date-fns/esm/locale'
-import { Event } from '@app/shared/event/event.model';
-import { EventService } from '@app/shared/event/event.service';
 import { DateFsnService } from '@app/theme/services/date-fsn.service';
 import { MatDialog } from '@angular/material/dialog';
-import { EventDialogComponent } from '@app/shared/event/event-dialog/event-dialog.component';
+import { CalendarEvent } from '../../calendar-event';
 
 @Component({
   selector: 'calendar-month-day',
@@ -13,30 +11,22 @@ import { EventDialogComponent } from '@app/shared/event/event-dialog/event-dialo
   styleUrls: ['./calendar-month-day.component.scss']
 })
 export class CalendarMonthDayComponent implements OnInit {
+  @Input() events: CalendarEvent[] = [];
   @Input() date: Date = new Date();
   @Input() context: Date;
   @Input() out: boolean = true;
-  public events: Event[] = [];
+  @Output() onDayClick: EventEmitter<Date> = new EventEmitter<Date>();
 
   constructor(
-    private eventService: EventService, 
     public df: DateFsnService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
-    // this.eventService.getEvents().subscribe((events: Event[]) => this.eventsDayFilter(events) );
-  }
-  
-  openDialog(): void {
-    let event = new Event();
-    event.start = this.date;
-    const dialogRef = this.dialog.open(EventDialogComponent, { data: { event: event, action: 'add' } });
-
-    // dialogRef.afterClosed().subscribe(result => result ? this.event = result.event : false );
+    this.eventsDayFilter(this.events);
   }
 
-  eventsDayFilter(events: Event[]) {
+  eventsDayFilter(events: CalendarEvent[]) {
     this.events = events.filter(event =>
       isSameDay(this.date, event.start) || isSameDay(this.date, event.end) ||
       (isBefore(this.date, event.end) && isAfter(this.date, event.start))

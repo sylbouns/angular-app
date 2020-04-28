@@ -1,8 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Event } from '@app/shared/event/event.model';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DateFsnService } from '@app/theme/services/date-fsn.service';
-import { MatDialogRef, MatDialog } from '@angular/material/dialog';
-import { EventDialogComponent } from '@app/shared/event/event-dialog/event-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { CalendarEvent } from '../../calendar-event';
 
 @Component({
   selector: 'calendar-month-event',
@@ -10,17 +9,14 @@ import { EventDialogComponent } from '@app/shared/event/event-dialog/event-dialo
   styleUrls: ['./calendar-month-event.component.scss']
 })
 export class CalendarMonthEventComponent implements OnInit {
-  @Input() event: Event;
+  @Input() event: CalendarEvent;
+  @Output() onEventClick: EventEmitter<CalendarEvent> = new EventEmitter<CalendarEvent>();
 
-  constructor(public dialog: MatDialog, public df: DateFsnService) { }
+  constructor(
+    public dialog: MatDialog, 
+    public df: DateFsnService,
+  ) { }
 
   ngOnInit(): void {
   }
-
-  openDialog(): void {
-    const dialogRef = this.dialog.open(EventDialogComponent, { data: { event: this.event, action: 'view' } });
-
-    dialogRef.afterClosed().subscribe(result => result ? this.event = result.event : false );
-  }
-
 }

@@ -1,10 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { format, areIntervalsOverlapping, differenceInDays, isSameWeek, addWeeks, subWeeks, isSameDay, isAfter, isBefore, startOfMonth, endOfMonth, startOfWeek, endOfWeek, eachDayOfInterval, getMonth, isWeekend, addMonths, subMonths, isFirstDayOfMonth } from 'date-fns';
 import { fr } from 'date-fns/esm/locale'
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
-import { EventService } from '@app/shared/event/event.service';
-import { Event } from '@app/shared/event/event.model';
 import { DateFsnService } from '@app/theme/services/date-fsn.service';
+import { CalendarEvent } from '../calendar-event';
 
 @Component({
   selector: 'calendar-month',
@@ -12,13 +11,17 @@ import { DateFsnService } from '@app/theme/services/date-fsn.service';
   styleUrls: ['./calendar-month.component.scss']
 })
 export class CalendarMonthComponent implements OnInit {
+  @Input() events: CalendarEvent[];
   @Input() date: Date = new Date();
   @Input() weekend: boolean = true;
+  @Output() onDayClick: EventEmitter<Date> = new EventEmitter<Date>();
+  @Output() onEventClick: EventEmitter<CalendarEvent> = new EventEmitter<CalendarEvent>();
+
   public start: Date;
   public end: Date;
   public weeks: Date[] = [];
 
-  constructor(private eventService: EventService, public df: DateFsnService) { }
+  constructor(public df: DateFsnService) { }
 
   ngOnInit(): void {
     this.setWeeks();

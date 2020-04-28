@@ -7,13 +7,21 @@
                 [date]="day" 
                 [context]="context" 
                 [out]="df.isSameMonth(date, day)" 
-                [ngStyle]="{width: weekend ? '14.28%' : '20%'}">
-            </calendar-month-day>
+                [ngStyle]="{width: weekend ? '14.28%' : '20%'}"
+                [events]="showEvents ? events : []"
+                (onDayClick)="onDayClick.emit($event)"
+            ></calendar-month-day>
         </ng-container>
     </div>
     <div class="events">
-        <ng-container *ngFor="let event of grid">
-            <calendar-month-event [event]="event.event" [ngStyle]="{top: event.top, left: event.left, width: event.width}"></calendar-month-event>
+        <ng-container *ngFor="let row of gridRows">
+            <ng-container *ngFor="let gridEvent of row">
+                <calendar-month-event 
+                    [event]="gridEvent.event" 
+                    (onEventClick)="onEventClick.emit($event)" 
+                    [ngStyle]="{top: gridEvent.top, left: gridEvent.left, width: gridEvent.width}"
+                ></calendar-month-event>
+            </ng-container>
         </ng-container>
     </div>
 </div>

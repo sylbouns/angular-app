@@ -1,6 +1,6 @@
 <div class="day" [ngClass]="{ 'out': !df.isSameMonth(date, context), 'weekend': df.isWeekend(date), 'today': df.isToday(date) }">
     <span class="day-number">{{ df.format(date, 'd') }} <span *ngIf="df.isFirstDayOfMonth(date)">{{ df.format(date, 'MMM') }}</span></span>
-    <div class="day-content" (click)="openDialog()">
+    <div class="day-content" (click)="onDayClick.emit(date)">
         <div class="day-event" *ngFor="let event of events">{{ event.label }}</div>
     </div>
-</div>
+</div>  
