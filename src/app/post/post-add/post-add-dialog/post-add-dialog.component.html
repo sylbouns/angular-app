@@ -1,8 +1,13 @@
-<dialog title="Add post">
-    <app-post-form #form (onSubmit)="onSubmit()"></app-post-form>
-    <actions dialog-actions>
-        <button mat-button mat-dialog-close>Cancel</button>
-        <button mat-button mat-flat-button color="accent" (click)="form.submit()" [disabled]="form.postForm.invalid" >Add</button>    
-    </actions>
-</dialog>
+<dialog title="Add post" [dialogActions]="dialogActions">
 
+    <app-post-form #form (onSubmit)="onSubmit()"></app-post-form>
+
+    <ng-template #dialogActions>
+        <actions>
+            <button mat-button mat-dialog-close>Cancel</button>
+            <button mat-button mat-flat-button color="accent" (click)="form.submit()"
+                [disabled]="form.postForm.invalid">Add</button>
+        </actions>
+    </ng-template>
+
+</dialog>

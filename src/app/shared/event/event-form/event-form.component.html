@@ -1,7 +1,7 @@
 <form #form="ngForm" *ngIf="event" [formGroup]="eventForm" (ngSubmit)="onSubmitForm()">
     <mat-form-field appearance="fill" class="label">
         <mat-label>Label</mat-label>
-        <input #label matInput id="label" formControlName="label">
+        <input #label="matInput" [autofocus]="label.focus()" matInput id="label" formControlName="label">
     </mat-form-field>
     <div class="dates">
         <mat-form-field appearance="fill" class="start">

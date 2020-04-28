@@ -1,14 +1,15 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { FormGroup, NgForm, FormBuilder, Validators } from '@angular/forms';
 import { EventService } from '../event.service';
 import { Event } from '../event.model';
+import { MatInput } from '@angular/material/input';
 
 @Component({
   selector: 'app-event-form',
   templateUrl: './event-form.component.html',
   styleUrls: ['./event-form.component.scss']
 })
-export class EventFormComponent implements OnInit, AfterViewInit {
+export class EventFormComponent implements OnInit {
   @Input() event: Event;
   public isNewPost: boolean = true;
   public eventForm: FormGroup;
@@ -16,7 +17,6 @@ export class EventFormComponent implements OnInit, AfterViewInit {
   @Output() onSubmit = new EventEmitter<string>();
 
   @ViewChild("form") form:NgForm;
-  @ViewChild("label") label: ElementRef<any>;
 
   constructor(private formBuilder: FormBuilder,
               private eventService: EventService) { }
@@ -28,10 +28,6 @@ export class EventFormComponent implements OnInit, AfterViewInit {
       start: [this.event.start, Validators.required],
       end: [this.event.end],
     });
-  }
-
-  ngAfterViewInit() {
-    this.label.nativeElement.focus();
   }
 
   onSubmitForm() {

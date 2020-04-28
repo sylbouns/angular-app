@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Component, Input, TemplateRef } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -9,16 +9,8 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class DialogComponent {
   @Input() title: string;
   @Input() data: any;
-  @ViewChild("dialogActions") dialogActionsRef: ElementRef<any>;
+  @Input() dialogActions: TemplateRef<any>;
   public actions: boolean = true;
 
   constructor( ) {}
-
-  ngAfterViewInit() {
-    this.actions = !this.isEmpty(this.dialogActionsRef);
-  }
-
-  isEmpty(elt: ElementRef<any>) {
-    return elt == undefined ? true : elt.nativeElement.childNodes.length == 0;
-  }
 }
