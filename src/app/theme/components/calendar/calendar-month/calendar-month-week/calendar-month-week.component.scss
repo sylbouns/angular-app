@@ -46,6 +46,9 @@ $palette: $primary;
                 padding: 1px;
                 overflow: hidden;
             }
+            &.editing calendar-month-event {
+                pointer-events: none;
+            }
         }
     }
 }

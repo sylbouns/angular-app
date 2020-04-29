@@ -38,7 +38,9 @@ export class EventFormComponent implements OnInit {
     this.onSubmit.next('submit');
   }
 
-  public submit() {
+  public submit(): boolean {
+    if (this.form.invalid) return false;
     this.form.ngSubmit.emit();
+    return true;
   }
 }

@@ -38,17 +38,32 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  addDialog(date: Date): void {
+  addDialogDay(date: Date): void {
     let event = new Event();
     event.start = date;
+    this.addDialiog(event);
+  }
+
+  addDialogRange(range: { start: Date, end: Date }): void {
+    let event = new Event();
+    event.start = range.start;
+    event.end = range.end;
+    this.addDialiog(event);
+  }
+
+  addDialiog(event: Event): void {
     const dialogRef = this.dialog.open(EventDialogComponent, { data: { event: event, action: 'add' } });
-    // dialogRef.afterClosed().subscribe(result => result ? this.event = result.event : false );
+    dialogRef.afterClosed().subscribe(result => this.refreshCalendarEvents(this.events));
   }
 
   eventDialog(event: CalendarEvent): void {
-    const dialogRef = this.dialog.open(EventDialogComponent, { data: { event: event.data, action: 'view' } });
-
-    // // dialogRef.afterClosed().subscribe(result => result ? this.event = result.event : false );
+    if (event.data) {
+      const dialogRef = this.dialog.open(EventDialogComponent, { data: { event: event.data, action: 'view' } });
+      dialogRef.afterClosed().subscribe(result => this.refreshCalendarEvents(this.events));  
+    } else this.addDialogRange({ start: event.start, end: event.end });
   }
 
+  updateEvent(event: CalendarEvent): void {
+    console.log(event);
+  }
 }

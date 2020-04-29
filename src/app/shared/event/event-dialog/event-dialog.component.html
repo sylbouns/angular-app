@@ -12,7 +12,7 @@
 </dialog>
 
 <!-- Add / Edit  -->
-<dialog title="{{ title }}" [dialogActions]="dialogActions" *ngIf="action == 'edit' || action == 'add'">
+<dialog title="{{ title }}" [dialogActions]="dialogActions" *ngIf="action == 'edit' || action == 'add'" (keypress)="onKeypressed($event)">
     <button *ngIf="action == 'edit'" contextual-actions mat-icon-button class="contextual-actions" (click)="view()">
         <mat-icon>visibility</mat-icon>
     </button>
@@ -26,7 +26,7 @@
     <ng-template #dialogActions>
         <actions>
             <button mat-button mat-dialog-close>Cancel</button>
-            <button mat-button mat-flat-button color="accent" [mat-dialog-close]="data" (click)="form.submit()"
+            <button mat-button mat-flat-button #submit type="submit" color="accent" [mat-dialog-close]="data" (click)="form.submit()"
                 [disabled]="form.eventForm.invalid">{{ action == 'edit' ? "Update" : "Add"}}</button>
         </actions>
     </ng-template>

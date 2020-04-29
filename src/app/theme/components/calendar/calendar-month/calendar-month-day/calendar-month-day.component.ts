@@ -16,12 +16,18 @@ export class CalendarMonthDayComponent implements OnInit {
   @Input() context: Date;
   @Input() out: boolean = true;
   @Output() onDayClick: EventEmitter<Date> = new EventEmitter<Date>();
+  @Output() onDayMousedown: EventEmitter<Date> = new EventEmitter<Date>();
+  @Output() onDayMouseenter: EventEmitter<Date> = new EventEmitter<Date>();
+  @Output() onDayMouseup: EventEmitter<Date> = new EventEmitter<Date>();
 
   constructor(
     public df: DateFsnService,
     public dialog: MatDialog,
   ) { }
 
+  mouse(date) {
+    console.log(event);
+  }
   ngOnInit(): void {
     this.eventsDayFilter(this.events);
   }

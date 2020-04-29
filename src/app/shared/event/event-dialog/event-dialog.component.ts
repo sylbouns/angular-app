@@ -1,7 +1,9 @@
-import { Component, OnInit, Inject, Input } from '@angular/core';
+import { Component, OnInit, Inject, Input, ViewChild, ElementRef } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Event } from '../event.model';
 import { EventService } from '../event.service';
+import { NgForm } from '@angular/forms';
+import { EventFormComponent } from '../event-form/event-form.component';
 
 @Component({
   selector: 'app-event-dialog',
@@ -9,6 +11,7 @@ import { EventService } from '../event.service';
   styleUrls: ['./event-dialog.component.scss']
 })
 export class EventDialogComponent implements OnInit {
+  @ViewChild("form") form: EventFormComponent;
   public event: Event;
   public action: string = 'view';
   public title: string;
@@ -44,5 +47,9 @@ export class EventDialogComponent implements OnInit {
   delete() {
     this.serviceEvent.deleteEvent(this.event.id);
     this.dialogRef.close();
+  }
+
+  onKeypressed(event):void {
+    if (event.key == "Enter" &&  this.form.submit()) this.dialogRef.close();
   }
 }

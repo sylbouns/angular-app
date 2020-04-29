@@ -8,12 +8,15 @@
                 [context]="context" 
                 [out]="df.isSameMonth(date, day)" 
                 [ngStyle]="{width: weekend ? '14.28%' : '20%'}"
-                [events]="showEvents ? events : []"
+                [events]="showDayEvents ? events : []"
                 (onDayClick)="onDayClick.emit($event)"
+                (onDayMousedown)="onDayMousedown.emit($event)"
+                (onDayMouseenter)="onDayMouseenter.emit($event)"
+                (onDayMouseup)="onDayMouseup.emit($event)"
             ></calendar-month-day>
         </ng-container>
     </div>
-    <div class="events">
+    <div class="events" [ngClass]="{'editing': isEditing}">
         <ng-container *ngFor="let row of gridRows">
             <ng-container *ngFor="let gridEvent of row">
                 <calendar-month-event 

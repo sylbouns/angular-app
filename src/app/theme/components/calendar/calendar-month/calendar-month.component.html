@@ -24,16 +24,20 @@
             <span *ngIf="weekend">Sam.</span>
             <span *ngIf="weekend">Dim.</span>
         </div>
-        <div class="weeks">
+        <div class="weeks" (mouseleave)="onMonthMouseleave()">
             <ng-container *ngFor="let week of weeks">
                 <calendar-month-week 
                     [events]="events" 
                     [date]="week" 
                     [context]="date" 
-                    [weekend]="weekend" 
+                    [weekend]="weekend"
+                    [isEditing]="isEditing()" 
                     [ngStyle]="{height: 100 / weeks.length + '%'}"
                     (onDayClick)="onDayClick.emit($event)"
                     (onEventClick)="onEventClick.emit($event)"
+                    (onDayMousedown)="onDayMousedown($event)"
+                    (onDayMouseenter)="onDayMouseenter($event)"
+                    (onDayMouseup)="onDayMouseup($event)"
                 ></calendar-month-week>
             </ng-container>    
         </div>
