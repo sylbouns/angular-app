@@ -1,4 +1,5 @@
 <calendar-month 
+    [date]="date" 
     [events]="events" 
     (onDayClick)="onDayClick.emit($event)" 
     (onDayRange)="onDayRange.emit($event)"

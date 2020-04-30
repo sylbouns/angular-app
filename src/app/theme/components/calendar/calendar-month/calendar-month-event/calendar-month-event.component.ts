@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DateFsnService } from '@app/theme/services/date-fsn.service';
-import { MatDialog } from '@angular/material/dialog';
 import { CalendarEvent } from '../../calendar-event';
 
 @Component({
@@ -12,10 +11,7 @@ export class CalendarMonthEventComponent implements OnInit {
   @Input() event: CalendarEvent;
   @Output() onEventClick: EventEmitter<CalendarEvent> = new EventEmitter<CalendarEvent>();
 
-  constructor(
-    public dialog: MatDialog, 
-    public df: DateFsnService,
-  ) { }
+  constructor(public df: DateFsnService) { }
 
   ngOnInit(): void {
   }

@@ -4,11 +4,10 @@
         <ng-container *ngFor="let day of days">
             <calendar-month-day 
                 *ngIf="weekend || !df.isWeekend(day)" 
-                [date]="day" 
-                [context]="context" 
+                [date]="day"
                 [out]="df.isSameMonth(date, day)" 
                 [ngStyle]="{width: weekend ? '14.28%' : '20%'}"
-                [events]="showDayEvents ? events : []"
+                [events]="showDayEvents ? filteredEvents : []"
                 (onDayClick)="onDayClick.emit($event)"
                 (onDayMousedown)="onDayMousedown.emit($event)"
                 (onDayMouseenter)="onDayMouseenter.emit($event)"
@@ -17,7 +16,7 @@
         </ng-container>
     </div>
     <div class="events" [ngClass]="{'editing': isEditing}">
-        <ng-container *ngFor="let row of gridRows">
+        <ng-container *ngFor="let row of eventsGridRows">
             <ng-container *ngFor="let gridEvent of row">
                 <calendar-month-event 
                     [event]="gridEvent.event" 

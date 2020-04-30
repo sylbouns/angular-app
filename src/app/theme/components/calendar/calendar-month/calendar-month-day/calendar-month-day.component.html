@@ -1,4 +1,4 @@
-<div class="day" [ngClass]="{ 'out': !df.isSameMonth(date, context), 'weekend': df.isWeekend(date), 'today': df.isToday(date) }">
+<div class="day" [ngClass]="{ 'out': out, 'weekend': df.isWeekend(date), 'today': df.isToday(date) }">
     <span class="day-number">{{ df.format(date, 'd') }} <span *ngIf="df.isFirstDayOfMonth(date)">{{ df.format(date, 'MMM') }}</span></span>
     <div class="day-content" 
         (click)="onDayClick.emit(date)"
@@ -6,6 +6,6 @@
         (mouseenter)="onDayMouseenter.emit(date)"
         (mouseup)="onDayMouseup.emit(date)"
     >
-        <div class="day-event" *ngFor="let event of events">{{ event.label }}</div>
+        <div class="day-event" *ngFor="let event of filteredEvents">{{ event.label }}</div>
     </div>
 </div>  

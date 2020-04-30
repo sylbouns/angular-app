@@ -1,6 +1,4 @@
 import { Component, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { format, areIntervalsOverlapping, differenceInDays, isSameWeek, addWeeks, subWeeks, isSameDay, isAfter, isBefore, startOfMonth, endOfMonth, startOfWeek, endOfWeek, eachDayOfInterval, getMonth, isWeekend, addMonths, subMonths, isFirstDayOfMonth, addDays } from 'date-fns';
-import { fr } from 'date-fns/esm/locale'
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { DateFsnService } from '@app/theme/services/date-fsn.service';
 import { CalendarEvent } from '../calendar-event';
@@ -10,13 +8,15 @@ import { CalendarEvent } from '../calendar-event';
   templateUrl: './calendar-month.component.html',
   styleUrls: ['./calendar-month.component.scss']
 })
-export class CalendarMonthComponent implements OnInit {
+export class CalendarMonthComponent implements OnInit, OnChanges {
   @Input() events: CalendarEvent[] = [];
+  @Input() filteredEvents: CalendarEvent[] = [];
   @Input() date: Date = new Date();
   @Input() weekend: boolean = true;
   @Output() onDayClick: EventEmitter<Date> = new EventEmitter<Date>();
   @Output() onDayRange: EventEmitter<{ start: Date, end: Date }> = new EventEmitter<{ start: Date, end: Date }>();
   @Output() onEventClick: EventEmitter<CalendarEvent> = new EventEmitter<CalendarEvent>();
+  @Output() onEventMove: EventEmitter<CalendarEvent> = new EventEmitter<CalendarEvent>();
 
   public start: Date;
   public end: Date;
@@ -31,21 +31,38 @@ export class CalendarMonthComponent implements OnInit {
     this.setWeeks();
   }
 
-  setDate(date: Date): void {
-    this.date = date;
-    this.setWeeks();
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.date) this.setWeeks();
+    if (changes.events) this.setMonthFilteredEvents(changes.events.currentValue);
+    if (changes.weekend) this.setMonthFilteredEvents(this.events);
   }
 
   setWeeks(): void {
-    this.start = startOfWeek(startOfMonth(this.date), { weekStartsOn: 1 });
-    this.end = endOfWeek(endOfMonth(this.date), { weekStartsOn: 1 });
+    this.start = this.df.startOfWeek(this.df.startOfMonth(this.date));
+    this.end = this.df.endOfWeek(this.df.endOfMonth(this.date));
     let date = this.date;
     this.weeks = [];
-    while (!isSameWeek(date, this.start, { weekStartsOn: 1 })) date = subWeeks(date, 1);
-    while (!isSameWeek(date, addWeeks(this.end, 1), { weekStartsOn: 1 })) {
+    while (!this.df.isSameWeek(date, this.start)) date = this.df.subWeeks(date, 1);
+    while (!this.df.isSameWeek(date, this.df.addWeeks(this.end, 1))) {
       this.weeks.push(date);
-      date = addWeeks(date, 1);
+      date = this.df.addWeeks(date, 1);
     }
+  }
+
+  setMonthFilteredEvents(events: CalendarEvent[]) {
+    this.filteredEvents = events.filter(event => this.df.areIntervalsOverlapping(
+      { start: this.start, end: this.end },
+      { start: event.start, end: event.end }
+    ));
+  }
+
+  formatWeekDayName(day: number) {
+    return this.df.format(this.df.addDays(this.start, day), 'iii');
+  }
+
+  setDate(date: Date): void {
+    this.date = date;
+    this.setWeeks();
   }
 
   weekendChange($event: MatSlideToggleChange) {
@@ -58,11 +75,11 @@ export class CalendarMonthComponent implements OnInit {
   }
 
   nextMonth(): void {
-    this.setDate(addMonths(this.date, 1));
+    this.setDate(this.df.addMonths(this.date, 1));
   }
 
   previousMonth(): void {
-    this.setDate(subMonths(this.date, 1));
+    this.setDate(this.df.subMonths(this.date, 1));
   }
 
   // Dumb Event
@@ -72,31 +89,37 @@ export class CalendarMonthComponent implements OnInit {
   }
 
   onDayMousedown(date): void {
-    if (this.createDumbEvent(date)) this.events = [...this.events];
+    if (this.createDumbEvent(date)) this.events = [ ...this.events ];
   }
 
   onDayMouseenter(date): void {
-    if (this.dumbEvent != undefined) {
-      if (this.updateDumbEvent(date)) this.events = [...this.events];
-    }
+    if (this.isEditing() && this.updateDumbEvent(date)) this.events = [ ...this.events ];
   }
 
   onDayMouseup(date): void {
-    if (this.dumbEvent && date != this.dumbStart) this.onDayRange.emit({ start: this.dumbEvent.start, end: this.dumbEvent.end });
+    if (this.isEditing() && !this.isDayClick(date)) this.onDayRange.emit({ 
+      start: this.dumbEvent.start, 
+      end: this.dumbEvent.end 
+    });
     this.dumbEvent = undefined;
     this.dumbStart = undefined;
+  }
+
+  isDayClick(date): boolean {
+    return date == this.dumbStart;
   }
 
   onMonthMouseleave(): void {
-    // if (this.deleteDumbEvent()) this.events = [...this.events];
     if (this.dumbEvent) this.onDayRange.emit({ start: this.dumbEvent.start, end: this.dumbEvent.end });
+    this.stopEdit();
+  }
+
+  stopEdit(): void {
     this.dumbEvent = undefined;
     this.dumbStart = undefined;
   }
 
-  createDumbEvent(date: Date): boolean {
-    if (this.dumbEvent != undefined) return this.updateDumbEvent(date);
-    this.deleteDumbEvent();
+  startEdit(date: Date): void {
     this.dumbStart = date;
     this.dumbEvent = {
       start: date,
@@ -104,6 +127,12 @@ export class CalendarMonthComponent implements OnInit {
       label: "(Sans titre)",
       data: null,
     }
+  }
+
+  createDumbEvent(date: Date): boolean {
+    if (this.isEditing()) return this.updateDumbEvent(date);
+    this.deleteDumbEvent();
+    this.startEdit(date);
     this.events.push(this.dumbEvent);
     return true;
   }
@@ -113,21 +142,25 @@ export class CalendarMonthComponent implements OnInit {
   }
 
   updateDumbEvent(date: Date): boolean {
-    if (this.dumbEvent == undefined) return this.createDumbEvent(date);
+    // Not editing
+    if (!this.isEditing()) return this.createDumbEvent(date);
+    // dumbEvent not found
     let index = this.getDumbEventIndex();
     if (index == -1) {
-      this.dumbEvent = undefined;
+      this.stopEdit();
       return this.createDumbEvent(date);
     }
+    // dumbEvent unchanged
     if (date == this.events[index].start || date == this.events[index].end) return false;
+    // Update left or right
     if (date > this.dumbStart) {
-      date = addDays(date, 1);
+      date = this.df.addDays(date, 1);
       this.dumbEvent.start = this.dumbStart;
       this.dumbEvent.end = date;
     } else {
       this.dumbEvent.start = date;
       this.dumbEvent.end = this.dumbStart;
-      this.dumbEvent.end = addDays(this.dumbStart, 1);
+      this.dumbEvent.end = this.df.addDays(this.dumbStart, 1);
     }
     this.events[index] = this.dumbEvent;
     return true;
@@ -136,8 +169,7 @@ export class CalendarMonthComponent implements OnInit {
   deleteDumbEvent(): boolean {
     let index = this.getDumbEventIndex();
     if (index != -1) this.events.splice(index, 1);
-    this.dumbEvent = undefined;
-    this.dumbStart = undefined;
+    this.stopEdit();
     return index > -1;
   }
 }

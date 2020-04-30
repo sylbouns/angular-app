@@ -7,8 +7,43 @@ import { fr } from 'date-fns/esm/locale'
 })
 export class DateFsnService {
 
+  private weekStartsOn = 1;
+  private locale = fr;
+
   constructor() { }
+
+  startOfWeek(date, options?): Date {
+    return startOfWeek(date, { weekStartsOn: this.weekStartsOn, ...options });
+  }
+
+  endOfWeek(date, options?): Date {
+    return endOfWeek(date, { weekStartsOn: this.weekStartsOn, ...options });
+  }
+
+  startOfMonth(date): Date {
+    return startOfMonth(date);
+  }
+
+  endOfMonth(date): Date {
+    return endOfMonth(date);
+  }
+
+  eachDayOfInterval(interval, options?): Date[] {
+    return eachDayOfInterval(interval, options);
+  }
+
+  isSameDay(dateLeft: number | Date, dateRight: number | Date): boolean {
+    return isSameDay(dateLeft, dateRight);
+  }
   
+  isAfter(date: number | Date, dateToCompare: number | Date): boolean {
+    return isAfter(date, dateToCompare);
+  }
+  
+  isBefore(date: number | Date, dateToCompare: number | Date): boolean {
+    return isBefore(date, dateToCompare);
+  }
+
   getTime(date): number {
     return getTime(date);
   }
@@ -17,8 +52,12 @@ export class DateFsnService {
     return isToday(date);
   }
 
-  format(date, f: string): string {
-    return format(date, f, { locale: fr });
+  format(date, f: string, options?): string {
+    return format(date, f, { 
+      locale: this.locale, 
+      weekStartsOn: this.weekStartsOn, 
+      ...options 
+    });
   }
 
   max(datesArray): Date {
@@ -49,6 +88,14 @@ export class DateFsnService {
     return subDays(date, amount);
   }
 
+  addMonths(date, amount): Date {
+    return addMonths(date, amount);
+  }
+
+  subMonths(date, amount): Date {
+    return subMonths(date, amount);
+  }
+
   addWeeks(date, amount): Date {
     return addWeeks(date, amount);
   }
@@ -61,8 +108,8 @@ export class DateFsnService {
     return isSameMonth(dateLeft, dateRight);
   }
 
-  isSameWeek(dateLeft, dateRight): boolean {
-    return isSameWeek(dateLeft, dateRight);
+  isSameWeek(dateLeft, dateRight, options?): boolean {
+    return isSameWeek(dateLeft, dateRight, { weekStartsOn: this.weekStartsOn, ...options });
   }
 
   isWeekend(date): boolean {
@@ -74,7 +121,7 @@ export class DateFsnService {
   }
 
   getWeekOfMonth(date, options?): number {
-    return getWeekOfMonth(date, options);
+    return getWeekOfMonth(date, { weekStartsOn: this.weekStartsOn, ...options });
   }
 
 }

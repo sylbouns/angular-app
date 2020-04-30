@@ -16,13 +16,13 @@
 
     <main>
         <div class="days-name">
-            <span>Lun.</span>
-            <span>Mar.</span>
-            <span>Mer.</span>
-            <span>Jeu.</span>
-            <span>Ven.</span>
-            <span *ngIf="weekend">Sam.</span>
-            <span *ngIf="weekend">Dim.</span>
+            <span>{{ formatWeekDayName(0) }}</span>
+            <span>{{ formatWeekDayName(1) }}</span>
+            <span>{{ formatWeekDayName(2) }}</span>
+            <span>{{ formatWeekDayName(3) }}</span>
+            <span>{{ formatWeekDayName(4) }}</span>
+            <span *ngIf="weekend">{{ formatWeekDayName(5) }}</span>
+            <span *ngIf="weekend">{{ formatWeekDayName(6) }}</span>
         </div>
         <div class="weeks" (mouseleave)="onMonthMouseleave()">
             <ng-container *ngFor="let week of weeks">
