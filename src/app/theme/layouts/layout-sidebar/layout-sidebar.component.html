@@ -2,17 +2,17 @@
 
   <mat-sidenav #sidenav [mode]="mode" [opened]="opened">
     <section-layout>
-      <ng-content header select="sidebar-toolbar"></ng-content>
-      <ng-content main select="sidebar-menu"></ng-content>
-      <ng-content footer select="sidebar-tabs"></ng-content>
+      <ng-content header select="[sidebar-toolbar]"></ng-content>
+      <ng-content main select="[sidebar-menu]"></ng-content>
+      <ng-content footer select="[sidebar-tabs]"></ng-content>
     </section-layout>
   </mat-sidenav>
 
   <mat-sidenav-content>
     <section-layout>
-      <ng-content header select="toolbar"></ng-content>
+      <ng-content header select="[toolbar]"></ng-content>
       <ng-content></ng-content>
-      <ng-content footer select="bottom-toolbar"></ng-content>
+      <ng-content footer select="[bottom-toolbar]"></ng-content>
     </section-layout>
   </mat-sidenav-content>
 

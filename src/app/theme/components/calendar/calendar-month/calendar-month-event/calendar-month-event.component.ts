@@ -9,6 +9,7 @@ import { CalendarEvent } from '../../calendar-event';
 })
 export class CalendarMonthEventComponent implements OnInit {
   @Input() event: CalendarEvent;
+  @Input() showStartTime: boolean = false;
   @Output() onEventClick: EventEmitter<CalendarEvent> = new EventEmitter<CalendarEvent>();
 
   constructor(public df: DateFsnService) { }

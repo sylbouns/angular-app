@@ -1,3 +1,3 @@
 <div class="event" (click)="onEventClick.emit(event)">
-    <span class="hour" *ngIf="!event.allday">{{ df.format(event.start, 'HH:mm') }}</span> {{ event.label }}
+    <span class="hour" *ngIf="showStartTime">{{ df.format(event.start, 'HH:mm') }}</span> {{ event.label }}
 </div>

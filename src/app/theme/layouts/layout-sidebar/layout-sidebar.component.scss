@@ -1,9 +1,12 @@
+@import "_variables.scss";
+
 mat-sidenav-container {
     height: 100vh;
     mat-sidenav {
         width: 264px;
-    }
-    mat-sidenav-content {
+        @include media($xsmall) {
+            width: calc(100vw - 56px);
+        }
     }
 }
 
@@ -11,12 +14,16 @@ mat-toolbar[header] {
     mat-toolbar-row {
         display: flex;
         justify-content: space-between;
-        .spacer { flex-grow: 1; }
-        > :first-child { 
-            margin-left: -8px; 
-            margin-right: 8px; 
+        .spacer {
+            flex-grow: 1;
         }
-        > :last-child { margin-right: -8px; }
+        > :first-child {
+            margin-left: -8px;
+            margin-right: 8px;
+        }
+        > :last-child {
+            margin-right: -8px;
+        }
     }
 }
 
@@ -24,7 +31,9 @@ mat-toolbar[footer] {
     mat-toolbar-row {
         display: flex;
         margin: auto -8px;
-        .spacer { flex-grow: 1; }
+        .spacer {
+            flex-grow: 1;
+        }
         > * {
             margin: 0 8px;
         }
@@ -36,7 +45,9 @@ mat-nav-list.sidebar-menu {
         a {
             display: flex;
             align-items: flex-end;
-            mat-icon { margin-right: 16px; }
+            mat-icon {
+                margin-right: 16px;
+            }
         }
     }
 }

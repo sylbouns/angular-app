@@ -1,0 +1,14 @@
+<search *ngIf="!layout.media.xsmall"></search>
+<button *ngIf="!layout.media.xsmall" mat-icon-button aria-hidden="false" aria-label="Switch to other domains">
+    <mat-icon>apps</mat-icon>
+</button>
+<fullscreen *ngIf="!layout.media.xsmall"></fullscreen>
+<button *ngIf="!layout.media.xsmall" mat-icon-button aria-hidden="false" aria-label="Messages">
+    <mat-icon matBadge="8" matBadgeColor="accent">mail</mat-icon>
+</button>
+<button *ngIf="!layout.media.xsmall" mat-icon-button aria-hidden="false" aria-label="Notifications">
+    <mat-icon matBadge="3" matBadgeColor="warn">notifications</mat-icon>
+</button>
+<button mat-icon-button aria-hidden="false" aria-label="My account">
+    <mat-icon>face</mat-icon>
+</button>
