@@ -3,7 +3,7 @@ import { EventService } from '@app/shared/event/event.service';
 import { Event } from '@app/shared/event/event.model';
 import { CalendarEvent } from '@app/theme/components/calendar/calendar-event';
 import { EventDialogComponent } from '@app/shared/event/event-dialog/event-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-dashboard',
@@ -30,9 +30,10 @@ export class DashboardComponent implements OnInit {
     this.calendarEvents = [];
     events.map(event => {
       this.calendarEvents.push({
+        label: event.label,
         start: event.start,
         end: event.end ? event.end : event.start,
-        label: event.label,
+        allday: event.allday,
         data: event,
       })
     });
@@ -41,26 +42,29 @@ export class DashboardComponent implements OnInit {
   addDialogDay(date: Date): void {
     let event = new Event();
     event.start = date;
+    event.allday = true;
     this.addDialiog(event);
   }
 
-  addDialogRange(range: { start: Date, end: Date }): void {
+  addDialogRange(range: CalendarEvent): void {
     let event = new Event();
     event.start = range.start;
     event.end = range.end;
+    event.allday = range.allday;
     this.addDialiog(event);
   }
 
   addDialiog(event: Event): void {
     const dialogRef = this.dialog.open(EventDialogComponent, { data: { event: event, action: 'add' } });
     dialogRef.afterClosed().subscribe(result => this.refreshCalendarEvents(this.events));
+    MatDialogConfig
   }
 
   eventDialog(event: CalendarEvent): void {
     if (event.data) {
       const dialogRef = this.dialog.open(EventDialogComponent, { data: { event: event.data, action: 'view' } });
       dialogRef.afterClosed().subscribe(result => this.refreshCalendarEvents(this.events));  
-    } else this.addDialogRange({ start: event.start, end: event.end });
+    } else this.addDialogRange(event);
   }
 
   updateEvent(event: CalendarEvent): void {

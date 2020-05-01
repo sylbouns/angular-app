@@ -97,10 +97,7 @@ export class CalendarMonthComponent implements OnInit, OnChanges {
   }
 
   onDayMouseup(date): void {
-    if (this.isEditing() && !this.isDayClick(date)) this.onDayRange.emit({ 
-      start: this.dumbEvent.start, 
-      end: this.dumbEvent.end 
-    });
+    if (this.isEditing() && !this.isDayClick(date)) this.onDayRange.emit(this.dumbEvent);
     this.dumbEvent = undefined;
     this.dumbStart = undefined;
   }
@@ -110,7 +107,7 @@ export class CalendarMonthComponent implements OnInit, OnChanges {
   }
 
   onMonthMouseleave(): void {
-    if (this.dumbEvent) this.onDayRange.emit({ start: this.dumbEvent.start, end: this.dumbEvent.end });
+    if (this.dumbEvent) this.onDayRange.emit(this.dumbEvent);
     this.stopEdit();
   }
 
@@ -122,9 +119,10 @@ export class CalendarMonthComponent implements OnInit, OnChanges {
   startEdit(date: Date): void {
     this.dumbStart = date;
     this.dumbEvent = {
+      label: "(Sans titre)",
       start: date,
       end: date,
-      label: "(Sans titre)",
+      allday: true,
       data: null,
     }
   }
@@ -154,7 +152,6 @@ export class CalendarMonthComponent implements OnInit, OnChanges {
     if (date == this.events[index].start || date == this.events[index].end) return false;
     // Update left or right
     if (date > this.dumbStart) {
-      date = this.df.addDays(date, 1);
       this.dumbEvent.start = this.dumbStart;
       this.dumbEvent.end = date;
     } else {

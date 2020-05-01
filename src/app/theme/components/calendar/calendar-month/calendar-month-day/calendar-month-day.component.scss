@@ -23,6 +23,9 @@ $palette: $primary;
             text-transform: capitalize;
         }
     }
+    &.today .day-number {
+        color: mat-color($accent);
+    }
     .day-content {
         flex-grow: 1;
         overflow-y: auto;

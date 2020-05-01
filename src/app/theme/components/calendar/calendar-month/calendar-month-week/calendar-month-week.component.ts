@@ -35,6 +35,7 @@ export class CalendarMonthWeekComponent implements OnInit, OnChanges {
   public end: Date;
   public filteredEvents: CalendarEvent[] = [];
   public eventsGridRows: GridEvent[][];
+  private startTime: number;
   private length: number;
 
   constructor(public df: DateFsnService) { }
@@ -54,7 +55,8 @@ export class CalendarMonthWeekComponent implements OnInit, OnChanges {
     this.start = this.df.startOfWeek(this.date);
     this.end = this.df.endOfWeek(this.date);
     if (!this.weekend) this.end = this.df.subDays(this.end, 2);
-    this.length = this.df.getTime(this.end) - this.df.getTime(this.start);
+    this.startTime = this.df.getTime(this.start);
+    this.length = this.df.getTime(this.end) - this.startTime;
     this.days = this.df.eachDayOfInterval({ start: this.start, end: this.end });
   }
 
@@ -94,9 +96,11 @@ export class CalendarMonthWeekComponent implements OnInit, OnChanges {
 
   newGrigEvent(event: CalendarEvent): GridEvent {
     let gridEvent = new GridEvent();
+    let start = event.allday || event.start == event.end ? this.df.startOfDay(event.start): event.start;
+    let end = event.allday || event.start == event.end ? this.df.endOfDay(event.end): event.end;
     gridEvent.event = event;
-    gridEvent.start = Math.max(this.df.getTime(event.start) - this.df.getTime(this.start), 0);
-    gridEvent.end = Math.min(this.df.getTime(event.end) - this.df.getTime(this.start), this.length); // 1 week
+    gridEvent.start = Math.max(this.df.getTime(start) - this.startTime, 0);
+    gridEvent.end = Math.min(this.df.getTime(end) - this.startTime, this.length); // 1 week
     if (gridEvent.start == gridEvent.end) gridEvent.end = Math.min(gridEvent.end + 86400000, this.length); // Add 1 day
     return gridEvent;
   }

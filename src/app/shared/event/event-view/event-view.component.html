@@ -1,1 +1,19 @@
-<p>Du {{ df.format(event.start, 'dd MMMM yyyy, HH:mm') }} au {{ df.format(event.end, 'dd MMMM yyyy, HH:mm') }}</p>
+<ng-container *ngIf="!event.end">
+    <ng-container *ngIf="event.allday">
+        <p>Le {{ df.format(event.start, 'dd MMMM yyyy') }}.</p>
+    </ng-container>
+    <ng-container *ngIf="!event.allday">
+        <p>Le {{ df.format(event.start, 'dd MMMM yyyy à HH:mm') }}.</p>
+    </ng-container>
+</ng-container>
+
+<ng-container *ngIf="event.end">
+    <ng-container *ngIf="event.allday">
+        <p>Du {{ df.format(event.start, 'dd MMMM yyyy') }} au {{ df.format(event.end, 'dd MMMM yyyy') }}.</p>
+    </ng-container>
+    <ng-container *ngIf="!event.allday">
+        <p>Du {{ df.format(event.start, 'dd MMMM yyyy, HH:mm') }} au {{ df.format(event.end, 'dd MMMM yyyy, HH:mm') }}.</p>
+    </ng-container>
+</ng-container>
+
+<p>{{ event.comment }}</p>

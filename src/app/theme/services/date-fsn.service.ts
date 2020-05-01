@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { format, isToday, getTime, differenceInCalendarDays, addDays, subDays, max, min, isSameWeek, addWeeks, subWeeks, isSameMonth, getWeekOfMonth, areIntervalsOverlapping, getOverlappingDaysInIntervals, differenceInDays, isSameDay, isAfter, isBefore, startOfMonth, endOfMonth, startOfWeek, endOfWeek, eachDayOfInterval, getMonth, isWeekend, addMonths, subMonths, isFirstDayOfMonth } from 'date-fns';
+import { format, startOfDay, endOfDay, isToday, getTime, differenceInCalendarDays, addDays, subDays, max, min, isSameWeek, addWeeks, subWeeks, isSameMonth, getWeekOfMonth, areIntervalsOverlapping, getOverlappingDaysInIntervals, differenceInDays, isSameDay, isAfter, isBefore, startOfMonth, endOfMonth, startOfWeek, endOfWeek, eachDayOfInterval, getMonth, isWeekend, addMonths, subMonths, isFirstDayOfMonth } from 'date-fns';
 import { fr } from 'date-fns/esm/locale'
 
 @Injectable({
@@ -11,6 +11,14 @@ export class DateFsnService {
   private locale = fr;
 
   constructor() { }
+
+  startOfDay(date: number | Date): Date {
+    return startOfDay(date);
+  }
+
+  endOfDay(date: number | Date): Date {
+    return endOfDay(date);
+  }
 
   startOfWeek(date, options?): Date {
     return startOfWeek(date, { weekStartsOn: this.weekStartsOn, ...options });
@@ -73,7 +81,7 @@ export class DateFsnService {
   }
 
   areIntervalsOverlapping(intervalLeft, intervalRight, options?): boolean {
-    return areIntervalsOverlapping(intervalLeft, intervalRight, options);
+    return areIntervalsOverlapping(intervalLeft, intervalRight, { inclusive: true, ...options });
   }
 
   getOverlappingDaysInIntervals(intervalLeft, intervalRight): number {

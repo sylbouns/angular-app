@@ -1,7 +1,47 @@
+form {
+    width: 520px;
+}
 mat-form-field.label {
     width: 100%;
 }
+mat-slide-toggle {
+    margin-bottom: 16px;
+}
 .dates {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
+    align-items: center;
+    .spacer {
+        display: inline-block;
+        text-align: center;
+        width: 32px;
+        margin-bottom: 16px;
+    }
+    .date { 
+        display: flex;
+        justify-content: flex-start;
+
+        .day {
+            max-width: 140px;
+        }
+        .time {
+            max-width: 94px;
+        }
+        .spacer {
+            width: 16px;
+        }
+    }
+    &.allday {
+        .date .time, 
+        .date .spacer {
+            width: 0;
+            overflow: hidden;
+        }
+    }
+}
+.comment {
+    width: 100%;
+    textarea {
+        min-height: 150px;
+    }
 }

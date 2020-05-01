@@ -1,21 +1,54 @@
 <form #form="ngForm" *ngIf="event" [formGroup]="eventForm" (ngSubmit)="onSubmitForm()">
+
     <mat-form-field appearance="fill" class="label">
         <mat-label>Label</mat-label>
-        <input #label="matInput" [autofocus]="label.focus()" matInput id="label" formControlName="label">
+        <input #label="matInput" matInput autofocus id="label" formControlName="label" required>
     </mat-form-field>
-    <div class="dates">
-        <mat-form-field appearance="fill" class="start">
-            <mat-label>Start</mat-label>
-            <input matInput [matDatepicker]="start" id="start" formControlName="start">
-            <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
-            <mat-datepicker #start></mat-datepicker>
-        </mat-form-field>
-        <span class="spacer"></span>
-        <mat-form-field appearance="fill" class="end">
-            <mat-label>End</mat-label>
-            <input matInput [matDatepicker]="end" id="end" formControlName="end">
-            <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
-            <mat-datepicker #end></mat-datepicker>
-        </mat-form-field>
+
+    <mat-slide-toggle [checked]="allday" (change)="toggleAllday($event)">All day
+    </mat-slide-toggle>
+
+    <div class="dates" [ngClass]="{allday: allday}">
+
+        <div class="date">
+            <mat-form-field appearance="fill" class="day">
+                <mat-label>Start</mat-label>
+                <input #startDay="matInput" matInput id="startDay" [matDatepicker]="startCal" formControlName="startDay"
+                    (focus)="startCal.open()" required>
+                <mat-datepicker-toggle matSuffix [for]="startCal"></mat-datepicker-toggle>
+                <mat-datepicker #startCal></mat-datepicker>
+            </mat-form-field>
+            <span class="spacer"></span>
+            <mat-form-field appearance="fill" class="time">
+                <mat-label>At</mat-label>
+                <input #startTime="matInput" matInput id="startTime" formControlName="startTime" type="time">
+                <mat-icon matSuffix>schedule</mat-icon>
+            </mat-form-field>
+        </div>
+
+        <span class="spacer"> - </span>
+
+        <div class="date">
+            <mat-form-field appearance="fill" class="day">
+                <mat-label>End</mat-label>
+                <input #endDay="matInput" matInput [matDatepicker]="endCal" id="endDay" formControlName="endDay"
+                    [min]="df.format(startDay.value, 'yyyy-MM-dd')" (focus)="endCal.open()" (dateChange)="initEndDate()">
+                <mat-datepicker-toggle matSuffix [for]="endCal"></mat-datepicker-toggle>
+                <mat-datepicker #endCal></mat-datepicker>
+            </mat-form-field>
+            <span class="spacer"></span>
+            <mat-form-field appearance="fill" class="time" (click)="initEndDate()">
+                <mat-label>At</mat-label>
+                <input #endTime="matInput" matInput id="endTime" formControlName="endTime" type="time">
+                <mat-icon matSuffix>schedule</mat-icon>
+            </mat-form-field>
+        </div>
+
     </div>
+
+    <mat-form-field appearance="fill" class="comment">
+        <mat-label>Comment</mat-label>
+        <textarea matInput id="comment" formControlName="comment"></textarea>
+    </mat-form-field>
+
 </form>

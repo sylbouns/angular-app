@@ -1,6 +1,7 @@
 export interface CalendarEvent {
+    label: string;
     start: Date;
     end: Date;
-    label: string;
+    allday: boolean;
     data: any;
 }

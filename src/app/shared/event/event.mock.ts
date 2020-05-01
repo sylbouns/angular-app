@@ -20,25 +20,34 @@ const lorem = new LoremIpsum({
 
 
 function random(max: number, min: number = 0) {
-    return Math.floor(Math.random() * Math.floor(max - min)) + min;
+    return Math.round(Math.random() * (max - min)) + min;
 }
 
 let date = new Date();
 
 for (let i = 0; i < quantity; i++) {
     let event = new Event();
+    // id
     event.id = Guid.create();
+    // label
+    event.label = lorem.generateWords(random(6, 2));
+    event.label = event.label.charAt(0).toUpperCase() + event.label.slice(1);
+    // start
     event.start = new Date(date);
     event.start = addDays(event.start, random(amplitude, -amplitude));
     event.start = addHours(event.start, random(24, -24));
     event.start = addMinutes(event.start, random(60, -60));
+    // end
     event.end = event.start;
-    if (random(0, 5) == 0) {
+    if (random(2, 0) == 0) {
         event.end = addDays(event.start, random(5));
         event.end = addHours(event.end, random(24));
         event.end = addMinutes(event.end, random(60));
     }
-    event.label = lorem.generateWords(random(5, 1));
-    event.label = event.label.charAt(0).toUpperCase() + event.label.slice(1);
+    event.allday = random(2) == 0;
+    // comment
+    event.comment = lorem.generateSentences(random(6, 2));
+    event.comment = event.comment.charAt(0).toUpperCase() + event.comment.slice(1);
+    // PUSH !
     events.push(event);
 }
