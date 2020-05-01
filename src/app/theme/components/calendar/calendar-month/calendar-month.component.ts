@@ -52,7 +52,7 @@ export class CalendarMonthComponent implements OnInit, OnChanges {
   setMonthFilteredEvents(events: CalendarEvent[]) {
     this.filteredEvents = events.filter(event => this.df.areIntervalsOverlapping(
       { start: this.start, end: this.end },
-      { start: event.start, end: event.end }
+      { start: event.start, end: event.end ? event.end : event.start }
     ));
   }
 

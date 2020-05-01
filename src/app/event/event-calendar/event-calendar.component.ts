@@ -32,7 +32,7 @@ export class EventCalendarComponent implements OnInit {
       this.calendarEvents.push({
         label: event.label,
         start: event.start,
-        end: event.end ? event.end : event.start,
+        end: event.end,
         allday: event.allday,
         data: event,
       })

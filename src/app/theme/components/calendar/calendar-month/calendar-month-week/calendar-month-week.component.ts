@@ -68,7 +68,7 @@ export class CalendarMonthWeekComponent implements OnInit, OnChanges {
   setWeekFilteredEvents(events: CalendarEvent[]) {
     this.filteredEvents = events.filter(event => this.df.areIntervalsOverlapping(
       { start: this.start, end: this.end },
-      { start: event.start, end: event.end }
+      { start: event.start, end: event.end ? event.end : event.start }
     )).sort((a, b) => this.sortEvents(a, b));
   }
 
@@ -96,8 +96,8 @@ export class CalendarMonthWeekComponent implements OnInit, OnChanges {
 
   newGrigEvent(event: CalendarEvent): GridEvent {
     let gridEvent = new GridEvent();
-    let start = event.allday || event.start == event.end ? this.df.startOfDay(event.start): event.start;
-    let end = event.allday || event.start == event.end ? this.df.endOfDay(event.end): event.end;
+    let start = event.allday || !event.end || this.df.isSameDay(event.start, event.end) ? this.df.startOfDay(event.start): event.start;
+    let end = event.allday || !event.end || this.df.isSameDay(event.start, event.end) ? this.df.endOfDay(event.end ? event.end : event.start): event.end;
     gridEvent.event = event;
     gridEvent.start = Math.max(this.df.getTime(start) - this.startTime, 0);
     gridEvent.end = Math.min(this.df.getTime(end) - this.startTime, this.length); // 1 week

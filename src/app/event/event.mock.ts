@@ -38,12 +38,13 @@ for (let i = 0; i < quantity; i++) {
     event.start = addHours(event.start, random(24, -24));
     event.start = addMinutes(event.start, random(60, -60));
     // end
-    event.end = event.start;
     if (random(2, 0) == 0) {
+        event.end = event.start;
         event.end = addDays(event.start, random(5));
         event.end = addHours(event.end, random(24));
         event.end = addMinutes(event.end, random(60));
     }
+    // allday
     event.allday = random(2) == 0;
     // comment
     event.comment = lorem.generateSentences(random(6, 2));

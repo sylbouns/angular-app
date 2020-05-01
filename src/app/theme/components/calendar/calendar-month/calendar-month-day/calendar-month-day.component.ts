@@ -17,6 +17,8 @@ export class CalendarMonthDayComponent implements OnChanges {
   @Output() onDayMouseenter: EventEmitter<Date> = new EventEmitter<Date>();
   @Output() onDayMouseup: EventEmitter<Date> = new EventEmitter<Date>();
 
+  public start: Date;
+  public end: Date;
   public filteredEvents: CalendarEvent[] = [];
 
   constructor(
@@ -24,15 +26,20 @@ export class CalendarMonthDayComponent implements OnChanges {
     public dialog: MatDialog,
   ) { }
 
+  ngOnInit(): void {
+    this.start = this.df.startOfDay(this.date);
+    this.end = this.df.endOfDay(this.date);
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.events) this.setDayFilteredEvents(changes.events.currentValue);
   }
 
   setDayFilteredEvents(events: CalendarEvent[]) {
-    this.filteredEvents = events.filter(event =>
-      this.df.isSameDay(this.date, event.start) || this.df.isSameDay(this.date, event.end) ||
-      (this.df.isBefore(this.date, event.end) && this.df.isAfter(this.date, event.start))
-    );
+    this.filteredEvents = events.filter(event => this.df.areIntervalsOverlapping(
+      { start: this.start, end: this.end },
+      { start: event.start, end: event.end ? event.end : event.start }
+    ));
   }
 
 }
