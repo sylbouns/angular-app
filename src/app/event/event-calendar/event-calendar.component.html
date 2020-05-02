@@ -1,9 +1,7 @@
 <calendar 
     [events]="calendarEvents" 
-    (onDayClick)="addDialogDay($event)" 
-    (onDayRange)="addDialogRange($event)" 
-    (onEventClick)="eventDialog($event)" 
-    (onEventMove)="updateEvent($event)" 
+    (onEventClick)="eventView($event)" 
+    (onEventEdit)="eventEdit($event)" 
 >
     <ng-content></ng-content>
 </calendar>

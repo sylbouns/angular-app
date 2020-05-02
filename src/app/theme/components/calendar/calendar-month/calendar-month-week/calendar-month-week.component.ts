@@ -24,11 +24,12 @@ export class CalendarMonthWeekComponent implements OnInit, OnChanges {
   @Input() showDayEvents: boolean = false;
   @Input() eventLineHeight: number = 30; // pixels
   @Input() isEditing: boolean = false;
-  @Output() onDayClick: EventEmitter<Date> = new EventEmitter<Date>();
   @Output() onDayMousedown: EventEmitter<Date> = new EventEmitter<Date>();
   @Output() onDayMouseenter: EventEmitter<Date> = new EventEmitter<Date>();
   @Output() onDayMouseup: EventEmitter<Date> = new EventEmitter<Date>();
   @Output() onEventClick: EventEmitter<CalendarEvent> = new EventEmitter<CalendarEvent>();
+  @Output() onEventExpandMousedownStart: EventEmitter<CalendarEvent> = new EventEmitter<CalendarEvent>();
+  @Output() onEventExpandMousedownEnd: EventEmitter<CalendarEvent> = new EventEmitter<CalendarEvent>();
 
   public days: Date[];
   public start: Date;

@@ -29,45 +29,42 @@ export class EventCalendarComponent implements OnInit {
   refreshCalendarEvents(events: Event[]): void {
     this.calendarEvents = [];
     events.map(event => {
-      this.calendarEvents.push({
-        label: event.label,
-        start: event.start,
-        end: event.end,
-        allday: event.allday,
-        data: event,
-      })
+      let calendarEvent = new CalendarEvent();
+      calendarEvent.label = event.label;
+      calendarEvent.start = event.start;
+      calendarEvent.end = event.end;
+      calendarEvent.allday = event.allday;
+      calendarEvent.data = new Event();
+      Object.assign(calendarEvent.data, event);
+      this.calendarEvents.push(calendarEvent);
     });
   }
 
-  addDialogDay(date: Date): void {
-    let event = new Event();
-    event.start = date;
-    event.allday = true;
-    this.addDialiog(event);
+  eventEdit(calendarEvent: CalendarEvent): void {
+    let event = calendarEvent.data;
+    if (event) {
+      event.start = calendarEvent.start;
+      event.end = calendarEvent.end;
+      this.eventDialog(event, 'edit');
+    } else {
+      event = new Event();
+      event.start = calendarEvent.start;
+      event.end = calendarEvent.end;
+      event.allday = calendarEvent.allday;
+      this.eventDialog(event, 'add');
+    }
+  }
+  
+  eventView(calendarEvent: CalendarEvent): void {
+    let event = calendarEvent.data;
+    if (event) this.eventDialog(event, 'view');
   }
 
-  addDialogRange(range: CalendarEvent): void {
-    let event = new Event();
-    event.start = range.start;
-    event.end = range.end;
-    event.allday = range.allday;
-    this.addDialiog(event);
-  }
-
-  addDialiog(event: Event): void {
-    const dialogRef = this.dialog.open(EventDialogComponent, { data: { event: event, action: 'add' } });
-    dialogRef.afterClosed().subscribe(result => this.refreshCalendarEvents(this.events));
-    MatDialogConfig
-  }
-
-  eventDialog(event: CalendarEvent): void {
-    if (event.data) {
-      const dialogRef = this.dialog.open(EventDialogComponent, { data: { event: event.data, action: 'view' } });
-      dialogRef.afterClosed().subscribe(result => this.refreshCalendarEvents(this.events));  
-    } else this.addDialogRange(event);
-  }
-
-  updateEvent(event: CalendarEvent): void {
-    console.log(event);
+  eventDialog(event: Event, action: 'add' | 'edit' | 'view'): void {
+    const dialogRef = this.dialog.open(EventDialogComponent, { data: { event: event, action: action } });
+    dialogRef.afterClosed().subscribe(result => {
+      this.refreshCalendarEvents(this.events);
+      console.log('refreshCalendarEvents');
+    });  
   }
 }

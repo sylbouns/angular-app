@@ -11,7 +11,9 @@ export class CalendarMonthEventComponent implements OnInit {
   @Input() event: CalendarEvent;
   @Input() showStartTime: boolean = false;
   @Output() onEventClick: EventEmitter<CalendarEvent> = new EventEmitter<CalendarEvent>();
-
+  @Output() onEventExpandMousedownStart: EventEmitter<CalendarEvent> = new EventEmitter<CalendarEvent>();
+  @Output() onEventExpandMousedownEnd: EventEmitter<CalendarEvent> = new EventEmitter<CalendarEvent>();
+  
   constructor(public df: DateFsnService) { }
 
   ngOnInit(): void {

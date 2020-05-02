@@ -12,7 +12,6 @@ export class CalendarMonthDayComponent implements OnChanges {
   @Input() events: CalendarEvent[] = [];
   @Input() date: Date = new Date();
   @Input() out: boolean = false;
-  @Output() onDayClick: EventEmitter<Date> = new EventEmitter<Date>();
   @Output() onDayMousedown: EventEmitter<Date> = new EventEmitter<Date>();
   @Output() onDayMouseenter: EventEmitter<Date> = new EventEmitter<Date>();
   @Output() onDayMouseup: EventEmitter<Date> = new EventEmitter<Date>();

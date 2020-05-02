@@ -2,6 +2,7 @@ import { Component, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChange
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { DateFsnService } from '@app/theme/services/date-fsn.service';
 import { CalendarEvent } from '../calendar-event';
+import { CalendarMonthEditor } from './calendar-month.editor';
 
 @Component({
   selector: 'calendar-month',
@@ -13,22 +14,21 @@ export class CalendarMonthComponent implements OnInit, OnChanges {
   @Input() filteredEvents: CalendarEvent[] = [];
   @Input() date: Date = new Date();
   @Input() weekend: boolean = true;
-  @Output() onDayClick: EventEmitter<Date> = new EventEmitter<Date>();
-  @Output() onDayRange: EventEmitter<{ start: Date, end: Date }> = new EventEmitter<{ start: Date, end: Date }>();
   @Output() onEventClick: EventEmitter<CalendarEvent> = new EventEmitter<CalendarEvent>();
-  @Output() onEventMove: EventEmitter<CalendarEvent> = new EventEmitter<CalendarEvent>();
+  @Output() onEventEdit: EventEmitter<CalendarEvent> = new EventEmitter<CalendarEvent>();
 
   public start: Date;
   public end: Date;
   public weeks: Date[] = [];
 
-  private dumbEvent: CalendarEvent;
-  private dumbStart: Date;
+  // Event editor
+  public editor: CalendarMonthEditor;
 
   constructor(public df: DateFsnService) { }
 
   ngOnInit(): void {
     this.setWeeks();
+    this.initEditor();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -82,91 +82,26 @@ export class CalendarMonthComponent implements OnInit, OnChanges {
     this.setDate(this.df.subMonths(this.date, 1));
   }
 
-  // Dumb Event
-
-  isEditing(): boolean {
-    return this.dumbEvent != undefined;
+  // EDITOR
+  initEditor() {
+    this.editor = new CalendarMonthEditor(this.df);
+    this.editor.eventChanged.subscribe(event => this.updateEditorEvent(event));
+    this.editor.eventFixed.subscribe(event => this.onEventEdit.emit(event));
   }
 
-  onDayMousedown(date): void {
-    if (this.createDumbEvent(date)) this.events = [ ...this.events ];
+  updateEditorEvent(event: CalendarEvent) {
+    let index = this.events.findIndex(e => e.id == event.id);
+    if (index != -1) {
+      this.events.splice(index, 1, event);
+      this.events = [...this.events];
+    } else this.events = [event, ...this.events]
   }
 
-  onDayMouseenter(date): void {
-    if (this.isEditing() && this.updateDumbEvent(date)) this.events = [ ...this.events ];
-  }
+  onDayMousedown(date): void { this.editor.start(date); }
+  onDayMouseenter(date): void { this.editor.update(date); }
+  onDayMouseup(date): void { this.editor.stop(date); }
+  onEventExpandMousedownStart(event: CalendarEvent): void { this.editor.startExpand(event, 'start'); }
+  onEventExpandMousedownEnd(event: CalendarEvent): void { this.editor.startExpand(event, 'end'); }
+  onMonthMouseleave(): void { this.editor.stop(); }
 
-  onDayMouseup(date): void {
-    if (this.isEditing() && !this.isDayClick(date)) this.onDayRange.emit(this.dumbEvent);
-    this.dumbEvent = undefined;
-    this.dumbStart = undefined;
-  }
-
-  isDayClick(date): boolean {
-    return date == this.dumbStart;
-  }
-
-  onMonthMouseleave(): void {
-    if (this.dumbEvent) this.onDayRange.emit(this.dumbEvent);
-    this.stopEdit();
-  }
-
-  stopEdit(): void {
-    this.dumbEvent = undefined;
-    this.dumbStart = undefined;
-  }
-
-  startEdit(date: Date): void {
-    this.dumbStart = date;
-    this.dumbEvent = {
-      label: "(Sans titre)",
-      start: date,
-      end: date,
-      allday: true,
-      data: null,
-    }
-  }
-
-  createDumbEvent(date: Date): boolean {
-    if (this.isEditing()) return this.updateDumbEvent(date);
-    this.deleteDumbEvent();
-    this.startEdit(date);
-    this.events.push(this.dumbEvent);
-    return true;
-  }
-
-  getDumbEventIndex(): number {
-    return this.events.findIndex(event => event.label == "(Sans titre)");
-  }
-
-  updateDumbEvent(date: Date): boolean {
-    // Not editing
-    if (!this.isEditing()) return this.createDumbEvent(date);
-    // dumbEvent not found
-    let index = this.getDumbEventIndex();
-    if (index == -1) {
-      this.stopEdit();
-      return this.createDumbEvent(date);
-    }
-    // dumbEvent unchanged
-    if (date == this.events[index].start || date == this.events[index].end) return false;
-    // Update left or right
-    if (date > this.dumbStart) {
-      this.dumbEvent.start = this.dumbStart;
-      this.dumbEvent.end = date;
-    } else {
-      this.dumbEvent.start = date;
-      this.dumbEvent.end = this.dumbStart;
-      this.dumbEvent.end = this.df.addDays(this.dumbStart, 1);
-    }
-    this.events[index] = this.dumbEvent;
-    return true;
-  }
-
-  deleteDumbEvent(): boolean {
-    let index = this.getDumbEventIndex();
-    if (index != -1) this.events.splice(index, 1);
-    this.stopEdit();
-    return index > -1;
-  }
 }

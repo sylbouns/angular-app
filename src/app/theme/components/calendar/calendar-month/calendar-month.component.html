@@ -31,13 +31,14 @@
                     [date]="week" 
                     [context]="date" 
                     [weekend]="weekend"
-                    [isEditing]="isEditing()" 
+                    [isEditing]="editor.isEditing()" 
                     [ngStyle]="{height: 100 / weeks.length + '%'}"
-                    (onDayClick)="onDayClick.emit($event)"
-                    (onEventClick)="onEventClick.emit($event)"
                     (onDayMousedown)="onDayMousedown($event)"
                     (onDayMouseenter)="onDayMouseenter($event)"
                     (onDayMouseup)="onDayMouseup($event)"
+                    (onEventClick)="onEventClick.emit($event)"
+                    (onEventExpandMousedownStart)="onEventExpandMousedownStart($event)"
+                    (onEventExpandMousedownEnd)="onEventExpandMousedownEnd($event)"
                 ></calendar-month-week>
             </ng-container>    
         </div>

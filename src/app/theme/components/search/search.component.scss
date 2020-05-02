@@ -3,6 +3,7 @@
 form {
     display: flex;
     align-items: center;
+    width: calc(100vw - 40px);
     .search-input {
         font-weight: 300;
         font-size: 0.7em;

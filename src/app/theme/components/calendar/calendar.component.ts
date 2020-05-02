@@ -9,10 +9,8 @@ import { CalendarEvent } from './calendar-event';
 export class CalendarComponent implements OnInit {
   @Input() events: CalendarEvent[] = [];
   @Input() date: Date = new Date();
-  @Output() onDayClick: EventEmitter<Date> = new EventEmitter<Date>();
-  @Output() onDayRange: EventEmitter<{ start: Date, end: Date }> = new EventEmitter<{ start: Date, end: Date }>();
   @Output() onEventClick: EventEmitter<CalendarEvent> = new EventEmitter<CalendarEvent>();
-  @Output() onEventMove: EventEmitter<CalendarEvent> = new EventEmitter<CalendarEvent>();
+  @Output() onEventEdit: EventEmitter<CalendarEvent> = new EventEmitter<CalendarEvent>();
 
   constructor() {
   }

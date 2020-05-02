@@ -6,18 +6,28 @@ $palette: $primary;
     padding: 1px;
 }
 .event {
+    display: flex;
     background-color: mat-color($palette, 400);
-    padding: 4px 8px;
     border-radius: 4px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
     width: 100%;
+    height: 100%;
     opacity: 0.8;
     cursor: pointer;
-
-    .hour {
-        padding-right: 8px;
+    .expand {
+        display: block;
+        width: 8px;
+        height: 100%;
+        cursor: w-resize;
+    }
+    .label {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+            width: calc(100% - 16px);
+        padding: 4px 0;
+        .hour {
+            padding-right: 8px;
+        }    
     }
 }
 .event:hover {

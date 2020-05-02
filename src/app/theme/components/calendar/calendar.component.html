@@ -1,10 +1,8 @@
 <calendar-month 
     [date]="date" 
     [events]="events" 
-    (onDayClick)="onDayClick.emit($event)" 
-    (onDayRange)="onDayRange.emit($event)"
     (onEventClick)="onEventClick.emit($event)" 
-    (onEventMove)="onEventMove.emit($event)" 
+    (onEventEdit)="onEventEdit.emit($event)" 
 >
     <ng-content></ng-content>
 </calendar-month>
