@@ -55,30 +55,4 @@ export class CalendarMonthComponent implements OnInit, OnChanges {
     ));
   }
 
-  formatWeekDayName(day: number) {
-    return this.df.format(this.df.addDays(this.start, day), 'iii');
-  }
-
-  setDate(date: Date): void {
-    this.date = date;
-    this.setWeeks();
-  }
-
-  weekendChange($event: MatSlideToggleChange) {
-    this.weekend = $event.checked;
-    this.setWeeks();
-  }
-
-  today(): void {
-    this.setDate(new Date());
-  }
-
-  nextMonth(): void {
-    this.setDate(this.df.addMonths(this.date, 1));
-  }
-
-  previousMonth(): void {
-    this.setDate(this.df.subMonths(this.date, 1));
-  }
-
 }

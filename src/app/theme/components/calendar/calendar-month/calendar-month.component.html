@@ -1,40 +1,10 @@
-<section class="calendar-month">
-
-    <header>
-        <button mat-button (click)="today()">Aujourd'hui</button>
-        <button mat-icon-button mat-icon="keyboard_arrow_left" aria-hidden="false" aria-label="Mois précédent"
-            (click)="previousMonth()">
-            <mat-icon>keyboard_arrow_left</mat-icon>
-        </button>
-        <button mat-icon-button aria-hidden="false" aria-label="Mois suivant" (click)="nextMonth()">
-            <mat-icon>keyboard_arrow_right</mat-icon>
-        </button>
-        <h3 class="month-title">{{ df.format(date, 'MMMM y') }}</h3>
-        <span class="spacer"></span>
-        <mat-slide-toggle (change)="weekendChange($event)" [checked]="weekend">Weekend</mat-slide-toggle>
-    </header>
-
-    <main>
-        <div class="days-name">
-            <span>{{ formatWeekDayName(0) }}</span>
-            <span>{{ formatWeekDayName(1) }}</span>
-            <span>{{ formatWeekDayName(2) }}</span>
-            <span>{{ formatWeekDayName(3) }}</span>
-            <span>{{ formatWeekDayName(4) }}</span>
-            <span *ngIf="weekend">{{ formatWeekDayName(5) }}</span>
-            <span *ngIf="weekend">{{ formatWeekDayName(6) }}</span>
-        </div>
-        <div class="weeks">
-            <ng-container *ngFor="let week of weeks">
-                <calendar-month-week 
-                    [events]="events" 
-                    [date]="week" 
-                    [context]="date" 
-                    [weekend]="weekend"
-                    [ngStyle]="{height: 100 / weeks.length + '%'}"
-                ></calendar-month-week>
-            </ng-container>    
-        </div>
-    </main>
-
-</section>
+<ng-container *ngFor="let week of weeks; let index = index">
+    <calendar-week 
+        [events]="events" 
+        [date]="week" 
+        [context]="date" 
+        [weekend]="weekend"
+        [showDayNames]="index == 0"
+        [ngStyle]="{height: 100 / weeks.length + '%'}"
+    ></calendar-week>
+</ng-container>    

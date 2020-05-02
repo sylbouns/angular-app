@@ -1,9 +1,47 @@
-<calendar-month 
-    [date]="date" 
-    [events]="events" 
-    (onEventClick)="onEventClick.emit($event)" 
-    (onEventEdit)="onEventEdit.emit($event)"
-    (mouseleave)="onCalendarMouseleave()"
->
-    <ng-content></ng-content>
-</calendar-month>
+<section (mouseleave)="onCalendarMouseleave()">
+
+    <header>
+        <button mat-button (click)="today()">Aujourd'hui</button>
+        <button mat-icon-button aria-hidden="false" aria-label="Mois précédent" (click)="previous()">
+            <mat-icon>keyboard_arrow_left</mat-icon>
+        </button>
+        <button mat-icon-button aria-hidden="false" aria-label="Mois suivant" (click)="next()">
+            <mat-icon>keyboard_arrow_right</mat-icon>
+        </button>
+        <h3 class="title">{{ getWeekCalendarTitle() }}</h3>
+        <span class="spacer"></span>
+        <mat-form-field appearance="outline" class="view-select">
+            <mat-select [value]="view" (selectionChange)="setView($event)">
+                <mat-option value="month">Month</mat-option>
+                <mat-option value="week">Week</mat-option>
+            </mat-select>
+        </mat-form-field>          
+        <mat-slide-toggle (change)="weekendChange($event)" [checked]="weekend">Weekend</mat-slide-toggle>
+    </header>
+
+    <main>
+        <calendar-month 
+            *ngIf="view == 'month'"
+            class="calendar"
+            [date]="date" 
+            [events]="events" 
+            [weekend]="weekend"
+            (onEventClick)="onEventClick.emit($event)" 
+            (onEventEdit)="onEventEdit.emit($event)"
+        >
+            <ng-content></ng-content>
+        </calendar-month>
+
+        <calendar-week 
+            *ngIf="view == 'week'"
+            [events]="events" 
+            [date]="date" 
+            [context]="date" 
+            [weekend]="weekend"
+            [showDayNames]="true"
+            [ngStyle]="{height: '100%'}"
+        ></calendar-week>
+
+    </main>
+
+</section>

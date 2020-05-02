@@ -1,6 +1,54 @@
-:host {
-    -webkit-user-select: none;  
-    -moz-user-select: none;    
-    -ms-user-select: none;      
+@import "_variables.scss";
+
+$palette: $primary;
+
+section {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
     user-select: none;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    .spacer {
+        flex-grow: 1;
+    }
+    header {
+        margin: 8px;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        align-items: center;
+        .title {
+            margin: 0 8px;
+            text-transform: capitalize;
+        }
+        mat-slide-toggle {
+            margin-right: 16px;
+        }
+        ::ng-deep .view-select {
+            width: 96px;
+            .mat-form-field-infix {
+                padding: 4px 0 8px 0;
+                border-top-width: 8px;
+            }
+            .mat-form-field-wrapper {
+                padding: 0;
+                margin: 0 16px 0 0;
+            }
+        }
+    }
+    main {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: space-between;
+        flex-grow: 1;
+        overflow-y: auto;
+        .calendar {
+            height: 100%;
+        }
+    }
 }

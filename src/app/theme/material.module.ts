@@ -17,6 +17,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSelectModule } from '@angular/material/select';
 
 @Injectable()
 class MaterialDateAdapter extends NativeDateAdapter {
@@ -43,6 +44,7 @@ class MaterialDateAdapter extends NativeDateAdapter {
     MatSlideToggleModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatSelectModule,
   ],
   providers: [
     MatDatepickerModule,

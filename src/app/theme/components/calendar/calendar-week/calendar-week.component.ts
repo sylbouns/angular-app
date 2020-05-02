@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { DateFsnService } from '@app/theme/services/date-fsn.service';
-import { CalendarEvent } from '../../calendar-event';
-import { CalendarEditor } from '../../calendar.editor';
+import { CalendarEvent } from '../calendar-event';
+import { CalendarEditor } from '../calendar.editor';
 
 class GridEvent {
   public event: CalendarEvent;
@@ -13,15 +13,16 @@ class GridEvent {
 }
 
 @Component({
-  selector: 'calendar-month-week',
-  templateUrl: './calendar-month-week.component.html',
-  styleUrls: ['./calendar-month-week.component.scss']
+  selector: 'calendar-week',
+  templateUrl: './calendar-week.component.html',
+  styleUrls: ['./calendar-week.component.scss']
 })
-export class CalendarMonthWeekComponent implements OnInit, OnChanges {
+export class CalendarWeekComponent implements OnInit, OnChanges {
   @Input() events: CalendarEvent[];
   @Input() date: Date = new Date();
   @Input() context: Date;
-  @Input() weekend: boolean = false;
+  @Input() weekend: boolean = true;
+  @Input() showDayNames: boolean = false;
   @Input() showDayEvents: boolean = false;
   @Input() eventLineHeight: number = 30; // pixels
 
@@ -43,10 +44,9 @@ export class CalendarMonthWeekComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.date) this.setDays();
+    if (changes.date || changes.weekend) this.setDays();
     if (changes.events) this.refreshEventsGrid(changes.events.currentValue);
-    if (changes.weekend) this.refreshEventsGrid(this.events);
-    if (changes.events || changes.weekend) this.refreshEventsGridRows();
+    if (changes.date || changes.weekend) this.refreshEventsGrid(this.events);
   }
 
   setDays(): void {
@@ -125,5 +125,9 @@ export class CalendarMonthWeekComponent implements OnInit, OnChanges {
     gridEvent.left = gridEvent.start / this.length * 100 + '%';
     gridEvent.width = (gridEvent.end - gridEvent.start) / this.length * 100 + '%';
     this.eventsGridRows[row].splice(index, 0, gridEvent);
+  }
+
+  formatWeekDayName(day: number) {
+    return this.df.format(this.df.addDays(this.start, day), 'iii');
   }
 }

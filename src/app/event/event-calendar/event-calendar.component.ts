@@ -60,7 +60,7 @@ export class EventCalendarComponent implements OnInit {
     if (event) this.eventDialog(event, 'view');
   }
 
-  eventDialog(event: Event, action: 'add' | 'edit' | 'view') {
+  eventDialog(event: Event, action: 'add' | 'edit' | 'view'): void {
     const dialogRef = this.dialog.open(EventDialogComponent, { data: { event: event, action: action } });
     dialogRef.afterClosed().subscribe(result => this.refreshCalendarEvents(this.events) );  
   }

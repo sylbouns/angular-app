@@ -1,0 +1,43 @@
+<div class="days-name" *ngIf="showDayNames">
+    <span>{{ formatWeekDayName(0) }}</span>
+    <span>{{ formatWeekDayName(1) }}</span>
+    <span>{{ formatWeekDayName(2) }}</span>
+    <span>{{ formatWeekDayName(3) }}</span>
+    <span>{{ formatWeekDayName(4) }}</span>
+    <span *ngIf="weekend">{{ formatWeekDayName(5) }}</span>
+    <span *ngIf="weekend">{{ formatWeekDayName(6) }}</span>
+</div>
+
+<div class="weekline" [ngClass]="{'day-names-above': showDayNames}">
+
+    <span class="number">{{ df.format(date, 'w') }}</span>
+    
+    <div class="week">
+
+        <div class="days">
+            <ng-container *ngFor="let day of days">
+                <calendar-month-day 
+                    *ngIf="weekend || !df.isWeekend(day)" 
+                    [date]="day"
+                    [out]="!df.isSameMonth(context, day)" 
+                    [ngStyle]="{width: weekend ? '14.28%' : '20%'}"
+                    [events]="showDayEvents ? filteredEvents : []"
+                ></calendar-month-day>
+            </ng-container>
+        </div>
+
+        <div class="events" [ngClass]="{'editing': editor.isEditing()}">
+            <ng-container *ngFor="let row of eventsGridRows">
+                <ng-container *ngFor="let gridEvent of row">
+                    <calendar-month-event 
+                        [event]="gridEvent.event" 
+                        [showStartTime]="!gridEvent.event.allday && df.isSameWeek(gridEvent.event.start, date)"
+                        [ngStyle]="{top: gridEvent.top, left: gridEvent.left, width: gridEvent.width, height: eventLineHeight + 'px'}"
+                    ></calendar-month-event>
+                </ng-container>
+            </ng-container>
+        </div>
+        
+    </div>
+
+</div>
