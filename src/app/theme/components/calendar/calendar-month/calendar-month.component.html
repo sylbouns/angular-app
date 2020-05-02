@@ -24,21 +24,14 @@
             <span *ngIf="weekend">{{ formatWeekDayName(5) }}</span>
             <span *ngIf="weekend">{{ formatWeekDayName(6) }}</span>
         </div>
-        <div class="weeks" (mouseleave)="onMonthMouseleave()">
+        <div class="weeks">
             <ng-container *ngFor="let week of weeks">
                 <calendar-month-week 
                     [events]="events" 
                     [date]="week" 
                     [context]="date" 
                     [weekend]="weekend"
-                    [isEditing]="editor.isEditing()" 
                     [ngStyle]="{height: 100 / weeks.length + '%'}"
-                    (onDayMousedown)="onDayMousedown($event)"
-                    (onDayMouseenter)="onDayMouseenter($event)"
-                    (onDayMouseup)="onDayMouseup($event)"
-                    (onEventClick)="onEventClick.emit($event)"
-                    (onEventExpandMousedownStart)="onEventExpandMousedownStart($event)"
-                    (onEventExpandMousedownEnd)="onEventExpandMousedownEnd($event)"
                 ></calendar-month-week>
             </ng-container>    
         </div>

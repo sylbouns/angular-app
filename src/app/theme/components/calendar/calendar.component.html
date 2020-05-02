@@ -2,7 +2,8 @@
     [date]="date" 
     [events]="events" 
     (onEventClick)="onEventClick.emit($event)" 
-    (onEventEdit)="onEventEdit.emit($event)" 
+    (onEventEdit)="onEventEdit.emit($event)"
+    (mouseleave)="onCalendarMouseleave()"
 >
     <ng-content></ng-content>
 </calendar-month>

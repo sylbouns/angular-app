@@ -3,7 +3,7 @@ import { EventService } from '@app/event/event.service';
 import { Event } from '@app/event/event.model';
 import { CalendarEvent } from '@app/theme/components/calendar/calendar-event';
 import { EventDialogComponent } from '@app/event/event-dialog/event-dialog.component';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-event-calendar',
@@ -60,11 +60,8 @@ export class EventCalendarComponent implements OnInit {
     if (event) this.eventDialog(event, 'view');
   }
 
-  eventDialog(event: Event, action: 'add' | 'edit' | 'view'): void {
+  eventDialog(event: Event, action: 'add' | 'edit' | 'view') {
     const dialogRef = this.dialog.open(EventDialogComponent, { data: { event: event, action: action } });
-    dialogRef.afterClosed().subscribe(result => {
-      this.refreshCalendarEvents(this.events);
-      console.log('refreshCalendarEvents');
-    });  
+    dialogRef.afterClosed().subscribe(result => this.refreshCalendarEvents(this.events) );  
   }
 }

@@ -2,7 +2,7 @@ import { Component, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChange
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { DateFsnService } from '@app/theme/services/date-fsn.service';
 import { CalendarEvent } from '../calendar-event';
-import { CalendarMonthEditor } from './calendar-month.editor';
+import { CalendarEditor } from '../calendar.editor';
 
 @Component({
   selector: 'calendar-month',
@@ -21,14 +21,13 @@ export class CalendarMonthComponent implements OnInit, OnChanges {
   public end: Date;
   public weeks: Date[] = [];
 
-  // Event editor
-  public editor: CalendarMonthEditor;
-
-  constructor(public df: DateFsnService) { }
+  constructor(
+    public editor: CalendarEditor,
+    public df: DateFsnService
+  ) { }
 
   ngOnInit(): void {
     this.setWeeks();
-    this.initEditor();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -81,27 +80,5 @@ export class CalendarMonthComponent implements OnInit, OnChanges {
   previousMonth(): void {
     this.setDate(this.df.subMonths(this.date, 1));
   }
-
-  // EDITOR
-  initEditor() {
-    this.editor = new CalendarMonthEditor(this.df);
-    this.editor.eventChanged.subscribe(event => this.updateEditorEvent(event));
-    this.editor.eventFixed.subscribe(event => this.onEventEdit.emit(event));
-  }
-
-  updateEditorEvent(event: CalendarEvent) {
-    let index = this.events.findIndex(e => e.id == event.id);
-    if (index != -1) {
-      this.events.splice(index, 1, event);
-      this.events = [...this.events];
-    } else this.events = [event, ...this.events]
-  }
-
-  onDayMousedown(date): void { this.editor.start(date); }
-  onDayMouseenter(date): void { this.editor.update(date); }
-  onDayMouseup(date): void { this.editor.stop(date); }
-  onEventExpandMousedownStart(event: CalendarEvent): void { this.editor.startExpand(event, 'start'); }
-  onEventExpandMousedownEnd(event: CalendarEvent): void { this.editor.startExpand(event, 'end'); }
-  onMonthMouseleave(): void { this.editor.stop(); }
 
 }

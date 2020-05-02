@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { DateFsnService } from '@app/theme/services/date-fsn.service';
-import { MatDialog } from '@angular/material/dialog';
 import { CalendarEvent } from '../../calendar-event';
+import { CalendarEditor } from '../../calendar.editor';
 
 @Component({
   selector: 'calendar-month-day',
@@ -12,17 +12,14 @@ export class CalendarMonthDayComponent implements OnChanges {
   @Input() events: CalendarEvent[] = [];
   @Input() date: Date = new Date();
   @Input() out: boolean = false;
-  @Output() onDayMousedown: EventEmitter<Date> = new EventEmitter<Date>();
-  @Output() onDayMouseenter: EventEmitter<Date> = new EventEmitter<Date>();
-  @Output() onDayMouseup: EventEmitter<Date> = new EventEmitter<Date>();
 
   public start: Date;
   public end: Date;
   public filteredEvents: CalendarEvent[] = [];
 
   constructor(
+    public editor: CalendarEditor,
     public df: DateFsnService,
-    public dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {

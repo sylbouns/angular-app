@@ -1,22 +1,45 @@
+import { EventEmitter, Injectable } from '@angular/core';
 import { DateFsnService } from '@app/theme/services/date-fsn.service';
-import { CalendarEvent } from '../calendar-event';
+import { CalendarEvent } from './calendar-event';
 import { Subject } from 'rxjs';
 
-export class CalendarMonthEditor {
+@Injectable({
+  providedIn: "root"
+})
+export class CalendarEditor {
   public event: CalendarEvent;
   public initial: CalendarEvent;
   public expand: 'start' | 'end';
+  public drag: Date;
+
   public eventChanged: Subject<CalendarEvent> = new Subject<CalendarEvent>();
   public eventFixed: Subject<CalendarEvent> = new Subject<CalendarEvent>();
 
   constructor(public df: DateFsnService) { }
 
+  getEditedEvents(event: CalendarEvent, events: CalendarEvent[]): CalendarEvent[] {
+    let index = events.findIndex(e => e.id == event.id);
+    if (index != -1) {
+      events.splice(index, 1, event);
+      events = [...events];
+    } else events = [event, ...events]
+    return events;
+  }
+
   isEditing(): boolean {
     return this.event != undefined;
   }
 
+  isEditingEvent(event: CalendarEvent): boolean {
+    return this.isEditing() && this.event.id == event.id;
+  }
+
+  isDragging(): boolean {
+    return this.drag !== undefined;
+  }
+
   start(date: Date): void {
-    if (this.isEditing()) this.updateEvent(date);
+    if (this.isEditing()) this.expandEvent(date);
     else this.newEvent(date);
   }
 
@@ -40,14 +63,21 @@ export class CalendarMonthEditor {
     this.expand = position;
   }
 
+  startDrag(event: CalendarEvent): void {
+    this.event = event;
+    this.setInitial(this.event);
+    this.drag = null;
+  }
+
   clean(): void {
     this.event = undefined;
     this.initial = undefined;
     this.expand = undefined;
+    this.drag = undefined;
   }
 
   update(date): void {
-    if (this.isEditing()) this.updateEvent(date);
+    if (this.isEditing()) this.isDragging() ? this.dragEvent(date) : this.expandEvent(date);
   }
 
   stop(date?: Date): void {
@@ -60,7 +90,7 @@ export class CalendarMonthEditor {
     return date ? date == this.initial.start : false;
   }
 
-  updateEvent(date: Date) {
+  expandEvent(date: Date) {
     if (date <= this.initial.start) {
       this.event.start = this.applyTimeOnDay(this.initial.start, date);
       this.event.end = this.initial.end ? this.initial.end : this.initial.start;
@@ -84,5 +114,15 @@ export class CalendarMonthEditor {
     if (!time) return day;
     day.setHours(time.getHours(), time.getMinutes());
     return day;
+  }
+
+  dragEvent(date: Date): void {
+    if (this.drag == null) this.drag = date;
+    else {
+      let move = date.getTime() - this.drag.getTime();
+      this.event.start = this.df.addMilliseconds(this.initial.start, move);
+      this.event.end = this.initial.end ? this.df.addMilliseconds(this.initial.end, move) : this.initial.end;
+    }
+    this.eventChanged.next(this.event);
   }
 }

@@ -1,8 +1,8 @@
-<div class="event" (click)="onEventClick.emit(event)">
-    <span class="expand" (mousedown)="onEventExpandMousedownStart.emit(event)"></span>
-    <span class="label">
+<div class="event" (click)="onEventClick.emit(event)" [ngClass]="{'editing': editor.isEditingEvent(event)}">
+    <span class="expand" (mousedown)="editor.startExpand(event, 'start')"></span>
+    <span class="label" (mousedown)="editor.startDrag(event)">
         <span class="hour" *ngIf="showStartTime">{{ df.format(event.start, 'HH:mm') }}</span>
         {{ event.label }}
     </span>
-    <span class="expand" (mousedown)="onEventExpandMousedownEnd.emit(event)"></span>
+    <span class="expand" (mousedown)="editor.startExpand(event, 'end')"></span>
 </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { DateFsnService } from '@app/theme/services/date-fsn.service';
 import { CalendarEvent } from '../../calendar-event';
+import { CalendarEditor } from '../../calendar.editor';
 
 class GridEvent {
   public event: CalendarEvent;
@@ -23,13 +24,6 @@ export class CalendarMonthWeekComponent implements OnInit, OnChanges {
   @Input() weekend: boolean = false;
   @Input() showDayEvents: boolean = false;
   @Input() eventLineHeight: number = 30; // pixels
-  @Input() isEditing: boolean = false;
-  @Output() onDayMousedown: EventEmitter<Date> = new EventEmitter<Date>();
-  @Output() onDayMouseenter: EventEmitter<Date> = new EventEmitter<Date>();
-  @Output() onDayMouseup: EventEmitter<Date> = new EventEmitter<Date>();
-  @Output() onEventClick: EventEmitter<CalendarEvent> = new EventEmitter<CalendarEvent>();
-  @Output() onEventExpandMousedownStart: EventEmitter<CalendarEvent> = new EventEmitter<CalendarEvent>();
-  @Output() onEventExpandMousedownEnd: EventEmitter<CalendarEvent> = new EventEmitter<CalendarEvent>();
 
   public days: Date[];
   public start: Date;
@@ -39,7 +33,10 @@ export class CalendarMonthWeekComponent implements OnInit, OnChanges {
   private startTime: number;
   private length: number;
 
-  constructor(public df: DateFsnService) { }
+  constructor(
+    public editor: CalendarEditor,
+    public df: DateFsnService
+  ) { }
 
   ngOnInit(): void {
     this.setDays();

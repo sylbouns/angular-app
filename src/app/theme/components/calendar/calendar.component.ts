@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CalendarEvent } from './calendar-event';
+import { CalendarEditor } from './calendar.editor';
 
 @Component({
   selector: 'calendar',
@@ -12,9 +13,13 @@ export class CalendarComponent implements OnInit {
   @Output() onEventClick: EventEmitter<CalendarEvent> = new EventEmitter<CalendarEvent>();
   @Output() onEventEdit: EventEmitter<CalendarEvent> = new EventEmitter<CalendarEvent>();
 
-  constructor() {
+  constructor(public editor: CalendarEditor) {
   }
 
   ngOnInit(): void {
+    this.editor.eventChanged.subscribe(event =>  this.events = this.editor.getEditedEvents(event, this.events));
+    this.editor.eventFixed.subscribe(event => this.onEventEdit.emit(event));
   }
+
+  onCalendarMouseleave(): void { this.editor.stop(); }
 }

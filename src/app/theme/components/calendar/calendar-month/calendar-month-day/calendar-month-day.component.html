@@ -1,10 +1,11 @@
-<div class="day" [ngClass]="{ 'out': out, 'weekend': df.isWeekend(date), 'today': df.isToday(date) }">
+<div class="day" 
+    [ngClass]="{ 'out': out, 'weekend': df.isWeekend(date), 'today': df.isToday(date) }"
+    (mousedown)="editor.start(date)"
+    (mouseenter)="editor.update(date)"
+    (mouseup)="editor.stop(date)"
+>
     <span class="day-number">{{ df.format(date, 'd') }} <span *ngIf="df.isFirstDayOfMonth(date)">{{ df.format(date, 'MMM') }}</span></span>
-    <div class="day-content" 
-        (mousedown)="onDayMousedown.emit(date)"
-        (mouseenter)="onDayMouseenter.emit(date)"
-        (mouseup)="onDayMouseup.emit(date)"
-    >
+    <div class="day-content">
         <div class="day-event" *ngFor="let event of filteredEvents">{{ event.label }}</div>
     </div>
 </div>  
