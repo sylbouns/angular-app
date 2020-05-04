@@ -13,12 +13,10 @@ import { CalendarNav } from '../calendar-nav';
 export class CalendarMonthComponent implements OnInit, OnChanges {
   @Input() events: CalendarEvent[] = [];
   @Input() filteredEvents: CalendarEvent[] = [];
-  @Input() date: Date = new Date();
+  @Input() date: Date;
   @Input() editor: CalendarEditor;
   @Input() nav: CalendarNav;
   @Input() weekend: boolean = true;
-  @Output() onEventClick: EventEmitter<CalendarEvent> = new EventEmitter<CalendarEvent>();
-  @Output() onEventEdit: EventEmitter<CalendarEvent> = new EventEmitter<CalendarEvent>();
 
   public start: Date;
   public end: Date;

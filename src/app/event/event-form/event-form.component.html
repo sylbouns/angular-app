@@ -2,7 +2,7 @@
 
     <mat-form-field appearance="fill" class="label">
         <mat-label>Label</mat-label>
-        <input #label="matInput" matInput autofocus id="label" formControlName="label" required>
+        <input #label="matInput" matInput id="label" formControlName="label" required>
     </mat-form-field>
 
     <mat-slide-toggle [checked]="allday" (change)="toggleAllday($event)">All day

@@ -14,7 +14,6 @@ export class CalendarEventComponent implements OnInit {
   @Input() showStartTime: boolean = false;
   @Input() editor: CalendarEditor;
   @Input() nav: CalendarNav;
-  @Output() onEventClick: EventEmitter<CalendarEvent> = new EventEmitter<CalendarEvent>();
   
   constructor(
     public df: DateFsnService

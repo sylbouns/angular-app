@@ -23,8 +23,12 @@ section {
         justify-content: space-between;
         align-items: center;
         .title {
-            margin: 0 8px;
+            margin: 0 16px;
             text-transform: capitalize;
+        }
+        .title-link { cursor: pointer; }
+        mat-chip-list {
+            margin: 0 16px;
         }
         mat-slide-toggle {
             margin-right: 16px;

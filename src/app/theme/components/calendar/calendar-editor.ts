@@ -1,6 +1,7 @@
 import { DateFsnService } from '@app/theme/services/date-fsn.service';
 import { CalendarEvent } from './calendar-event';
 import { Subject } from 'rxjs';
+import { EventEmitter } from '@angular/core';
 
 export const df = new DateFsnService();
 
@@ -12,6 +13,7 @@ export class CalendarEditor {
 
   public eventChanged: Subject<CalendarEvent> = new Subject<CalendarEvent>();
   public eventFixed: Subject<CalendarEvent> = new Subject<CalendarEvent>();
+  public eventClicked: EventEmitter<CalendarEvent> = new EventEmitter<CalendarEvent>();
 
   constructor() { }
 
@@ -34,6 +36,10 @@ export class CalendarEditor {
 
   isDragging(): boolean {
     return this.drag !== undefined;
+  }
+
+  isExpanding(): boolean {
+    return this.expand !== undefined;
   }
 
   start(date: Date): void {
@@ -79,13 +85,26 @@ export class CalendarEditor {
   }
 
   stop(date?: Date): void {
-    if (this.isEditing() && this.isDayClick(date)) this.event.end = undefined;
-    if (this.isEditing()) this.eventFixed.next(this.event);
+    if (this.isEditing() && !this.isEventClick(date)) {
+      if (this.isDayClick(date)) this.event.end = undefined;
+      this.eventFixed.next(this.event);
+    } else if (this.isEventClick(date)) {
+      this.eventClicked.emit(this.event);
+    } 
     this.clean();
   }
 
   isDayClick(date: Date): boolean {
     return date ? date == this.initial.start : false;
+  }
+
+  isEventClick(date: Date): boolean {
+    if (this.isDragging() && this.drag == date) return true;
+    if (this.isExpanding()) {
+      if (this.expand == 'start' && df.isSameDay(this.initial.start, date)) return true;
+      if (this.expand == 'end' && df.isSameDay(this.initial.end ? this.initial.end : this.initial.start, date)) return true;
+    }
+    return false;
   }
 
   expandEvent(date: Date) {

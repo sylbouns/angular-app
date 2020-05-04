@@ -8,7 +8,31 @@
         <button mat-icon-button aria-hidden="false" aria-label="Mois suivant" [routerLink]="nav.next">
             <mat-icon>keyboard_arrow_right</mat-icon>
         </button>
-        <h3 class="title">{{ title }}</h3>
+        
+        <ng-container *ngIf="nav.view == 'day'">
+            <h3 class="title">
+                {{ titleDay }}
+                <span class="title-link" [routerLink]="nav.getRouterLink('month', date)">{{ titleMonth }} {{ titleYear }}</span>
+            </h3>
+            <mat-chip-list *ngIf="titleWeek"><mat-chip [routerLink]="nav.getRouterLink('week', date)">{{ titleWeek }}</mat-chip></mat-chip-list>
+        </ng-container>
+
+        <ng-container *ngIf="nav.view == 'week'">
+            <h3 class="title title-link" [routerLink]="nav.getRouterLink('month', date)">{{ titleMonth }} {{ titleYear }}</h3>
+            <mat-chip-list *ngIf="titleWeek"><mat-chip disableRipple>{{ titleWeek }}</mat-chip></mat-chip-list>
+        </ng-container>
+        
+        <ng-container *ngIf="nav.view == 'month'">
+            <h3 class="title">
+                {{ titleMonth }}
+                <span class="title-link" [routerLink]="nav.getRouterLink('year', date)">{{ titleYear }}</span>
+            </h3>
+        </ng-container>
+
+        <ng-container *ngIf="nav.view == 'year'">
+            <h3 class="title">{{ titleYear }}</h3>
+        </ng-container>
+
         <span class="spacer"></span>
         <mat-form-field appearance="outline" class="view-select">
             <mat-select [value]="nav.view">
@@ -22,6 +46,16 @@
     </header>
 
     <main>
+        <calendar-year 
+            *ngIf="view == 'year'"
+            class="calendar"
+            [date]="date" 
+            [events]="events"
+            [nav]="nav"
+        >
+            <ng-content></ng-content>
+        </calendar-year>
+
         <calendar-month 
             *ngIf="view == 'month'"
             class="calendar"
@@ -38,6 +72,7 @@
 
         <calendar-week 
             *ngIf="view == 'week'"
+            class="calendar"
             [events]="events" 
             [nav]="nav"
             [editor]="editor"

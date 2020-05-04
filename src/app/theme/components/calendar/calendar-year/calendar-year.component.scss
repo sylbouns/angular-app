@@ -1,0 +1,71 @@
+@import "_variables.scss";
+
+@mixin cell {
+    display: block;
+    width: 32px;
+    height: 32px;
+    padding: 4px;
+    text-align: center;
+    line-height: 24px;    
+}
+
+.year {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin: 16px;
+}
+.month {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    padding: 8px;
+    .month-name {
+        text-transform: capitalize;
+        margin: 8px 0 4px 0;
+        font-size: medium;
+        cursor: pointer;
+    }
+    .day-names {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+
+        .day-name {
+            @include cell;
+        }
+    }
+}
+.week {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    .week-number {
+        @include cell;
+        background-color: rgba(0, 0, 0, 0.4);
+        cursor: pointer;
+    }
+    .day {
+        @include cell;
+        cursor: pointer;
+        span { 
+            display: block;
+            border-radius: 16px; 
+        }
+
+        &.out { background-color: rgba(0, 0, 0, 0.15); }
+        &.weekend { background-color: rgba(0, 0, 0, 0.2); }
+        &.weekend.out { background-color: rgba(0, 0, 0, 0.25); }
+
+        &.has-event span {
+            background-color: rgba($color: mat-color($accent), $alpha: 0.3) ;
+        }
+        &.has-event span:hover {
+            background-color: rgba($color: mat-color($accent), $alpha: 0.5) ;
+        }
+        &.today span {
+            background-color: mat-color($accent);
+        }
+    }
+}

@@ -4,7 +4,7 @@
 >
     <span class="day-number" [routerLink]="nav.getRouterLink('day', date)" >{{ df.format(date, 'd') }} <span *ngIf="df.isFirstDayOfMonth(date)">{{ df.format(date, 'MMM') }}</span></span>
     <div class="day-content"
-        (mousedown)="editor.start(date)"
+        (mousedown)="$event.which == 1 ? editor.start(date) : false"
         (mouseup)="editor.stop(date)"
     >
         <div class="day-event" *ngFor="let event of filteredEvents">{{ event.label }}</div>

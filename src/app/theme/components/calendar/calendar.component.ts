@@ -23,7 +23,10 @@ export class CalendarComponent implements OnInit {
   public date: Date;
   public nav: CalendarNav;
   public editor: CalendarEditor;
-  public title: string;
+  public titleDay: string;
+  public titleWeek: string;
+  public titleMonth: string;
+  public titleYear: string;
 
   constructor(
     public df: DateFsnService,
@@ -38,7 +41,7 @@ export class CalendarComponent implements OnInit {
     this.nav = nav;
     this.date = nav.date;
     this.view = nav.view;
-    this.setTitle();
+    this.setTitles();
     this.initEditor();
   }
 
@@ -46,25 +49,16 @@ export class CalendarComponent implements OnInit {
     this.editor = new CalendarEditor();
     this.editor.eventChanged.subscribe(event =>  this.events = this.editor.getEditedEvents(event, this.events));
     this.editor.eventFixed.subscribe(event => this.onEventEdit.emit(event));
+    this.editor.eventClicked.subscribe(event => this.onEventClick.emit(event));
   }
 
   onCalendarMouseleave(): void { this.editor.stop(); }
 
-  setTitle() {
-    switch (this.view) {
-      case 'month': this.title = this.df.format(this.date, 'MMMM y'); break;
-      case 'week': this.title = this.getWeekCalendarTitle(); break;
-    }
-  }
-
-  getWeekCalendarTitle(): string {
-    let start = this.df.startOfWeek(this.date);
-    let end = this.df.endOfWeek(this.date);
-    let title = this.df.format(start, 'MMMM');
-    if (!this.df.isSameMonth(start, end)) title+= this.df.format(end, '- MMMM');
-    title+= this.df.format(end, ' yyyy');
-    title+= ' (semaine ' + this.df.format(this.date, 'w') + ')';
-    return title;
+  setTitles() {
+    this.titleDay = this.df.format(this.date, 'EEEE d');
+    this.titleWeek = 'semaine ' + this.df.format(this.date, 'w');
+    this.titleMonth = this.df.format(this.date, 'MMMM');
+    this.titleYear = this.df.format(this.date, 'y');
   }
 
   weekendChange($event: MatSlideToggleChange) {

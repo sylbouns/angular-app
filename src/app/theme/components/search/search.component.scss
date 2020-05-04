@@ -3,12 +3,14 @@
 form {
     display: flex;
     align-items: center;
-    width: calc(100vw - 40px);
     .search-input {
         font-weight: 300;
         font-size: 0.7em;
 
         width: 300px;
+        @include media($xsmall) {
+            width: calc(100vw - 82px);
+        }
 
         ::ng-deep .mat-form-field-label {
             font-style: italic;
