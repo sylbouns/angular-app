@@ -17,9 +17,8 @@ export class EventGuard implements CanActivate, CanActivateChild {
     let year = route.paramMap.get('year');
     let month = route.paramMap.get('month');
     let day = route.paramMap.get('day');
-console.log('canActivate');
-    if (view == 'day') return false;
-    if (Number(month) < 5) return false;
+
+    if (Number(month) <= new Date().getMonth()) return false;
 
     return true;
   }

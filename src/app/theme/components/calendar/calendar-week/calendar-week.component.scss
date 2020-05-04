@@ -53,7 +53,7 @@ $palette: $primary;
             width: 100%;
             height: 100%;
 
-            calendar-month-day {
+            calendar-week-day {
                 height: 100%;
                 flex-grow: 1;
                 overflow-y: auto;
@@ -64,13 +64,13 @@ $palette: $primary;
             position: relative;
             overflow-y: auto;
             pointer-events: none;
-            calendar-month-event {
+            calendar-event {
                 pointer-events: all;
                 position: absolute;
                 padding: 1px;
                 overflow: hidden;
             }
-            &.editing calendar-month-event {
+            &.editing calendar-event {
                 pointer-events: none;
             }
         }

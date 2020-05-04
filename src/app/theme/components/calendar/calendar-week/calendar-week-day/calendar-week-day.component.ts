@@ -5,11 +5,11 @@ import { CalendarEditor } from '../../calendar-editor';
 import { CalendarNav } from '../../calendar-nav';
 
 @Component({
-  selector: 'calendar-month-day',
-  templateUrl: './calendar-month-day.component.html',
-  styleUrls: ['./calendar-month-day.component.scss']
+  selector: 'calendar-week-day',
+  templateUrl: './calendar-week-day.component.html',
+  styleUrls: ['./calendar-week-day.component.scss']
 })
-export class CalendarMonthDayComponent implements OnChanges {
+export class CalendarWeekDayComponent implements OnChanges {
   @Input() events: CalendarEvent[] = [];
   @Input() date: Date = new Date();
   @Input() out: boolean = false;

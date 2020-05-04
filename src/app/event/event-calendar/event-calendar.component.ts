@@ -4,7 +4,6 @@ import { Event } from '@app/event/event.model';
 import { CalendarEvent } from '@app/theme/components/calendar/calendar-event';
 import { EventDialogComponent } from '@app/event/event-dialog/event-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-event-calendar',

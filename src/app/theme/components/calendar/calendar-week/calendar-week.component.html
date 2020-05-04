@@ -16,7 +16,7 @@
 
         <div class="days">
             <ng-container *ngFor="let day of days">
-                <calendar-month-day 
+                <calendar-week-day 
                     *ngIf="weekend || !df.isWeekend(day)" 
                     [date]="day"
                     [nav]="nav"
@@ -24,20 +24,20 @@
                     [out]="!df.isSameMonth(context, day)" 
                     [ngStyle]="{width: weekend ? '14.28%' : '20%'}"
                     [events]="showDayEvents ? filteredEvents : []"
-                ></calendar-month-day>
+                ></calendar-week-day>
             </ng-container>
         </div>
 
         <div class="events" [ngClass]="{'editing': editor.isEditing()}">
             <ng-container *ngFor="let row of eventsGridRows">
                 <ng-container *ngFor="let gridEvent of row">
-                    <calendar-month-event 
+                    <calendar-event 
                         [event]="gridEvent.event" 
                         [nav]="nav"
                         [editor]="editor"
                         [showStartTime]="!gridEvent.event.allday && df.isSameWeek(gridEvent.event.start, date)"
                         [ngStyle]="{top: gridEvent.top, left: gridEvent.left, width: gridEvent.width, height: eventLineHeight + 'px'}"
-                    ></calendar-month-event>
+                    ></calendar-event>
                 </ng-container>
             </ng-container>
         </div>

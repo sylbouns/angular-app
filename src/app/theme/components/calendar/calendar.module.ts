@@ -3,12 +3,12 @@ import { SharedThemeModule } from '@app/theme/shared-theme.module';
 
 import { CalendarComponent } from './calendar.component';
 import { CalendarMonthComponent } from './calendar-month/calendar-month.component';
-import { CalendarMonthDayComponent } from './calendar-month/calendar-month-day/calendar-month-day.component';
-import { CalendarMonthEventComponent } from './calendar-month/calendar-month-event/calendar-month-event.component';
+import { CalendarWeekDayComponent } from './calendar-week/calendar-week-day/calendar-week-day.component';
+import { CalendarEventComponent } from './calendar-event/calendar-event.component';
 import { CalendarWeekComponent } from './calendar-week/calendar-week.component';
 
 @NgModule({
-  declarations: [CalendarComponent, CalendarMonthComponent, CalendarMonthDayComponent, CalendarMonthEventComponent, CalendarWeekComponent],
+  declarations: [CalendarComponent, CalendarMonthComponent, CalendarWeekDayComponent, CalendarEventComponent, CalendarWeekComponent],
   imports: [
     SharedThemeModule,
   ],

@@ -1,15 +1,15 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DateFsnService } from '@app/theme/services/date-fsn.service';
-import { CalendarEvent } from '../../calendar-event';
-import { CalendarEditor } from '../../calendar-editor';
-import { CalendarNav } from '../../calendar-nav';
+import { CalendarEvent } from '../calendar-event';
+import { CalendarEditor } from '../calendar-editor';
+import { CalendarNav } from '../calendar-nav';
 
 @Component({
-  selector: 'calendar-month-event',
-  templateUrl: './calendar-month-event.component.html',
-  styleUrls: ['./calendar-month-event.component.scss']
+  selector: 'calendar-event',
+  templateUrl: './calendar-event.component.html',
+  styleUrls: ['./calendar-event.component.scss']
 })
-export class CalendarMonthEventComponent implements OnInit {
+export class CalendarEventComponent implements OnInit {
   @Input() event: CalendarEvent;
   @Input() showStartTime: boolean = false;
   @Input() editor: CalendarEditor;
