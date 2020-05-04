@@ -2,7 +2,8 @@ import { Component, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChange
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { DateFsnService } from '@app/theme/services/date-fsn.service';
 import { CalendarEvent } from '../calendar-event';
-import { CalendarEditor } from '../calendar.editor';
+import { CalendarEditor } from '../calendar-editor';
+import { CalendarNav } from '../calendar-nav';
 
 @Component({
   selector: 'calendar-month',
@@ -13,6 +14,8 @@ export class CalendarMonthComponent implements OnInit, OnChanges {
   @Input() events: CalendarEvent[] = [];
   @Input() filteredEvents: CalendarEvent[] = [];
   @Input() date: Date = new Date();
+  @Input() editor: CalendarEditor;
+  @Input() nav: CalendarNav;
   @Input() weekend: boolean = true;
   @Output() onEventClick: EventEmitter<CalendarEvent> = new EventEmitter<CalendarEvent>();
   @Output() onEventEdit: EventEmitter<CalendarEvent> = new EventEmitter<CalendarEvent>();
@@ -22,7 +25,6 @@ export class CalendarMonthComponent implements OnInit, OnChanges {
   public weeks: Date[] = [];
 
   constructor(
-    public editor: CalendarEditor,
     public df: DateFsnService
   ) { }
 

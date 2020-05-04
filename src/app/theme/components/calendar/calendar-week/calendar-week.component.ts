@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { DateFsnService } from '@app/theme/services/date-fsn.service';
 import { CalendarEvent } from '../calendar-event';
-import { CalendarEditor } from '../calendar.editor';
+import { CalendarEditor } from '../calendar-editor';
+import { CalendarNav } from '../calendar-nav';
 
 class GridEvent {
   public event: CalendarEvent;
@@ -19,23 +20,24 @@ class GridEvent {
 })
 export class CalendarWeekComponent implements OnInit, OnChanges {
   @Input() events: CalendarEvent[];
-  @Input() date: Date = new Date();
+  @Input() editor: CalendarEditor;
+  @Input() nav: CalendarNav;
+  @Input() date: Date;
   @Input() context: Date;
-  @Input() weekend: boolean = true;
-  @Input() showDayNames: boolean = false;
-  @Input() showDayEvents: boolean = false;
+  @Input() weekend: boolean;
+  @Input() showDayNames: boolean;
+  @Input() showDayEvents: boolean;
   @Input() eventLineHeight: number = 30; // pixels
 
   public days: Date[];
   public start: Date;
   public end: Date;
-  public filteredEvents: CalendarEvent[] = [];
+  public filteredEvents: CalendarEvent[];
   public eventsGridRows: GridEvent[][];
   private startTime: number;
   private length: number;
 
   constructor(
-    public editor: CalendarEditor,
     public df: DateFsnService
   ) { }
 

@@ -1,8 +1,10 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { CalendarEvent } from './calendar-event';
-import { CalendarEditor } from './calendar.editor';
+import { CalendarEditor } from './calendar-editor';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { DateFsnService } from '@app/theme/services/date-fsn.service';
+import { ActivatedRoute } from '@angular/router';
+import { CalendarNav } from './calendar-nav';
 
 @Component({
   selector: 'calendar',
@@ -11,28 +13,47 @@ import { DateFsnService } from '@app/theme/services/date-fsn.service';
 })
 export class CalendarComponent implements OnInit {
   @Input() events: CalendarEvent[] = [];
-  @Input() date: Date = new Date();
   @Input() weekend: boolean = true;
-  @Input() view: 'month' | 'week' = 'week';
+  @Input() view: string = 'month';
   @Output() onEventClick: EventEmitter<CalendarEvent> = new EventEmitter<CalendarEvent>();
   @Output() onEventEdit: EventEmitter<CalendarEvent> = new EventEmitter<CalendarEvent>();
 
+  log(data) { console.log(data) 
+  }
+  public date: Date;
+  public nav: CalendarNav;
+  public editor: CalendarEditor;
+  public title: string;
+
   constructor(
-    public editor: CalendarEditor,
-    public df: DateFsnService
+    public df: DateFsnService,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
+    this.route.data.subscribe((data) => data.calendarNav ? this.initCalendar(data.calendarNav) : false);
+  }
+
+  initCalendar(nav: CalendarNav): void {
+    this.nav = nav;
+    this.date = nav.date;
+    this.view = nav.view;
+    this.setTitle();
+    this.initEditor();
+  }
+
+  initEditor(): void {
+    this.editor = new CalendarEditor();
     this.editor.eventChanged.subscribe(event =>  this.events = this.editor.getEditedEvents(event, this.events));
     this.editor.eventFixed.subscribe(event => this.onEventEdit.emit(event));
   }
 
   onCalendarMouseleave(): void { this.editor.stop(); }
 
-  getCalendarTitle(): string {
+  setTitle() {
     switch (this.view) {
-      case 'month': return this.df.format(this.date, 'MMMM y');
-      case 'week': return this.getWeekCalendarTitle();
+      case 'month': this.title = this.df.format(this.date, 'MMMM y'); break;
+      case 'week': this.title = this.getWeekCalendarTitle(); break;
     }
   }
 
@@ -46,33 +67,7 @@ export class CalendarComponent implements OnInit {
     return title;
   }
 
-  setView(event): void {
-    this.view = event.value;
-  }
-
   weekendChange($event: MatSlideToggleChange) {
     this.weekend = $event.checked;
-  }
-
-  setDate(date: Date): void {
-    this.date = date;
-  }
-
-  today(): void {
-    this.setDate(new Date());
-  }
-
-  next(): void {
-    switch (this.view) {
-      case 'month': this.setDate(this.df.addMonths(this.date, 1)); break;
-      case 'week': this.setDate(this.df.addWeeks(this.date, 1)); break;
-    }
-  }
-
-  previous(): void {
-    switch (this.view) {
-      case 'month': this.setDate(this.df.subMonths(this.date, 1)); break;
-      case 'week': this.setDate(this.df.subWeeks(this.date, 1)); break;
-    }
   }
 }

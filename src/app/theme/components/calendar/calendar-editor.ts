@@ -1,11 +1,9 @@
-import { EventEmitter, Injectable } from '@angular/core';
 import { DateFsnService } from '@app/theme/services/date-fsn.service';
 import { CalendarEvent } from './calendar-event';
 import { Subject } from 'rxjs';
 
-@Injectable({
-  providedIn: "root"
-})
+export const df = new DateFsnService();
+
 export class CalendarEditor {
   public event: CalendarEvent;
   public initial: CalendarEvent;
@@ -15,7 +13,7 @@ export class CalendarEditor {
   public eventChanged: Subject<CalendarEvent> = new Subject<CalendarEvent>();
   public eventFixed: Subject<CalendarEvent> = new Subject<CalendarEvent>();
 
-  constructor(public df: DateFsnService) { }
+  constructor() { }
 
   getEditedEvents(event: CalendarEvent, events: CalendarEvent[]): CalendarEvent[] {
     let index = events.findIndex(e => e.id == event.id);
@@ -120,8 +118,8 @@ export class CalendarEditor {
     if (this.drag == null) this.drag = date;
     else {
       let move = date.getTime() - this.drag.getTime();
-      this.event.start = this.df.addMilliseconds(this.initial.start, move);
-      this.event.end = this.initial.end ? this.df.addMilliseconds(this.initial.end, move) : this.initial.end;
+      this.event.start = df.addMilliseconds(this.initial.start, move);
+      this.event.end = this.initial.end ? df.addMilliseconds(this.initial.end, move) : this.initial.end;
     }
     this.eventChanged.next(this.event);
   }

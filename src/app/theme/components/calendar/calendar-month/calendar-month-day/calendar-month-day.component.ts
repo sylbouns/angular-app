@@ -1,7 +1,8 @@
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { DateFsnService } from '@app/theme/services/date-fsn.service';
 import { CalendarEvent } from '../../calendar-event';
-import { CalendarEditor } from '../../calendar.editor';
+import { CalendarEditor } from '../../calendar-editor';
+import { CalendarNav } from '../../calendar-nav';
 
 @Component({
   selector: 'calendar-month-day',
@@ -12,13 +13,14 @@ export class CalendarMonthDayComponent implements OnChanges {
   @Input() events: CalendarEvent[] = [];
   @Input() date: Date = new Date();
   @Input() out: boolean = false;
+  @Input() editor: CalendarEditor;
+  @Input() nav: CalendarNav;
 
   public start: Date;
   public end: Date;
   public filteredEvents: CalendarEvent[] = [];
 
   constructor(
-    public editor: CalendarEditor,
     public df: DateFsnService,
   ) { }
 

@@ -1,19 +1,21 @@
-<section (mouseleave)="onCalendarMouseleave()">
+<section *ngIf="nav" (mouseleave)="onCalendarMouseleave()">
 
     <header>
-        <button mat-button (click)="today()">Aujourd'hui</button>
-        <button mat-icon-button aria-hidden="false" aria-label="Mois précédent" (click)="previous()">
+        <button mat-button [routerLink]="nav.today">Aujourd'hui</button>
+        <button mat-icon-button aria-hidden="false" aria-label="Mois précédent" [routerLink]="nav.previous">
             <mat-icon>keyboard_arrow_left</mat-icon>
         </button>
-        <button mat-icon-button aria-hidden="false" aria-label="Mois suivant" (click)="next()">
+        <button mat-icon-button aria-hidden="false" aria-label="Mois suivant" [routerLink]="nav.next">
             <mat-icon>keyboard_arrow_right</mat-icon>
         </button>
-        <h3 class="title">{{ getWeekCalendarTitle() }}</h3>
+        <h3 class="title">{{ title }}</h3>
         <span class="spacer"></span>
         <mat-form-field appearance="outline" class="view-select">
-            <mat-select [value]="view" (selectionChange)="setView($event)">
-                <mat-option value="month">Month</mat-option>
-                <mat-option value="week">Week</mat-option>
+            <mat-select [value]="nav.view">
+                <mat-option value="year" [routerLink]="nav.year">Année</mat-option>
+                <mat-option value="month" [routerLink]="nav.month">Mois</mat-option>
+                <mat-option value="week" [routerLink]="nav.week">Semaine</mat-option>
+                <mat-option value="day" [routerLink]="nav.day">Jour</mat-option>
             </mat-select>
         </mat-form-field>          
         <mat-slide-toggle (change)="weekendChange($event)" [checked]="weekend">Weekend</mat-slide-toggle>
@@ -24,7 +26,9 @@
             *ngIf="view == 'month'"
             class="calendar"
             [date]="date" 
-            [events]="events" 
+            [events]="events"
+            [nav]="nav"
+            [editor]="editor"
             [weekend]="weekend"
             (onEventClick)="onEventClick.emit($event)" 
             (onEventEdit)="onEventEdit.emit($event)"
@@ -35,6 +39,8 @@
         <calendar-week 
             *ngIf="view == 'week'"
             [events]="events" 
+            [nav]="nav"
+            [editor]="editor"
             [date]="date" 
             [context]="date" 
             [weekend]="weekend"

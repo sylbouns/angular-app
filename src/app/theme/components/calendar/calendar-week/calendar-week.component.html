@@ -10,7 +10,7 @@
 
 <div class="weekline" [ngClass]="{'day-names-above': showDayNames}">
 
-    <span class="number">{{ df.format(date, 'w') }}</span>
+    <span class="number" [routerLink]="nav.getRouterLink('week', date)">{{ df.format(date, 'w') }}</span>
     
     <div class="week">
 
@@ -19,6 +19,8 @@
                 <calendar-month-day 
                     *ngIf="weekend || !df.isWeekend(day)" 
                     [date]="day"
+                    [nav]="nav"
+                    [editor]="editor"
                     [out]="!df.isSameMonth(context, day)" 
                     [ngStyle]="{width: weekend ? '14.28%' : '20%'}"
                     [events]="showDayEvents ? filteredEvents : []"
@@ -31,6 +33,8 @@
                 <ng-container *ngFor="let gridEvent of row">
                     <calendar-month-event 
                         [event]="gridEvent.event" 
+                        [nav]="nav"
+                        [editor]="editor"
                         [showStartTime]="!gridEvent.event.allday && df.isSameWeek(gridEvent.event.start, date)"
                         [ngStyle]="{top: gridEvent.top, left: gridEvent.left, width: gridEvent.width, height: eventLineHeight + 'px'}"
                     ></calendar-month-event>

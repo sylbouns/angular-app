@@ -18,6 +18,7 @@ $palette: $primary;
     .day-number {
         text-align: center;
         font-size: small;
+        cursor: pointer;
         span {
             text-transform: capitalize;
         }

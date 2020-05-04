@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { format, addMilliseconds, startOfDay, endOfDay, isToday, getTime, differenceInCalendarDays, addDays, subDays, max, min, isSameWeek, addWeeks, subWeeks, isSameMonth, getWeekOfMonth, areIntervalsOverlapping, getOverlappingDaysInIntervals, differenceInDays, isSameDay, isAfter, isBefore, startOfMonth, endOfMonth, startOfWeek, endOfWeek, eachDayOfInterval, getMonth, isWeekend, addMonths, subMonths, isFirstDayOfMonth } from 'date-fns';
+import { format, addYears, subYears, addMilliseconds, startOfYear, endOfYear, startOfDay, endOfDay, isToday, getTime, differenceInCalendarDays, addDays, subDays, max, min, isSameWeek, addWeeks, subWeeks, isSameMonth, getWeekOfMonth, areIntervalsOverlapping, getOverlappingDaysInIntervals, differenceInDays, isSameDay, isAfter, isBefore, startOfMonth, endOfMonth, startOfWeek, endOfWeek, eachDayOfInterval, getMonth, isWeekend, addMonths, subMonths, isFirstDayOfMonth } from 'date-fns';
 import { fr } from 'date-fns/esm/locale'
 
 @Injectable({
@@ -16,6 +16,14 @@ export class DateFsnService {
     return addMilliseconds(date, amount);
   }
 
+  startOfYear(date: number | Date): Date {
+    return startOfYear(date);
+  }
+
+  endOfYear(date: number | Date): Date {
+    return endOfYear(date);
+  }
+  
   startOfDay(date: number | Date): Date {
     return startOfDay(date);
   }
@@ -114,6 +122,14 @@ export class DateFsnService {
 
   subWeeks(date, amount): Date {
     return subWeeks(date, amount);
+  }
+
+  addYears(date, amount): Date {
+    return addYears(date, amount);
+  }
+
+  subYears(date, amount): Date {
+    return subYears(date, amount);
   }
 
   isSameMonth(dateLeft, dateRight): boolean {
