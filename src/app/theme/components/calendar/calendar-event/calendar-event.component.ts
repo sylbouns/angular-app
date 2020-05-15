@@ -12,6 +12,7 @@ import { CalendarNav } from '../calendar-nav';
 export class CalendarEventComponent implements OnInit {
   @Input() event: CalendarEvent;
   @Input() showStartTime: boolean = false;
+  @Input() direction: 'vertical' | 'horizontal' = 'horizontal';
   @Input() editor: CalendarEditor;
   @Input() nav: CalendarNav;
   

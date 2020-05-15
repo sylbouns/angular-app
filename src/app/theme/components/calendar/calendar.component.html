@@ -1,17 +1,18 @@
 <section *ngIf="nav" (mouseleave)="onCalendarMouseleave()">
 
     <header>
-        <button mat-button [routerLink]="nav.today">Aujourd'hui</button>
-        <button mat-icon-button aria-hidden="false" aria-label="Mois précédent" [routerLink]="nav.previous">
-            <mat-icon>keyboard_arrow_left</mat-icon>
-        </button>
-        <button mat-icon-button aria-hidden="false" aria-label="Mois suivant" [routerLink]="nav.next">
-            <mat-icon>keyboard_arrow_right</mat-icon>
-        </button>
+        <button mat-stroked-button [routerLink]="nav.today">Aujourd'hui</button>
+        <div class="previous-next">
+            <button mat-icon-button aria-hidden="false" aria-label="Mois précédent" [routerLink]="nav.previous">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+            </button>
+            <button mat-icon-button aria-hidden="false" aria-label="Mois suivant" [routerLink]="nav.next">
+                <mat-icon>keyboard_arrow_right</mat-icon>
+            </button>
+        </div>
         
         <ng-container *ngIf="nav.view == 'day'">
             <h3 class="title">
-                {{ titleDay }}
                 <span class="title-link" [routerLink]="nav.getRouterLink('month', date)">{{ titleMonth }} {{ titleYear }}</span>
             </h3>
             <mat-chip-list *ngIf="titleWeek"><mat-chip [routerLink]="nav.getRouterLink('week', date)">{{ titleWeek }}</mat-chip></mat-chip-list>
@@ -52,9 +53,7 @@
             [date]="date" 
             [events]="events"
             [nav]="nav"
-        >
-            <ng-content></ng-content>
-        </calendar-year>
+        ></calendar-year>
 
         <calendar-month 
             *ngIf="view == 'month'"
@@ -64,11 +63,7 @@
             [nav]="nav"
             [editor]="editor"
             [weekend]="weekend"
-            (onEventClick)="onEventClick.emit($event)" 
-            (onEventEdit)="onEventEdit.emit($event)"
-        >
-            <ng-content></ng-content>
-        </calendar-month>
+        ></calendar-month>
 
         <calendar-week 
             *ngIf="view == 'week'"
@@ -80,8 +75,15 @@
             [context]="date" 
             [weekend]="weekend"
             [showDayNames]="true"
-            [ngStyle]="{height: '100%'}"
         ></calendar-week>
+
+        <calendar-day 
+            *ngIf="view == 'day'"
+            class="calendar"
+            [events]="events" 
+            [editor]="editor"
+            [date]="date" 
+        ></calendar-day>
 
     </main>
 

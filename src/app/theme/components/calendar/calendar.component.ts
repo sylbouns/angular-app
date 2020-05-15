@@ -18,8 +18,6 @@ export class CalendarComponent implements OnInit {
   @Output() onEventClick: EventEmitter<CalendarEvent> = new EventEmitter<CalendarEvent>();
   @Output() onEventEdit: EventEmitter<CalendarEvent> = new EventEmitter<CalendarEvent>();
 
-  log(data) { console.log(data) 
-  }
   public date: Date;
   public nav: CalendarNav;
   public editor: CalendarEditor;

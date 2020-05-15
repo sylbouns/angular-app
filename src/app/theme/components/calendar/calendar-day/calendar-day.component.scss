@@ -1,0 +1,135 @@
+@import "_variables.scss";
+
+$palette: $primary;
+
+.day {
+    display: flex;
+    flex-flow: column nowrap;
+    height: 100%;
+    width: 100%;
+    .title {
+        margin: 0 24px 16px 24px;
+        font-weight: bolder;
+        text-transform: capitalize;
+        letter-spacing: 0.03em;
+    }
+    .day-top {
+        display: flex;
+        flex-flow: row nowrap;
+        .gmt {
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-end;
+            width: 64px;
+            font-size: smaller;
+            border-right: solid rgba($color: #ffffff, $alpha: 0.3) 1px;
+            span {
+                margin: 0px 16px -10px 0;
+            }
+        }
+        .allday-events {
+            flex-grow: 1;
+            border-bottom: solid rgba($color: #ffffff, $alpha: 0.3) 1px;
+            margin-left: -8px;
+            padding-left: 8px;
+            display: flex;
+            flex-flow: column nowrap;
+        }
+    }
+    .day-content {
+        flex-grow: 1;
+        overflow-y: auto;
+        display: grid;
+        grid-template-columns: 64px calc(100% - 64px);
+        grid-template-areas: "left right";
+    }
+}
+
+.times {
+    grid-area: 1 / 1 / 1 / span 2;
+    .time {
+        display: flex;
+        justify-content: space-between;
+        height: 5px;
+        .time-title {
+            width: 64px;
+            font-size: smaller;
+            border-right: solid rgba($color: #ffffff, $alpha: 0.3) 1px;
+            span {
+                display: none;
+                float: right;
+                margin: -10px 16px 0 0;
+            }
+        }
+        .time-slot {
+            flex-grow: 1;
+            margin-left: -8px;
+            padding-left: 8px;
+        }
+        &:first-child {
+            .time-title span {
+                display: none !important;
+            }
+            .time-slot {
+                border-top: none !important;
+            }
+        }
+        &.hour {
+            .time-title span {
+                display: block;
+            }
+            .time-slot {
+                border-top: solid rgba($color: #ffffff, $alpha: 0.3) 1px;
+            }
+        }
+    }
+}
+
+.events {
+    grid-area: right;
+    display: grid;
+    .event-cell {
+        padding: 1px;
+    }
+    &.editing {
+        pointer-events: none;
+    }
+}
+
+.event {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    border-radius: 4px;
+    width: 100%;
+    height: 100%;
+    opacity: 0.8;
+    background-color: mat-color($palette, 400);
+    cursor: pointer;
+    &.editing {
+        background-color: mat-color($accent);
+        .label {
+            cursor: move;
+        }
+    }
+    .expand {
+        display: block;
+        width: 100%;
+        height: 8px;
+        cursor: s-resize;
+    }
+    .label {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        width: 100%;
+        padding: 0px 8px;
+        flex-grow: 1;
+        .hour {
+            padding-right: 8px;
+        }
+    }
+}
+.event:hover {
+    opacity: 1;
+}

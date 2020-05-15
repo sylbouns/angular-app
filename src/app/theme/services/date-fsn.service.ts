@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { format, addYears, subYears, addMilliseconds, startOfYear, endOfYear, startOfDay, endOfDay, isToday, getTime, differenceInCalendarDays, addDays, subDays, max, min, isSameWeek, addWeeks, subWeeks, isSameMonth, getWeekOfMonth, areIntervalsOverlapping, getOverlappingDaysInIntervals, differenceInDays, isSameDay, isAfter, isBefore, startOfMonth, endOfMonth, startOfWeek, endOfWeek, eachDayOfInterval, getMonth, isWeekend, addMonths, subMonths, isFirstDayOfMonth } from 'date-fns';
+import { format, addYears, subYears, addMilliseconds, subMilliseconds, setMilliseconds, startOfYear, endOfYear, startOfDay, endOfDay, isToday, getTime, differenceInCalendarDays, addDays, subDays, max, min, isSameWeek, addWeeks, subWeeks, isSameMonth, getWeekOfMonth, areIntervalsOverlapping, getOverlappingDaysInIntervals, differenceInDays, isSameDay, isAfter, isBefore, startOfMonth, endOfMonth, startOfWeek, endOfWeek, eachDayOfInterval, getMonth, isWeekend, addMonths, subMonths, isFirstDayOfMonth } from 'date-fns';
 import { fr } from 'date-fns/esm/locale'
 
 @Injectable({
@@ -14,6 +14,14 @@ export class DateFsnService {
 
   addMilliseconds(date: number | Date, amount: number): Date {
     return addMilliseconds(date, amount);
+  }
+
+  subMilliseconds(date: number | Date, amount: number): Date {
+    return subMilliseconds(date, amount);
+  }
+
+  setMilliseconds(date: number | Date, milliseconds: number): Date {
+    return setMilliseconds(date, milliseconds);
   }
 
   startOfYear(date: number | Date): Date {

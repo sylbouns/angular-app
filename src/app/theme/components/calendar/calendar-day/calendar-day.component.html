@@ -1,0 +1,41 @@
+<div class="day">
+    <h2 class="title">{{ df.format(date, 'EEEE d') }}</h2>
+    <div class="day-top">
+        <div class="gmt"><span>GMT+02</span></div>
+        <div class="allday-events">
+            <div class="event-cell" *ngFor="let event of alldayEvents">
+                <div class="event" [ngClass]="{'editing': editor.isEditingEvent(event)}"
+                    (mousedown)="editorStartDrag($event, event); editor.update(date)"
+                    (mouseout)="editorStop()"
+                    (mouseup)="editorStop(date)">
+                    <span class="expand"></span>
+                    <span class="label">{{ event.label }}</span>
+                    <span class="expand"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="day-content">
+        <div class="times">
+            <div class="time" *ngFor="let time of times" 
+                (mouseenter)="editorUpdate(time)"
+                (mousedown)="editorStart($event, time)"
+                (mouseup)="editorStop(time)"
+                [ngClass]="{hour: time % 3600000 == 0}">
+                <div class="time-title"><span>{{ df.format(time, 'HH:mm') }}</span></div>
+                <div class="time-slot"></div>
+            </div>
+        </div>
+        <div class="events" [ngStyle]="grid.styles" [ngClass]="{'editing': editor.isEditing()}">
+            <div class="event-cell" *ngFor="let gridEvent of grid.gridEvents; let index = index" [ngStyle]="gridEvent.styles">
+                <div class="event" [ngClass]="{'editing': editor.isEditingEvent(gridEvent.event)}">
+                    <span class="expand" (mousedown)="editorStartExpand($event, gridEvent.event, 'start', true)"></span>
+                    <span class="label" (mousedown)="editorStartDrag($event, gridEvent.event, true)">
+                        <span class="hour">{{ gridEvent.index }}</span>{{ gridEvent.event.label }}
+                    </span>
+                    <span class="expand" (mousedown)="editorStartExpand($event, gridEvent.event, 'end', true)"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -7,9 +7,10 @@ import { CalendarWeekDayComponent } from './calendar-week/calendar-week-day/cale
 import { CalendarEventComponent } from './calendar-event/calendar-event.component';
 import { CalendarWeekComponent } from './calendar-week/calendar-week.component';
 import { CalendarYearComponent } from './calendar-year/calendar-year.component';
+import { CalendarDayComponent } from './calendar-day/calendar-day.component';
 
 @NgModule({
-  declarations: [CalendarComponent, CalendarMonthComponent, CalendarWeekDayComponent, CalendarEventComponent, CalendarWeekComponent, CalendarYearComponent],
+  declarations: [CalendarComponent, CalendarMonthComponent, CalendarWeekDayComponent, CalendarEventComponent, CalendarWeekComponent, CalendarYearComponent, CalendarDayComponent],
   imports: [
     SharedThemeModule,
   ],
